@@ -1,2 +1,2 @@
 # ibis
-Indonesia Brain Infection Studyd
+Indonesia Brain Infection Study
