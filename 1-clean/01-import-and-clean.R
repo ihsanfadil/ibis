@@ -140,33 +140,68 @@ df_jkt <- df_jkt |>
 
   # Create date of birth
   mutate(dob_new = str_c(yob, mob, dob, sep = '/'),
-         dob_new = ymd(dob_new))
+         dob_new = ymd(dob_new)) |>
+  
+  # Clarify different GCS
+  rename(gcs = gcs_x,
+         gcs2 = gcs_y) |>
+  
+  # Add non-existent variables to matcth the other site
+  mutate(motordef = rep(NA, nrow(df_jkt)))
 
 # Add `siteid` to `df_bdg`
 df_bdg <- df_bdg |>
   mutate(siteid = rep('Bandung', nrow(df_bdg)))
 
 # Select variables of interest
+# When adding a variable of interest in the merged dataset, update:
+# 1. `vars_of_interest`
+# 2. `df_bdg_selected`, where necessary. Usually due to different classes.
+#    If so, an error will pop up when merging the data
+# 3. Check if reasonable to remove the duplicated rows
+# 4. Remove the duplicated rows, considering the new variable of interest
+
 vars_of_interest <- c(
   'siteid', 'subjid',
   'age', 'sex',
-  'symdays', 'feversym'
+  'symdays', 'feversym', 'feverday',
+  'headsym', 'headday',
+  'vomitsym', 'vomitday',
+  'alconday',
+  'bechsym', 'bechday',
+  'seizusym', 'seizuonset',
+  'cough',
+  'htemp',
+  'gcs', 'palsy', 'papille', 'neckstiff',
+    'motordef', 'hemipare', 'parapare', 'tetrapare'
 )
 
 # Subset the datasets
-df_jkt_selected <- df_jkt |> select(all_of(vars_of_interest))
+df_jkt_selected <- df_jkt |>
+  select(all_of(vars_of_interest))
 
 df_bdg_selected <- df_bdg |>
   select(all_of(vars_of_interest)) |>
   mutate(subjid = as.character(subjid),
          sex = as.character(sex),
-         feversym = as.character(feversym))
+         feversym = as.character(feversym),
+         headsym = as.character(headsym),
+         vomitsym = as.character(vomitsym),
+         bechsym = as.character(bechsym),
+         seizusym = as.character(seizusym),
+         cough = as.character(cough),
+         palsy = as.character(palsy),
+         papille = as.character(papille),
+         neckstiff = as.character(neckstiff),
+         hemipare = as.character(hemipare),
+         parapare = as.character(parapare),
+         tetrapare = as.character(tetrapare))
 
 # Merge across sites
 ibis <- bind_rows(df_jkt_selected, df_bdg_selected) |>
   unique() # Deduplicate rows with respect to the selected variables
 
-still_duplicated_rows <- table(ibis$subjid) |>
+remaining_duplicated_rows <- table(ibis$subjid) |>
   data.frame() |>
   arrange(desc(Freq)) |>
   filter(Freq >= 2) |>
@@ -175,7 +210,8 @@ still_duplicated_rows <- table(ibis$subjid) |>
 # Look at the remaining duplicated data
 ibis |>
   arrange(subjid) |>
-  filter(subjid %in% still_duplicated_rows)
+  filter(subjid %in% remaining_duplicated_rows) |>
+  View()
 
 # Note that all these came from Jakarta, possibly due to one of the
 # sheets having duplicated rows.
@@ -183,25 +219,26 @@ ibis |>
 ibis <- ibis |>
   arrange(siteid, subjid,
           is.na(age), is.na(sex),
-          is.na(symdays), is.na(feversym)) |>
+          is.na(symdays), is.na(feversym), is.na(feverday),
+          is.na(headsym), is.na(headday),
+          is.na(vomitsym), is.na(vomitday),
+          is.na(alconday),
+          is.na(bechsym), is.na(bechday),
+          is.na(seizusym), is.na(seizuonset),
+          is.na(cough),
+          is.na(htemp),
+          is.na(gcs), is.na(palsy), is.na(papille), is.na(neckstiff),
+            is.na(motordef),
+            is.na(hemipare), is.na(parapare), is.na(tetrapare)) |>
   distinct(subjid, .keep_all = TRUE) # Keep all except the duplicated rows that
                                      # have been sorted so that more complete
                                      # missingness is found later, hence,
                                      # unselected by `distinct`
 
+# remove(list = ls())
 
-
-
-
-
-
-
-
-
-
-
-
-
+# Save the dataset
+write_rds(x = ibis, file = here('0-data', 'ibis_merged_20210903.rds'))
 
 # Appendix ----------------------------------------------------------------
 
