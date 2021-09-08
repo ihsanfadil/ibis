@@ -136,22 +136,36 @@ df_jkt <- df_jkt |>
          siteid = if_else(is.na(siteid), 'Jakarta', as.character(siteid)),
          site_num = rep('054', nrow(df_jkt)),
          subjid = str_c(site_num, subjid)) |>
-  select(-c(site_num)) |>
+  select(-site_num) |>
 
   # Create date of birth
-  mutate(dob_new = str_c(yob, mob, dob, sep = '/'),
-         dob_new = ymd(dob_new)) |>
+  # mutate(dob_new = str_c(yob, mob, dob, sep = '/'),
+  #        dob_new = ymd(dob_new)) |>
   
   # Clarify different GCS
   rename(gcs = gcs_x,
          gcs2 = gcs_y) |>
   
   # Add non-existent variables to matcth the other site
-  mutate(motordef = rep(NA, nrow(df_jkt)))
+  mutate(motordef = rep(NA, nrow(df_jkt)),
+         antiigg_res = rep(NA, nrow(df_jkt)),
+         ratio_glucose = rep(NA, nrow(df_jkt))) |>
+  
+  # Make variables uniform across sites
+  rename(xray_ores = xrayoth)
 
-# Add `siteid` to `df_bdg`
 df_bdg <- df_bdg |>
-  mutate(siteid = rep('Bandung', nrow(df_bdg)))
+  
+  # Add `siteid` to `df_bdg`
+  mutate(siteid = rep('Bandung', nrow(df_bdg))) |>
+  
+  # Make variables uniform across sites
+  rename(xraynm = xray_res___0,
+         xrayinf = xray_res___2,
+         xraymili = xray_res___3,
+         xraycav = xray_res___1,
+         bihernia = rest_rad1___3,
+         bienceph = rest_rad1___7)
 
 # Select variables of interest
 # When adding a variable of interest in the merged dataset, update:
@@ -173,7 +187,18 @@ vars_of_interest <- c(
   'cough',
   'htemp',
   'gcs', 'palsy', 'papille', 'neckstiff',
-    'motordef', 'hemipare', 'parapare', 'tetrapare'
+    'motordef', 'hemipare', 'parapare', 'tetrapare',
+  'hemovalue', 'wcellcvalue', 'platevalue',
+  'hivvalue', 'cd4value', 'antiigg_res', 'antiiggvalue',
+  'whcellc', 'polycellc', 'monocellc',
+  'protein', 'pblglucose', 'ratio_glucose',
+  'crag', 'xpert', 'xpertrif',
+  'csfcmv', 'csfhsv', 'csfebv', 'csfvzv',
+    'csfvdrl', 'csftpha',
+  'xraynm', 'xrayinf', 'xraymili', 'xraycav', 'xray_ores',
+  'bihernia', 'bienceph',
+  
+  'paticond'
 )
 
 # Subset the datasets
@@ -195,7 +220,18 @@ df_bdg_selected <- df_bdg |>
          neckstiff = as.character(neckstiff),
          hemipare = as.character(hemipare),
          parapare = as.character(parapare),
-         tetrapare = as.character(tetrapare))
+         tetrapare = as.character(tetrapare),
+         hivvalue = as.character(hivvalue),
+         crag = as.character(crag),
+         xpert = as.character(xpert),
+         xpertrif = as.character(xpertrif),
+         csfcmv = as.character(csfcmv),
+         csfhsv = as.character(csfhsv),
+         csfebv = as.character(csfebv),
+         csfvzv = as.character(csfvzv),
+         csfvdrl = as.character(csfvdrl),
+         csftpha = as.character(csftpha),
+         paticond = as.character(paticond))
 
 # Merge across sites
 ibis <- bind_rows(df_jkt_selected, df_bdg_selected) |>
@@ -213,8 +249,8 @@ ibis |>
   filter(subjid %in% remaining_duplicated_rows) |>
   View()
 
-# Note that all these came from Jakarta, possibly due to one of the
-# sheets having duplicated rows.
+# Note that all these duplications came from Jakarta, possibly due to one of the
+# sheets having duplicated rows and `full-join`-ed.
 
 ibis <- ibis |>
   arrange(siteid, subjid,
@@ -229,17 +265,32 @@ ibis <- ibis |>
           is.na(htemp),
           is.na(gcs), is.na(palsy), is.na(papille), is.na(neckstiff),
             is.na(motordef),
-            is.na(hemipare), is.na(parapare), is.na(tetrapare)) |>
+            is.na(hemipare), is.na(parapare), is.na(tetrapare),
+          is.na(hemovalue), is.na(wcellcvalue), is.na(platevalue),
+          is.na(hivvalue), is.na(cd4value),
+            is.na(antiigg_res), is.na(antiiggvalue),
+          is.na(whcellc), is.na(polycellc), is.na(monocellc),
+          is.na(protein), is.na(pblglucose), is.na(ratio_glucose),
+          is.na(crag), is.na(xpert), is.na(xpertrif),
+          is.na(csfcmv), is.na(csfhsv), is.na(csfebv), is.na(csfvzv),
+            is.na(csfvdrl), is.na(csftpha),
+          is.na(xraynm), is.na(xrayinf), is.na(xraymili), is.na(xraycav),
+            is.na(xray_ores),
+          is.na(bihernia), is.na(bienceph),
+          
+          is.na(paticond)) |>
   distinct(subjid, .keep_all = TRUE) # Keep all except the duplicated rows that
                                      # have been sorted so that more complete
                                      # missingness is found later, hence,
                                      # unselected by `distinct`
 
-# remove(list = ls())
+# Take a glimpse of the data
+glimpse(ibis)
 
 # Save the dataset
-write_rds(x = ibis, file = here('0-data', 'ibis_merged_20210903.rds'))
+write_rds(x = ibis, file = here('0-data', 'ibis_merged_20210908.rds'))
 
 # Appendix ----------------------------------------------------------------
 
+# remove(list = ls())
 
