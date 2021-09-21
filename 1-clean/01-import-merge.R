@@ -77,7 +77,7 @@ for (i in (1:length(file_jkt))) {
 df_bdg <- NULL # Initialise
 matching_col_bdg <- c('stnum')
 
-for (i in (1:(length(file_bdg) - 1))) {
+for (i in (1:length(file_bdg))) {
   
   if (i == 1) {
     
@@ -103,7 +103,8 @@ for (i in (1:(length(file_bdg) - 1))) {
   
 }
 
-# Clean the data ----------------------------------------------------------
+
+# Clean -------------------------------------------------------------------
 
 # Rename variables of interest
 df_jkt <- clean_names(df_jkt) # All to lower-case
@@ -122,18 +123,23 @@ jkt_raw <- df_jkt |>
     subjid = str_c(siteid, subjid)
   ) |>
   
-  # Clarify different GCS
+  # Clarify different names
   rename(gcs = gcs_x,  # Baseline
          gcs2 = gcs_y, # Some other point
          antiigg_res = antiiggvalue, # Qualitative results
-         hivstt = hivstt_y) |> # Some other point
+         hivstt = hivstt_y, # Some other point
+         ratio_glucose1 = csfgluratio1,
+         ratio_glucose2 = csfgluratio2,
+         etiothba = etiothba_x,     # All below belong to Discharge-Death
+         etiothmuco = etiothmuco_x,
+         etiothbm = etiothbm_x,
+         etiothneu = etiothneu_x,
+         etiohtlym = etiothlym_x,
+         etiohnmdar = etiothnmdar_x,
+         etiothspec = etiothspec_x) |> 
   
   # Add non-existent variables to matcth the other site
-  mutate(motordef = rep(NA, nrow(df_jkt)))
-
-,
-         antiigg_res = rep(NA, nrow(jkt_raw)),
-         ratio_glucose = rep(NA, nrow(jkt_raw))) |>
+  mutate(motordef = rep(NA, nrow(df_jkt))) |>
   
   # Make variables uniform across sites
   rename(xray_ores = xrayoth)
@@ -160,15 +166,49 @@ bdg_raw <- df_bdg |>
          protein1 = protein,
          protein2 = rep(NA, nrow(df_bdg)),
          pblglucose1 = pblglucose,
-         pblglucose2 = rep(NA, nrow(df_bdg)))
+         pblglucose2 = rep(NA, nrow(df_bdg)),
+         ratio_glucose1 = ratio_glucose,
+         ratio_glucose2 = rep(NA, nrow(df_bdg)),
+         crag1 = crag,
+         crag2 = rep(NA, nrow(df_bdg)),
+         xpert1 = xpert,
+         xpert2 = rep(NA, nrow(df_bdg)),
+         xpertrif1 = xpertrif,
+         xpertrif2 = rep(NA, nrow(df_bdg)),
+         csfcmv1 = csfcmv,
+         csfcmv2 = rep(NA, nrow(df_bdg)),
+         csfhsv1 = csfhsv,
+         csfhsv2 = rep(NA, nrow(df_bdg)),
+         csfebv1 = csfebv,
+         csfebv2 = rep(NA, nrow(df_bdg)),
+         csfvzv1 = csfvzv,
+         csfvzv2 = rep(NA, nrow(df_bdg)),
+         csfvdrl1 = csfvdrl,
+         csfvdrl2 = rep(NA, nrow(df_bdg)),
+         csftpha1 = csftpha,
+         csftpha2 = rep(NA, nrow(df_bdg)),
+         bihernia2 = rep(NA, nrow(df_bdg)),
+         bihernia3 = rep(NA, nrow(df_bdg)),
+         bienceph2 = rep(NA, nrow(df_bdg)),
+         bienceph3 = rep(NA, nrow(df_bdg))) |>
   
   # Make variables uniform across sites
   rename(xraynm = xray_res___0,
          xrayinf = xray_res___2,
          xraymili = xray_res___3,
          xraycav = xray_res___1,
-         bihernia = rest_rad1___3,
-         bienceph = rest_rad1___7)
+         bihernia1 = rest_rad1___3,
+         bienceph1 = rest_rad1___7,
+         staydur = disc_day,
+         etiothba = etioth_spec___1,
+         etiothmuco = etioth_spec___2,
+         etiothbm = etioth_spec___3,
+         etiothneu = etioth_spec___4,
+         etiohtlym = etioth_spec___5,
+         etiohnmdar = etioth_spec___6) 
+
+
+# Merge -------------------------------------------------------------------
 
 # Select variables of interest
 # When adding a variable of interest in the merged dataset, update:
@@ -177,6 +217,8 @@ bdg_raw <- df_bdg |>
 #    If so, an error will pop up when merging the data
 
 vars_of_interest <- c(
+  
+  # Baseline
   'site', 'siteid', 'subjid',
   'age', 'sex',
   'symdays', 'feversym', 'feverday',
@@ -189,21 +231,33 @@ vars_of_interest <- c(
   'htemp',
   'gcs', 'palsy', 'papille', 'neckstiff',
     'motordef', 'hemipare', 'parapare', 'tetrapare', 'monoparesis',
+  
+  # Blood
   'hemovalue', 'wcellcvalue', 'platevalue',
-  'hivvalue', 'cd4value', 'antiigg_res', 'hivstt',
+  'hivvalue', 'cd4value', 'antiigg_res',
+  
+  # HIV
+  'hivstt',
+  
+  # CSF
   'whcellc1', 'whcellc2', 'polycellc1', 'polycellc2', 'monocellc1',
-    'monocellc2', 'protein1', 'protein2', 'pblglucose1', 'pblglucose2'
-)
+    'monocellc2', 'protein1', 'protein2', 'pblglucose1', 'pblglucose2',
+    'ratio_glucose1', 'ratio_glucose2',
+  'crag1', 'crag2', 'xpert1', 'xpert2', 'xpertrif1', 'xpertrif2',
+  'csfcmv1', 'csfcmv2', 'csfhsv1', 'csfhsv2', 'csfebv1', 'csfebv2', 'csfvzv1',
+    'csfvzv2', 'csfvdrl1', 'csfvdrl2', 'csftpha1', 'csftpha2',
   
-'polycellc', 'monocellc'
-  'protein', 'pblglucose', 'ratio_glucose',
-  'crag', 'xpert', 'xpertrif',
-  'csfcmv', 'csfhsv', 'csfebv', 'csfvzv',
-    'csfvdrl', 'csftpha',
-  
+  # Radiologic
   'xraynm', 'xrayinf', 'xraymili', 'xraycav', 'xray_ores',
-  'bihernia', 'bienceph',
+  'bihernia1','bihernia2','bihernia3', 'bienceph1', 'bienceph2', 'bienceph3',
   
+  # Discharge-Death
+  'staydur', 'outcome', 'nonneuspec', 'etiomtuber', 'etmtustt', 'etitoxoenc',
+    'etitoxostt', 'eticryp', 'eticrypstt', 'etibac', 'etibacstt', 'etivence',
+    'etivencestt', 'etiothba', 'etiothmuco', 'etiothbm', 'etiothneu',
+    'etiohtlym', 'etiohnmdar',
+  
+  # Study Completion
   'paticond'
 )
 
@@ -228,27 +282,28 @@ df_bdg_selected <- bdg_raw |>
     parapare = as.character(parapare),
     tetrapare = as.character(tetrapare),
     hivvalue = as.character(hivvalue),
-    antiigg_res = as.character(antiigg_res)
+    antiigg_res = as.character(antiigg_res),
+    crag1 = as.character(crag1),
+    xpert1 = as.character(xpert1),
+    xpertrif1 = as.character(xpertrif1),
+    csfcmv1 = as.character(csfcmv1),
+    csfhsv1 = as.character(csfhsv1),
+    csfebv1 = as.character(csfebv1),
+    csfvzv1 = as.character(csfvzv1),
+    csfvdrl1 = as.character(csfvdrl1),
+    csftpha1 = as.character(csftpha1),
+    outcome = as.character(outcome),
+    etmtustt = as.character(etmtustt),
+    etitoxostt = as.character(etitoxostt),
+    eticrypstt = as.character(eticrypstt),
+    etibacstt = as.character(etibacstt),
+    etivencestt = as.character(etivencestt),
+    paticond = as.character(paticond)
   )
-
-
-         
-
-
-         ,
-         crag = as.character(crag),
-         xpert = as.character(xpert),
-         xpertrif = as.character(xpertrif),
-         csfcmv = as.character(csfcmv),
-         csfhsv = as.character(csfhsv),
-         csfebv = as.character(csfebv),
-         csfvzv = as.character(csfvzv),
-         csfvdrl = as.character(csfvdrl),
-         csftpha = as.character(csftpha),
-         paticond = as.character(paticond))
 
 # Merge across sites
 ibis <- bind_rows(df_jkt_selected, df_bdg_selected)
+# names(ibis)
 
 # Check if there is any duplication
 remaining_duplicated_rows <- table(ibis$subjid) |>
@@ -261,52 +316,20 @@ remaining_duplicated_rows <- table(ibis$subjid) |>
 duplicated <- ibis |>
   arrange(subjid) |>
   filter(subjid %in% remaining_duplicated_rows)
-duplicated %>% view(title = 'duplicated')
 
-# ibis <- ibis |>
-#   arrange(siteid, subjid,
-#           is.na(age), is.na(sex),
-#           is.na(symdays), is.na(feversym), is.na(feverday),
-#           is.na(headsym), is.na(headday),
-#           is.na(vomitsym), is.na(vomitday),
-#           is.na(alconday),
-#           is.na(bechsym), is.na(bechday),
-#           is.na(seizusym), is.na(seizuonset),
-#           is.na(cough),
-#           is.na(htemp),
-#           is.na(gcs), is.na(palsy), is.na(papille), is.na(neckstiff),
-#             is.na(motordef),
-#             is.na(hemipare), is.na(parapare), is.na(tetrapare),
-#           is.na(hemovalue), is.na(wcellcvalue), is.na(platevalue),
-#           is.na(hivvalue), is.na(cd4value),
-#             is.na(antiigg_res), is.na(antiiggvalue),
-#           is.na(whcellc), is.na(polycellc), is.na(monocellc),
-#           is.na(protein), is.na(pblglucose), is.na(ratio_glucose),
-#           is.na(crag), is.na(xpert), is.na(xpertrif),
-#           is.na(csfcmv), is.na(csfhsv), is.na(csfebv), is.na(csfvzv),
-#             is.na(csfvdrl), is.na(csftpha),
-#           is.na(xraynm), is.na(xrayinf), is.na(xraymili), is.na(xraycav),
-#             is.na(xray_ores),
-#           is.na(bihernia), is.na(bienceph),
-#           
-#           is.na(paticond)) |>
-#   distinct(subjid, .keep_all = TRUE) # Keep all except the duplicated rows that
-#                                      # have been sorted so that more complete
-#                                      # missingness is found later, hence,
-#                                      # unselected by `distinct`
+if (dim(duplicated)[1] == 0) {
+  print('You have no duplicated rows.')
+} else {
+  print('Duplicated rows found.')
+}
 
-# Take a glimpse of the data
+# Take a glimpse of the merged data
 glimpse(ibis)
 
 # Save the dataset
-write_rds(x = ibis, file = here('0-data', 'ibis_merged.rds')) # R format
-write_sav(x = ibis, file = here('0-data', 'ibis_merged.sav')) # SPSS format
+ibis |> write_rds(here('0-data', 'ibis_merged.rds')) # R format
+ibis |> write_sav(here('0-data', 'ibis_merged.sav')) # SPSS format
 
 # Appendix ----------------------------------------------------------------
 
 sessioninfo::platform_info()
-
-remove(list = ls())
-
-# set.seed(13)
-# sample(x = c('b', 'm'), size = 30, replace = TRUE, prob = c(0.5, 0.5))
