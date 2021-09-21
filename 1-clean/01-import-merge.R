@@ -109,7 +109,7 @@ for (i in (1:(length(file_bdg) - 1))) {
 df_jkt <- clean_names(df_jkt) # All to lower-case
 
 # Manipulate data
-df_jkt <- df_jkt |>
+jkt_raw <- df_jkt |>
   
   # Make variables more self-explanatory
   mutate(
@@ -123,18 +123,22 @@ df_jkt <- df_jkt |>
   ) |>
   
   # Clarify different GCS
-  rename(gcs = gcs_x,
-         gcs2 = gcs_y) |>
+  rename(gcs = gcs_x,  # Baseline
+         gcs2 = gcs_y, # Some other point
+         antiigg_res = antiiggvalue, # Qualitative results
+         hivstt = hivstt_y) |> # Some other point
   
   # Add non-existent variables to matcth the other site
-  mutate(motordef = rep(NA, nrow(df_jkt)),
-         antiigg_res = rep(NA, nrow(df_jkt)),
-         ratio_glucose = rep(NA, nrow(df_jkt))) |>
+  mutate(motordef = rep(NA, nrow(df_jkt)))
+
+,
+         antiigg_res = rep(NA, nrow(jkt_raw)),
+         ratio_glucose = rep(NA, nrow(jkt_raw))) |>
   
   # Make variables uniform across sites
   rename(xray_ores = xrayoth)
 
-df_bdg <- df_bdg |>
+bdg_raw <- df_bdg |>
   
   # Make variables more self-explanatory
   mutate(
@@ -143,6 +147,20 @@ df_bdg <- df_bdg |>
     subjid = str_sub(subjid, -4, -1),
     subjid = str_c(siteid, subjid)
   ) |>
+  
+  # Add non-existent variables to match the other site
+  mutate(monoparesis = rep(NA, nrow(df_bdg)),
+         hivstt = rep(NA, nrow(df_bdg)),
+         whcellc1 = whcellc,
+         whcellc2 = rep(NA, nrow(df_bdg)),
+         polycellc1 = polycellc,
+         polycellc2 = rep(NA, nrow(df_bdg)),
+         monocellc1 = monocellc,
+         monocellc2 = rep(NA, nrow(df_bdg)),
+         protein1 = protein,
+         protein2 = rep(NA, nrow(df_bdg)),
+         pblglucose1 = pblglucose,
+         pblglucose2 = rep(NA, nrow(df_bdg)))
   
   # Make variables uniform across sites
   rename(xraynm = xray_res___0,
@@ -157,8 +175,6 @@ df_bdg <- df_bdg |>
 # 1. `vars_of_interest`
 # 2. `df_bdg_selected`, where necessary. Usually due to different classes.
 #    If so, an error will pop up when merging the data
-# 3. Check if reasonable to remove the duplicated rows
-# 4. Remove the duplicated rows, considering the new variable of interest
 
 vars_of_interest <- c(
   'site', 'siteid', 'subjid',
@@ -170,17 +186,16 @@ vars_of_interest <- c(
   'bechsym', 'bechday',
   'seizusym', 'seizuonset',
   'cough',
-  'htemp'
+  'htemp',
+  'gcs', 'palsy', 'papille', 'neckstiff',
+    'motordef', 'hemipare', 'parapare', 'tetrapare', 'monoparesis',
+  'hemovalue', 'wcellcvalue', 'platevalue',
+  'hivvalue', 'cd4value', 'antiigg_res', 'hivstt',
+  'whcellc1', 'whcellc2', 'polycellc1', 'polycellc2', 'monocellc1',
+    'monocellc2', 'protein1', 'protein2', 'pblglucose1', 'pblglucose2'
 )
   
-
-
-  
-  'gcs', 'palsy', 'papille', 'neckstiff',
-    'motordef', 'hemipare', 'parapare', 'tetrapare',
-  'hemovalue', 'wcellcvalue', 'platevalue',
-  'hivvalue', 'cd4value', 'antiigg_res', 'antiiggvalue',
-  'whcellc', 'polycellc', 'monocellc',
+'polycellc', 'monocellc'
   'protein', 'pblglucose', 'ratio_glucose',
   'crag', 'xpert', 'xpertrif',
   'csfcmv', 'csfhsv', 'csfebv', 'csfvzv',
@@ -193,10 +208,10 @@ vars_of_interest <- c(
 )
 
 # Subset the datasets
-df_jkt_selected <- df_jkt |>
+df_jkt_selected <- jkt_raw |>
   select(all_of(vars_of_interest))
 
-df_bdg_selected <- df_bdg |>
+df_bdg_selected <- bdg_raw |>
   select(all_of(vars_of_interest)) |>
   mutate(
     sex = as.character(sex),
@@ -206,18 +221,21 @@ df_bdg_selected <- df_bdg |>
     bechsym = as.character(bechsym),
     seizusym = as.character(seizusym),
     cough = as.character(cough),
+    palsy = as.character(palsy),
+    papille = as.character(papille),
+    neckstiff = as.character(neckstiff),
+    hemipare = as.character(hemipare),
+    parapare = as.character(parapare),
+    tetrapare = as.character(tetrapare),
+    hivvalue = as.character(hivvalue),
+    antiigg_res = as.character(antiigg_res)
   )
 
 
          
 
-         palsy = as.character(palsy),
-         papille = as.character(papille),
-         neckstiff = as.character(neckstiff),
-         hemipare = as.character(hemipare),
-         parapare = as.character(parapare),
-         tetrapare = as.character(tetrapare),
-         hivvalue = as.character(hivvalue),
+
+         ,
          crag = as.character(crag),
          xpert = as.character(xpert),
          xpertrif = as.character(xpertrif),
