@@ -526,9 +526,9 @@ glimpse(ibis)
 
 # Save --------------------------------------------------------------------
 
-ibis_raw |> write_rds(here('0-data', 'ibis_merged.rds')) # R
-ibis_raw |> write_sav(here('0-data', 'ibis_merged.sav')) # SPSS
-ibis_raw |> write_dta(here('0-data', 'ibis_merged.dta')) # Stata
+ibis_raw |> write_rds(here('0-data', 'ibis_cleaned.rds')) # R
+ibis_raw |> write_sav(here('0-data', 'ibis_cleaned.sav')) # SPSS
+ibis_raw |> write_dta(here('0-data', 'ibis_cleaned.dta')) # Stata
 
 # Appendix ----------------------------------------------------------------
 
