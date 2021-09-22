@@ -135,13 +135,14 @@ jkt_raw <- df_jkt |>
          etiothneu = etiothneu_x,
          etiohtlym = etiothlym_x,
          etiohnmdar = etiothnmdar_x,
-         etiothspec = etiothspec_x) |> 
+         etioothspec = etiothspec_x) |> 
   
   # Add non-existent variables to matcth the other site
   mutate(motordef = rep(NA, nrow(df_jkt))) |>
   
   # Make variables uniform across sites
-  rename(xray_ores = xrayoth)
+  rename(xray_ores = xrayoth,
+         monopare = monoparesis)
 
 bdg_raw <- df_bdg |>
   
@@ -204,7 +205,9 @@ bdg_raw <- df_bdg |>
          etiothbm = etioth_spec___3,
          etiothneu = etioth_spec___4,
          etiohtlym = etioth_spec___5,
-         etiohnmdar = etioth_spec___6) 
+         etiohnmdar = etioth_spec___6,
+         etioothspec = etiothspec,
+         monopare = monoparesis) 
 
 
 # Merge -------------------------------------------------------------------
@@ -223,13 +226,13 @@ vars_of_interest <- c(
   'symdays', 'feversym', 'feverday',
   'headsym', 'headday',
   'vomitsym', 'vomitday',
-  'alconday',
+  'alconsym', 'alconday',
   'bechsym', 'bechday',
   'seizusym', 'seizuonset',
   'cough',
   'htemp',
   'gcs', 'palsy', 'papille', 'neckstiff',
-    'motordef', 'hemipare', 'parapare', 'tetrapare', 'monoparesis',
+    'motordef', 'hemipare', 'parapare', 'tetrapare', 'monopare',
   
   # Blood
   'hemovalue', 'wcellcvalue', 'platevalue',
@@ -254,7 +257,7 @@ vars_of_interest <- c(
   'staydur', 'outcome', 'nonneuspec', 'etiomtuber', 'etmtustt', 'etitoxoenc',
     'etitoxostt', 'eticryp', 'eticrypstt', 'etibac', 'etibacstt', 'etivence',
     'etivencestt', 'etiothba', 'etiothmuco', 'etiothbm', 'etiothneu',
-    'etiohtlym', 'etiohnmdar',
+    'etiohtlym', 'etiohnmdar', 'etioothspec',
   
   # Study Completion
   'paticond'
@@ -271,6 +274,7 @@ df_bdg_selected <- bdg_raw |>
     feversym = as.character(feversym),
     headsym = as.character(headsym),
     vomitsym = as.character(vomitsym),
+    alconsym = as.character(alconsym),
     bechsym = as.character(bechsym),
     seizusym = as.character(seizusym),
     cough = as.character(cough),
@@ -301,18 +305,18 @@ df_bdg_selected <- bdg_raw |>
   )
 
 # Merge across sites
-ibis <- bind_rows(df_jkt_selected, df_bdg_selected)
+ibis_raw <- bind_rows(df_jkt_selected, df_bdg_selected)
 # names(ibis)
 
 # Check if there is any duplication
-remaining_duplicated_rows <- table(ibis$subjid) |>
+remaining_duplicated_rows <- table(ibis_raw$subjid) |>
   data.frame() |>
   arrange(desc(Freq)) |>
   filter(Freq >= 2) |>
   pull(Var1)
 
 # Look at the remaining duplicated data, if any
-duplicated <- ibis |>
+duplicated <- ibis_raw |>
   arrange(subjid) |>
   filter(subjid %in% remaining_duplicated_rows)
 
@@ -323,11 +327,10 @@ if (dim(duplicated)[1] == 0) {
 }
 
 # Take a glimpse of the merged data
-glimpse(ibis)
+glimpse(ibis_raw)
 
 # Save the dataset
-ibis |> write_rds(here('0-data', 'ibis_merged.rds')) # R format
-ibis |> write_sav(here('0-data', 'ibis_merged.sav')) # SPSS format
+ibis_raw |> write_rds(here('0-data', 'ibis_merged.rds')) # R
 
 # Appendix ----------------------------------------------------------------
 
