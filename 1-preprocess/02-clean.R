@@ -592,6 +592,7 @@ glimpse(ibis)
 
 ibis |> write_rds(here('0-data', 'ibis_cleaned.rds')) # R
 ibis |> write_sav(here('0-data', 'ibis_cleaned.sav')) # SPSS
+ibis |> write_dta(here('0-data', 'ibis_cleaned.dta')) # Stata
 
 # Appendix ----------------------------------------------------------------
 
