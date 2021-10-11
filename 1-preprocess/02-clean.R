@@ -384,7 +384,7 @@ ibis <- ibis_raw |>
       ),
   ) |>
   
-  # Change the class
+  # Make sure all categories are present despite missingness
   mutate(
     sex = factor(sex,
                  levels = c('Female', 'Male'),
@@ -478,10 +478,13 @@ ibis <- ibis_raw |>
                          labels = c('Definite', 'Probable', 'Possible')),
     paticond = factor(paticond,
                       levels = c('Alive', 'Dead', 'Lost to follow up'),
-                      labels = c('Alive', 'Dead', 'Lost to follow up')))
+                      labels = c('Alive', 'Dead', 'Lost to follow up'))) |>
   
-  # Order variable appearance in the dataset
-  # ...
+  # Derived variables
+  rowwise() |>
+  mutate(comppare = sum(c_across(hemipare:monopare), na.rm = TRUE)) |>
+  ungroup() |>
+  mutate(comppare = if_else(comppare >= 1, TRUE, FALSE))
   
 # Label variables
 var_label(ibis) <- list(
@@ -582,8 +585,20 @@ var_label(ibis) <- list(
   etiohtlym = 'Lymphoma',
   etiohnmdar = 'NMDAR encephalitis',
   etioothspec = 'Other aetiology',
-  paticond = "Patient's condition"
+  paticond = "Patient's condition",
+  comppare = 'Presence of any paresis'
 )
+
+# Include or exclude observed, cleaned variables
+ibis <- ibis |>
+  mutate(
+    hivstt = case_when(
+      site == 'Jakarta' ~ hivstt,
+      site == 'Bandung' ~ hivvalue,
+      TRUE ~ NA_integer_
+    )
+  ) |>
+  select(-c(hivvalue))
 
 # Take a look at the cleaned dataset
 glimpse(ibis)
