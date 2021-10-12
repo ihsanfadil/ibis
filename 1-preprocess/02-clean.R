@@ -155,7 +155,7 @@ ibis <- ibis_raw |>
     polycellc1 = if_else(is.na(polycellc1) | polycellc1 == 99999, 
                          NA_real_, polycellc1),
     polycellc2 = if_else(is.na(polycellc2) | polycellc2 == 99999, 
-                       NA_real_, polycellc2),
+                         NA_real_, polycellc2),
     monocellc1 = if_else(is.na(monocellc1) | monocellc1 == 99999, 
                          NA_real_, monocellc1),
     monocellc2 = if_else(is.na(monocellc2) | monocellc2 == 99999, 
@@ -484,7 +484,16 @@ ibis <- ibis_raw |>
   rowwise() |>
   mutate(comppare = sum(c_across(hemipare:monopare), na.rm = TRUE)) |>
   ungroup() |>
-  mutate(comppare = if_else(comppare >= 1, TRUE, FALSE))
+  mutate(comppare = if_else(comppare >= 1, TRUE, FALSE)) |>
+  
+  # Include or exclude observed, cleaned variables
+  mutate(
+    hivstt = case_when(
+      site == 'Jakarta' ~ hivstt,
+      site == 'Bandung' ~ hivvalue,
+      TRUE ~ NA_integer_
+    )
+  )
   
 # Label variables
 var_label(ibis) <- list(
@@ -589,15 +598,8 @@ var_label(ibis) <- list(
   comppare = 'Presence of any paresis'
 )
 
-# Include or exclude observed, cleaned variables
+# Exclude variables
 ibis <- ibis |>
-  mutate(
-    hivstt = case_when(
-      site == 'Jakarta' ~ hivstt,
-      site == 'Bandung' ~ hivvalue,
-      TRUE ~ NA_integer_
-    )
-  ) |>
   select(-c(hivvalue))
 
 # Take a look at the cleaned dataset
