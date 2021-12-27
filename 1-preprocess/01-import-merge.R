@@ -129,7 +129,7 @@ jkt_raw <- df_jkt |>
          hivstt = hivstt_y, # Some other point
          ratio_glucose1 = csfgluratio1,
          ratio_glucose2 = csfgluratio2,
-         etiothba = etiothba_x,     # All below belong to Discharge-Death
+         etiothba = etiothba_x, # All below belong to Discharge-Death
          etiothmuco = etiothmuco_x,
          etiothbm = etiothbm_x,
          etiothneu = etiothneu_x,
@@ -137,7 +137,7 @@ jkt_raw <- df_jkt |>
          etiohnmdar = etiothnmdar_x,
          etioothspec = etiothspec_x) |> 
   
-  # Add non-existent variables to matcth the other site
+  # Add non-existent variables to match the other site
   mutate(motordef = rep(NA, nrow(df_jkt))) |>
   
   # Make variables uniform across sites
@@ -190,7 +190,9 @@ bdg_raw <- df_bdg |>
          bihernia2 = rep(NA, nrow(df_bdg)),
          bihernia3 = rep(NA, nrow(df_bdg)),
          bienceph2 = rep(NA, nrow(df_bdg)),
-         bienceph3 = rep(NA, nrow(df_bdg))) |>
+         bienceph3 = rep(NA, nrow(df_bdg)),
+         lumpdur = rep(NA, nrow(df_bdg)),
+         lumpdurhour = rep(NA, nrow(df_bdg))) |>
   
   # Make variables uniform across sites
   rename(xraynm = xray_res___0,
@@ -234,6 +236,13 @@ vars_of_interest <- c(
   'gcs', 'palsy', 'papille', 'neckstiff',
     'motordef', 'hemipare', 'parapare', 'tetrapare', 'monopare',
   
+  ## Extended baseline
+  'initial', 'iscnsinfec', 'is18', 'issigned', 'admisdtc', 'admistime',
+  'neuroinfecdtc', 'neuroinfectime', 'fstdosend', 'fstdosedtc', 'fstdosetime',
+  'lumpuncnd', 'lumpuncdtc', 'lunpunctime', 'lumpdur', 'lumpdurhour',
+  'enrolldtc', 'enrolltime', 'isrecrbf', 'patientid1', 'patientid2',
+  'patientid3', 'patientid4',
+  
   # Blood
   'hemovalue', 'wcellcvalue', 'platevalue',
   'hivvalue', 'cd4value', 'antiigg_res',
@@ -270,6 +279,7 @@ df_jkt_selected <- jkt_raw |>
 df_bdg_selected <- bdg_raw |>
   select(all_of(vars_of_interest)) |>
   mutate(
+    # Main
     sex = as.character(sex),
     feversym = as.character(feversym),
     headsym = as.character(headsym),
@@ -301,12 +311,27 @@ df_bdg_selected <- bdg_raw |>
     eticrypstt = as.character(eticrypstt),
     etibacstt = as.character(etibacstt),
     etivencestt = as.character(etivencestt),
-    paticond = as.character(paticond)
+    paticond = as.character(paticond),
+    
+    # Extended
+    ## Baseline
+    iscnsinfec = as.character(iscnsinfec),
+    is18 = as.character(is18),
+    issigned = as.character(issigned),
+    admistime = as.character(admistime),
+    neuroinfectime = as.character(neuroinfectime),
+    fstdosetime = as.character(fstdosetime),
+    lunpunctime = as.character(lunpunctime),
+    enrolltime = as.character(enrolltime),
+    isrecrbf = as.character(isrecrbf),
+    patientid1 = as.character(patientid1),
+    patientid2 = as.character(patientid2),
+    patientid3 = as.character(patientid3),
+    patientid4 = as.character(patientid4)
   )
 
 # Merge across sites
 ibis_raw <- bind_rows(df_jkt_selected, df_bdg_selected)
-# names(ibis)
 
 # Check if there is any duplication
 remaining_duplicated_rows <- table(ibis_raw$subjid) |>
@@ -327,6 +352,7 @@ if (dim(duplicated)[1] == 0) {
 }
 
 # Take a glimpse of the merged data
+dim(ibis_raw)
 glimpse(ibis_raw)
 
 # Save the dataset
