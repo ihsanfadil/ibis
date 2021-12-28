@@ -16,6 +16,11 @@
 # Adding new variables from the database will not break the code.
 # Changing the names of existing variables will.
 
+# Assume that the file 'Variable List IBIS bdg-jkt.xlsx', created on
+# 12 September 2021 at 9:31 am is valid. The ordering of the variables was
+# deemed invalid and I considered matching the identically named variables
+# as valid.
+
 # Setup -------------------------------------------------------------------
 
 library(tidyverse)  # Tidy code
@@ -135,7 +140,25 @@ jkt_raw <- df_jkt |>
          etiothneu = etiothneu_x,
          etiohtlym = etiothlym_x,
          etiohnmdar = etiothnmdar_x,
-         etioothspec = etiothspec_x) |> 
+         etioothspec = etiothspec_x,
+         eyesc = eyesc_x,
+         motoric = motoric_x,
+         verbal = verbal_x,
+         veruni = veruni_x,
+         verunirs = verunirs_x,
+         
+         # Extended
+         ## Baseline (syntax format: new_name = old_name)
+         ## Probably not valid this way
+         # fstdosend = fstdosedtc,
+         # fstdosedtc = fstdosetime,
+         # fstdosetime = fstdosend,
+         # lumpuncnd = lumpuncdtc,
+         # lumpuncdtc = lunpunctime,
+         # lunpunctime = lumpdur,
+         # lumpdur = lumpdurhour,
+         # lumpdurhour = lumpuncnd
+         ) |> 
   
   # Add non-existent variables to match the other site
   mutate(motordef = rep(NA, nrow(df_jkt))) |>
@@ -192,7 +215,14 @@ bdg_raw <- df_bdg |>
          bienceph2 = rep(NA, nrow(df_bdg)),
          bienceph3 = rep(NA, nrow(df_bdg)),
          lumpdur = rep(NA, nrow(df_bdg)),
-         lumpdurhour = rep(NA, nrow(df_bdg))) |>
+         lumpdurhour = rep(NA, nrow(df_bdg)),
+         mob = rep(NA, nrow(df_bdg)),
+         yob = rep(NA, nrow(df_bdg)),
+         covid19 = rep(NA, nrow(df_bdg)),
+         covid19vac = rep(NA, nrow(df_bdg)),
+         phyexamoth = rep(NA, nrow(df_bdg)),
+         veruni = rep(NA, nrow(df_bdg)),
+         verunirs = rep(NA, nrow(df_bdg))) |>
   
   # Make variables uniform across sites
   rename(xraynm = xray_res___0,
@@ -209,7 +239,18 @@ bdg_raw <- df_bdg |>
          etiohtlym = etioth_spec___5,
          etiohnmdar = etioth_spec___6,
          etioothspec = etiothspec,
-         monopare = monoparesis) 
+         monopare = monoparesis,
+         tbsttpul = type_tb___1,
+         tbsttmen = type_tb___2,
+         tbsttoth = type_tb___3,
+         cnsmen = cnsmen___1,
+         cnsenc = cnsmen___2,
+         cnsbra = cnsmen___3,
+         cnsmye = cnsmen___4,
+         cnsmtub = cnsm_sp___1,
+         cnstoxo = cnsm_sp___2,
+         cnscryp = cnsm_sp___3,
+         cnsoth = cnsm_oth) 
 
 
 # Merge -------------------------------------------------------------------
@@ -222,7 +263,14 @@ bdg_raw <- df_bdg |>
 
 vars_of_interest <- c(
   
-  # Baseline
+  # Screening (extended)
+  'initial', 'iscnsinfec', 'is18', 'issigned', 'admisdtc', 'admistime',
+  'neuroinfecdtc', 'neuroinfectime', 'fstdosend', 'fstdosedtc', 'fstdosetime',
+  'lumpuncnd', 'lumpuncdtc', 'lunpunctime', 'lumpdur', 'lumpdurhour',
+  'enrolldtc', 'enrolltime', 'isrecrbf', 'patientid1', 'patientid2',
+  'patientid3', 'patientid4',
+  
+  # Baseline (main)
   'site', 'siteid', 'subjid',
   'age', 'sex',
   'symdays', 'feversym', 'feverday',
@@ -236,12 +284,25 @@ vars_of_interest <- c(
   'gcs', 'palsy', 'papille', 'neckstiff',
     'motordef', 'hemipare', 'parapare', 'tetrapare', 'monopare',
   
-  ## Extended baseline
-  'initial', 'iscnsinfec', 'is18', 'issigned', 'admisdtc', 'admistime',
-  'neuroinfecdtc', 'neuroinfectime', 'fstdosend', 'fstdosedtc', 'fstdosetime',
-  'lumpuncnd', 'lumpuncdtc', 'lunpunctime', 'lumpdur', 'lumpdurhour',
-  'enrolldtc', 'enrolltime', 'isrecrbf', 'patientid1', 'patientid2',
-  'patientid3', 'patientid4',
+  # Baseline (extended)
+  # `initial` in Screening not considered
+  # 'hivstt' in Baseline not considered
+  'dob', 'mob', 'yob', 'studypl', 'refstt', 'refplace', 'fstsymdtc',
+  'fevercomp', 'headcomp', 'vomitcomp', 'alconcomp', 'lethsym', 'lethcomp',
+  'lethday', 'bechcomp', 'moabsym', 'moabcomp', 'moabday', 'seabsym',
+  'seabcomp', 'seabday', 'cranpsym', 'cranpcomp', 'cranpday', 'seizucomp',
+  'seipattern', 'seiwitms', 'seizufre', 'othcomp', 'othday', 'weightlost',
+  'nsweat', 'bcg', 'treatedtb', 'timettb', 'pretb', 'tbfre', 'tbrecent',
+  'tbsttrec', 'tbsttpul', 'tbsttmen', 'tbsttoth', 'tblatent', 'tbipt', 'precns',
+  'cnsfre', 'cnsmen', 'cnsenc', 'cnsbra', 'cnsmye', 'cnsmtub', 'cnstoxo',
+  'cnscryp', 'cnsoth', 'cnsepi', 'diabetes', 'diatherapy', 'corticocurt',
+  'corticodur', 'piein30', 'piein30spec', 'pieanimal', 'pieanispec',
+  'piefreshwt', 'piefrwtspec', 'pieplace', 'hissmoking', 'covid19',
+  'covid19vac', 'loctemp', 'pulse', 'sbp', 'dbp', 'respiratory', 'oxysatu',
+  'weight', 'weightmth', 'armcir', 'armcirmea', 'height', 'heightmth',
+  'phyexamoth', 'eyesc', 'motoric', 'verbal', 'veruni', 'verunirs', 'nerve3rd',
+  'nerve4th', 'nerve6th', 'nerve7th', 'nerve12th', 'pupisz', 'pupiref',
+  'urinary', 'gasbleed',
   
   # Blood
   'hemovalue', 'wcellcvalue', 'platevalue',
@@ -272,9 +333,20 @@ vars_of_interest <- c(
   'paticond'
 )
 
-# Subset the datasets
+# Subset the datasets and coerce into the character type where necessary
+# If non-existent in one of the datasets, create an NA vector
 df_jkt_selected <- jkt_raw |>
-  select(all_of(vars_of_interest))
+  select(all_of(vars_of_interest)) |> 
+  mutate(
+   # Extended
+   ## Extended
+   fstdosend = as.character(fstdosend),
+   fstdosetime = as.character(fstdosetime),
+   lumpuncnd = as.character(lumpuncnd),
+    
+   ## Baseline
+   dob = as.character(dob)
+  )
 
 df_bdg_selected <- bdg_raw |>
   select(all_of(vars_of_interest)) |>
@@ -314,20 +386,78 @@ df_bdg_selected <- bdg_raw |>
     paticond = as.character(paticond),
     
     # Extended
-    ## Baseline
+    ## Screening
     iscnsinfec = as.character(iscnsinfec),
     is18 = as.character(is18),
     issigned = as.character(issigned),
     admistime = as.character(admistime),
     neuroinfectime = as.character(neuroinfectime),
     fstdosetime = as.character(fstdosetime),
+    lumpuncnd = as.character(lumpuncnd),
+    fstdosend = as.character(fstdosend),
     lunpunctime = as.character(lunpunctime),
     enrolltime = as.character(enrolltime),
     isrecrbf = as.character(isrecrbf),
     patientid1 = as.character(patientid1),
     patientid2 = as.character(patientid2),
     patientid3 = as.character(patientid3),
-    patientid4 = as.character(patientid4)
+    patientid4 = as.character(patientid4),
+    
+    ## Baseline
+    dob = as.character(dob),
+    studypl = as.character(studypl),
+    refstt = as.character(refstt),
+    fevercomp = as.character(fevercomp),
+    headcomp = as.character(headcomp),
+    vomitcomp = as.character(vomitcomp),
+    alconcomp = as.character(alconcomp),
+    lethsym = as.character(lethsym),
+    lethcomp = as.character(lethcomp),
+    bechcomp = as.character(bechcomp),
+    moabsym = as.character(moabsym),
+    moabcomp = as.character(moabcomp),
+    seabsym = as.character(seabsym),
+    seabcomp = as.character(seabcomp),
+    cranpsym = as.character(cranpsym),
+    cranpcomp = as.character(cranpcomp),
+    seizucomp = as.character(seizucomp),
+    seipattern = as.character(seipattern),
+    seiwitms = as.character(seiwitms),
+    seizufre = as.character(seizufre),
+    othcomp = as.character(othcomp),
+    weightlost = as.character(weightlost),
+    nsweat = as.character(nsweat),
+    bcg = as.character(bcg),
+    treatedtb = as.character(treatedtb),
+    timettb = as.character(timettb),
+    pretb = as.character(pretb),
+    tbfre = as.character(tbfre),
+    tbrecent = as.character(tbrecent),
+    tbsttrec = as.character(tbsttrec),
+    tblatent = as.character(tblatent),
+    precns = as.character(precns),
+    cnsfre = as.character(cnsfre),
+    diabetes = as.character(diabetes),
+    diatherapy = as.character(diatherapy),
+    corticocurt = as.character(corticocurt),
+    corticodur = as.character(corticodur),
+    piein30 = as.character(piein30),
+    pieanimal = as.character(pieanimal),
+    piefreshwt = as.character(piefreshwt),
+    hissmoking = as.character(hissmoking),
+    loctemp = as.character(loctemp),
+    weightmth = as.character(weightmth),
+    armcirmea = as.character(armcirmea),
+    heightmth = as.character(heightmth),
+    nerve3rd = as.character(nerve3rd),
+    nerve4th = as.character(nerve4th),
+    nerve6th = as.character(nerve6th),
+    nerve7th = as.character(nerve7th),
+    nerve12th = as.character(nerve12th),
+    pupisz = as.character(pupisz),
+    pupiref = as.character(pupiref),
+    urinary = as.character(urinary),
+    gasbleed = as.character(gasbleed)
   )
 
 # Merge across sites
