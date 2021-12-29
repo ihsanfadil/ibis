@@ -3,7 +3,7 @@
 
 # Code author  : Ihsan Fadilah
 # Email        : ifadilah@eocru.org
-# Last updated : Late September 2021
+# Last updated : Late December 2021
 # Project      : Indonesia Brain Infection Study
 
 # This script provides reproducible code for merging and harmonising the data
@@ -165,7 +165,9 @@ jkt_raw <- df_jkt |>
   
   # Make variables uniform across sites
   rename(xray_ores = xrayoth,
-         monopare = monoparesis)
+         monopare = monoparesis,
+         suetiunk = syetiunk,
+         xray = xray_x)
 
 bdg_raw <- df_bdg |>
   
@@ -250,8 +252,19 @@ bdg_raw <- df_bdg |>
          cnsmtub = cnsm_sp___1,
          cnstoxo = cnsm_sp___2,
          cnscryp = cnsm_sp___3,
-         cnsoth = cnsm_oth) 
-
+         cnsoth = cnsm_oth,
+         inidiamen = inidiamen___1,
+         inidiaence = inidiamen___2,
+         inidiamye = inidiamen___3,
+         inidiabrain = inidiamen___4,
+         inidiaenc = inidiamen___5,
+         suetibac = suetibac___1,
+         suetiviral = suetibac___2,
+         suetitoxo = suetibac___3,
+         suetiauto = suetibac___4,
+         sueticryp = suetibac___5,
+         suetimtube = suetibac___6,
+         suetiunk = suetibac___7) 
 
 # Merge -------------------------------------------------------------------
 
@@ -285,7 +298,7 @@ vars_of_interest <- c(
     'motordef', 'hemipare', 'parapare', 'tetrapare', 'monopare',
   
   # Baseline (extended)
-  # `initial` in Screening not considered
+  # `initial` in Baseline not considered
   # 'hivstt' in Baseline not considered
   'dob', 'mob', 'yob', 'studypl', 'refstt', 'refplace', 'fstsymdtc',
   'fevercomp', 'headcomp', 'vomitcomp', 'alconcomp', 'lethsym', 'lethcomp',
@@ -303,6 +316,14 @@ vars_of_interest <- c(
   'phyexamoth', 'eyesc', 'motoric', 'verbal', 'veruni', 'verunirs', 'nerve3rd',
   'nerve4th', 'nerve6th', 'nerve7th', 'nerve12th', 'pupisz', 'pupiref',
   'urinary', 'gasbleed',
+  
+  # Initial diagnosis (extended)
+  # Here, `initial`, `siteid`, `subjid` not considered
+  'inidiamen', 'inidiaence', 'inidiamye', 'inidiabrain', 'inidiaenc',
+  'inidiaspec', 'suetibac', 'suetiviral', 'suetitoxo', 'suetitoxo', 'suetiauto',
+  'sueticryp', 'suetimtube', 'suetiunk', 'suetioth', 'gradespec', 'cnsinfec',
+  'othonset', 'onsetstt', 'evimales', 'csfabnor', 'hivresult', 'extraclues',
+  'extracluesspec', 'xray', 'ranscale',
   
   # Blood
   'hemovalue', 'wcellcvalue', 'platevalue',
@@ -457,7 +478,15 @@ df_bdg_selected <- bdg_raw |>
     pupisz = as.character(pupisz),
     pupiref = as.character(pupiref),
     urinary = as.character(urinary),
-    gasbleed = as.character(gasbleed)
+    gasbleed = as.character(gasbleed),
+    gradespec = as.character(gradespec),
+    cnsinfec = as.character(cnsinfec),
+    onsetstt = as.character(onsetstt),
+    evimales = as.character(evimales),
+    csfabnor = as.character(csfabnor),
+    hivresult = as.character(hivresult),
+    extraclues = as.character(extraclues),
+    xray = as.character(xray)
   )
 
 # Merge across sites
