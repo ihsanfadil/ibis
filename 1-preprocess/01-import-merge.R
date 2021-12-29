@@ -167,7 +167,16 @@ jkt_raw <- df_jkt |>
   rename(xray_ores = xrayoth,
          monopare = monoparesis,
          suetiunk = syetiunk,
-         xray = xray_x)
+         xray = xray_x,
+         tbdrug = tbdrug_x,
+         pyrimedtc = pyrimedtc_x,
+         pyrimestt = pyrimestt_x,
+         flucodtc = flucodtc_x,
+         flucostt = flucostt_x,
+         amphodtc = amphodtc_x,
+         amphostt = amphostt_x,
+         ceftriadtc = ceftriadtc_x,
+         ceftriastt = ceftriastt_x)
 
 bdg_raw <- df_bdg |>
   
@@ -325,6 +334,15 @@ vars_of_interest <- c(
   'othonset', 'onsetstt', 'evimales', 'csfabnor', 'hivresult', 'extraclues',
   'extracluesspec', 'xray', 'ranscale',
   
+  # Initial treatment (extended)
+  # Here, `initial`, `siteid`, `subjid` not considered
+  'tbdrug', 'tbdrugspec', 'tbdrugdtc', 'tbdrugstt', 'levof', 'levofdtc',
+  'levofstt', 'moxif', 'moxifdtc', 'moxifstt', 'cotrimo', 'cotrimodtc',
+  'cotrimostt', 'metroni', 'metronidtc', 'metronistt', 'pyrime', 'pyrimedtc',
+  'pyrimestt', 'clinda', 'clindastt', 'clindadtc', 'fluco', 'flucodtc',
+  'flucostt', 'ampho', 'amphodtc', 'amphostt', 'ceftria', 'ceftriadtc',
+  'ceftriastt', 'merope', 'meropedtc', 'meropestt',
+  
   # Blood
   'hemovalue', 'wcellcvalue', 'platevalue',
   'hivvalue', 'cd4value', 'antiigg_res',
@@ -364,6 +382,7 @@ df_jkt_selected <- jkt_raw |>
    fstdosend = as.character(fstdosend),
    fstdosetime = as.character(fstdosetime),
    lumpuncnd = as.character(lumpuncnd),
+   clindadtc = as.character(clindadtc),
     
    ## Baseline
    dob = as.character(dob)
@@ -486,7 +505,29 @@ df_bdg_selected <- bdg_raw |>
     csfabnor = as.character(csfabnor),
     hivresult = as.character(hivresult),
     extraclues = as.character(extraclues),
-    xray = as.character(xray)
+    xray = as.character(xray),
+    tbdrug = as.character(tbdrug),
+    tbdrugstt = as.character(tbdrugstt),
+    levof = as.character(levof),
+    levofstt = as.character(levofstt),
+    moxif = as.character(moxif),
+    cotrimo = as.character(cotrimo),
+    cotrimostt = as.character(cotrimostt),
+    metroni = as.character(metroni),
+    metronistt = as.character(metronistt),
+    pyrime = as.character(pyrime),
+    pyrimestt = as.character(pyrimestt),
+    clinda = as.character(clinda),
+    clindastt = as.character(clindastt),
+    clindadtc = as.character(clindadtc),
+    fluco = as.character(fluco),
+    flucostt = as.character(flucostt),
+    ampho = as.character(ampho),
+    amphostt = as.character(amphostt),
+    ceftria = as.character(ceftria),
+    ceftriastt = as.character(ceftriastt),
+    merope = as.character(merope),
+    meropestt = as.character(meropestt)
   )
 
 # Merge across sites
