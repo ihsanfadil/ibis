@@ -146,22 +146,78 @@ jkt_raw <- df_jkt |>
          verbal = verbal_x,
          veruni = veruni_x,
          verunirs = verunirs_x,
-         
-         # Extended
-         ## Baseline (syntax format: new_name = old_name)
-         ## Probably not valid this way
-         # fstdosend = fstdosedtc,
-         # fstdosedtc = fstdosetime,
-         # fstdosetime = fstdosend,
-         # lumpuncnd = lumpuncdtc,
-         # lumpuncdtc = lunpunctime,
-         # lunpunctime = lumpdur,
-         # lumpdur = lumpdurhour,
-         # lumpdurhour = lumpuncnd
+         acyclodtc = acyclodtc_x,
+         art = art_x,
+         artspec = artspec_x,
+         artdtc = artdtc_x
          ) |> 
   
   # Add non-existent variables to match the other site
-  mutate(motordef = rep(NA, nrow(df_jkt))) |>
+  mutate(motordef = rep(NA, nrow(df_jkt)),
+         oth3text = rep(NA, nrow(df_jkt)),
+         oth3 = rep(NA, nrow(df_jkt)),
+         oth3dtc = rep(NA, nrow(df_jkt)),
+         oth3stt = rep(NA, nrow(df_jkt)),
+  
+         oth4text = rep(NA, nrow(df_jkt)),
+         oth4 = rep(NA, nrow(df_jkt)),
+         oth4dtc = rep(NA, nrow(df_jkt)),
+         oth4stt = rep(NA, nrow(df_jkt)),
+  
+         oth5text = rep(NA, nrow(df_jkt)),
+         oth5 = rep(NA, nrow(df_jkt)),
+         oth5dtc = rep(NA, nrow(df_jkt)),
+         oth5stt = rep(NA, nrow(df_jkt)),
+         
+         oth6text = rep(NA, nrow(df_jkt)),
+         oth6 = rep(NA, nrow(df_jkt)),
+         oth6dtc = rep(NA, nrow(df_jkt)),
+         oth6stt = rep(NA, nrow(df_jkt)),
+         
+         oth7text = rep(NA, nrow(df_jkt)),
+         oth7 = rep(NA, nrow(df_jkt)),
+         oth7dtc = rep(NA, nrow(df_jkt)),
+         oth7stt = rep(NA, nrow(df_jkt)),
+         
+         oth8text = rep(NA, nrow(df_jkt)),
+         oth8 = rep(NA, nrow(df_jkt)),
+         oth8dtc = rep(NA, nrow(df_jkt)),
+         oth8stt = rep(NA, nrow(df_jkt)),
+         
+         oth9text = rep(NA, nrow(df_jkt)),
+         oth9 = rep(NA, nrow(df_jkt)),
+         oth9dtc = rep(NA, nrow(df_jkt)),
+         oth9stt = rep(NA, nrow(df_jkt)),
+         
+         oth10text = rep(NA, nrow(df_jkt)),
+         oth10 = rep(NA, nrow(df_jkt)),
+         oth10dtc = rep(NA, nrow(df_jkt)),
+         oth10stt = rep(NA, nrow(df_jkt)),
+         
+         oth11text = rep(NA, nrow(df_jkt)),
+         oth11 = rep(NA, nrow(df_jkt)),
+         oth11dtc = rep(NA, nrow(df_jkt)),
+         oth11stt = rep(NA, nrow(df_jkt)),
+         
+         oth12text = rep(NA, nrow(df_jkt)),
+         oth12 = rep(NA, nrow(df_jkt)),
+         oth12dtc = rep(NA, nrow(df_jkt)),
+         oth12stt = rep(NA, nrow(df_jkt)),
+         
+         oth13text = rep(NA, nrow(df_jkt)),
+         oth13 = rep(NA, nrow(df_jkt)),
+         oth13dtc = rep(NA, nrow(df_jkt)),
+         oth13stt = rep(NA, nrow(df_jkt)),
+         
+         oth14text = rep(NA, nrow(df_jkt)),
+         oth14 = rep(NA, nrow(df_jkt)),
+         oth14dtc = rep(NA, nrow(df_jkt)),
+         oth14stt = rep(NA, nrow(df_jkt)),
+         
+         oth15text = rep(NA, nrow(df_jkt)),
+         oth15 = rep(NA, nrow(df_jkt)),
+         oth15dtc = rep(NA, nrow(df_jkt)),
+         oth15stt = rep(NA, nrow(df_jkt))) |>
   
   # Make variables uniform across sites
   rename(xray_ores = xrayoth,
@@ -176,7 +232,14 @@ jkt_raw <- df_jkt |>
          amphodtc = amphodtc_x,
          amphostt = amphostt_x,
          ceftriadtc = ceftriadtc_x,
-         ceftriastt = ceftriastt_x)
+         ceftriastt = ceftriastt_x,
+         acyclostt = acyclostt_x,
+         valgandtc = valgandtc_x,
+         valganstt = valganstt_x,
+         methyldtc = methyldtc_x,
+         methylstt = methylstt_x,
+         furosedtc = furosedtc_x,
+         furosestt = furosestt_x)
 
 bdg_raw <- df_bdg |>
   
@@ -341,7 +404,28 @@ vars_of_interest <- c(
   'cotrimostt', 'metroni', 'metronidtc', 'metronistt', 'pyrime', 'pyrimedtc',
   'pyrimestt', 'clinda', 'clindastt', 'clindadtc', 'fluco', 'flucodtc',
   'flucostt', 'ampho', 'amphodtc', 'amphostt', 'ceftria', 'ceftriadtc',
-  'ceftriastt', 'merope', 'meropedtc', 'meropestt',
+  'ceftriastt', 'merope', 'meropedtc', 'meropestt', 'acyclo', 'acyclodtc',
+  'acyclostt', 'valgan', 'valgandtc', 'valganstt', 'dexame', 'dexamedtc',
+  'dexamestt', 'methyl', 'methyldtc', 'methylstt', 'mannitol', 'mannitoldtc',
+  'mannitolstt', 'furose', 'furosedtc', 'furosestt', 'valproic', 'valproicdtc',
+  'valproicstt', 'topira', 'topiradtc', 'topirastt', 'pheny', 'phenydtc',
+  'phenystt', 'levitira', 'levitiradtc', 'levitirastt', 'ranppi', 'ranppidtc',
+  'ranppistt', 'art', 'artspec', 'artdtc', 'artstt', 'oth1text', 'oth1',
+  'oth1dtc', 'oth1stt', 'oth2text', 'oth2', 'oth2dtc', 'oth2stt',
+  
+  'oth3text', 'oth3', 'oth3dtc', 'oth3stt',
+  'oth4text', 'oth4', 'oth4dtc', 'oth4stt',
+  'oth5text', 'oth5', 'oth5dtc', 'oth5stt',
+  'oth6text', 'oth6', 'oth6dtc', 'oth6stt',
+  'oth7text', 'oth7', 'oth7dtc', 'oth7stt',
+  'oth8text', 'oth8', 'oth8dtc', 'oth8stt',
+  'oth9text', 'oth9', 'oth9dtc', 'oth9stt',
+  'oth10text', 'oth10', 'oth10dtc', 'oth10stt',
+  'oth11text', 'oth11', 'oth11dtc', 'oth11stt',
+  'oth12text', 'oth12', 'oth12dtc', 'oth12stt',
+  'oth13text', 'oth13', 'oth13dtc', 'oth13stt',
+  'oth14text', 'oth14', 'oth14dtc', 'oth14stt',
+  'oth15text', 'oth15', 'oth15dtc', 'oth15stt',
   
   # Blood
   'hemovalue', 'wcellcvalue', 'platevalue',
@@ -527,7 +611,31 @@ df_bdg_selected <- bdg_raw |>
     ceftria = as.character(ceftria),
     ceftriastt = as.character(ceftriastt),
     merope = as.character(merope),
-    meropestt = as.character(meropestt)
+    meropestt = as.character(meropestt),
+    acyclo = as.character(acyclo),
+    acyclostt = as.character(acyclostt),
+    valgan = as.character(valgan),
+    dexame = as.character(dexame),
+    dexamestt = as.character(dexamestt),
+    methyl = as.character(methyl),
+    methylstt = as.character(methylstt),
+    mannitol = as.character(mannitol),
+    mannitolstt = as.character(mannitolstt),
+    furose = as.character(furose),
+    valproic = as.character(valproic),
+    topira = as.character(topira),
+    pheny = as.character(pheny),
+    phenystt = as.character(phenystt),
+    levitira = as.character(levitira),
+    levitirastt = as.character(levitirastt),
+    ranppi = as.character(ranppi),
+    ranppistt = as.character(ranppistt),
+    art = as.character(art),
+    artstt = as.character(artstt),
+    oth1 = as.character(oth1),
+    oth1stt = as.character(oth1stt),
+    oth2 = as.character(oth2),
+    oth2stt = as.character(oth2stt)
   )
 
 # Merge across sites
