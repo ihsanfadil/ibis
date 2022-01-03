@@ -149,7 +149,9 @@ jkt_raw <- df_jkt |>
          acyclodtc = acyclodtc_x,
          art = art_x,
          artspec = artspec_x,
-         artdtc = artdtc_x
+         artdtc = artdtc_x,
+         hivdtc = hivdtc_x,
+         cd4dtc = cd4dtc_x
          ) |> 
   
   # Add non-existent variables to match the other site
@@ -296,7 +298,11 @@ bdg_raw <- df_bdg |>
          covid19vac = rep(NA, nrow(df_bdg)),
          phyexamoth = rep(NA, nrow(df_bdg)),
          veruni = rep(NA, nrow(df_bdg)),
-         verunirs = rep(NA, nrow(df_bdg))) |>
+         verunirs = rep(NA, nrow(df_bdg)),
+         fujilamdtc = rep(NA, nrow(df_bdg)),
+         fujilamvalue = rep(NA, nrow(df_bdg)),
+         aleredtc = rep(NA, nrow(df_bdg)),
+         alerevalue = rep(NA, nrow(df_bdg))) |>
   
   # Make variables uniform across sites
   rename(xraynm = xray_res___0,
@@ -430,6 +436,21 @@ vars_of_interest <- c(
   # Blood
   'hemovalue', 'wcellcvalue', 'platevalue',
   'hivvalue', 'cd4value', 'antiigg_res',
+  
+  # Blood findings (extended)
+  # Here, `initial`, `siteid`, `subjid` not considered
+  'hemodtc', 'hemadtc', 'hemavalue', 'hemand', 'wcellcdtc', 'wcellcnd',
+  'neudtc', 'neuvalue', 'neund', 'monodtc', 'monovalue', 'monond', 'lympdtc',
+  'lympvalue', 'lympnd', 'eosidtc', 'eosivalue', 'eosind', 'platedtc',
+  'platend', 'altdtc', 'altvalue', 'altnd', 'creatdtc', 'creatvalue', 'creatnd',
+  'sodiumdtc', 'sodiumvalue', 'sodiumnd', 'hivdtc', 'hbadtc', 'hbavalue',
+  'hband', 'bilirudtc', 'biliruvalue', 'bilirund', 'hbsagdtc', 'hbsagvalue',
+  'hcvdtc', 'hcvvalue', 'crpdtc', 'crpvalue', 'crpnd', 'procaldtc',
+  'procalvalue', 'procalnd', 'cd4dtc', 'cd4nd', 'hivvldtc', 'hivvlvalue',
+  'hivvlnd', 'antiiggdtc', 'vdrldtc', 'vdrlvalue', 'vdrltiter', 'tphadtc',
+  'tphavalue', 'nmdardtc', 'nmdarvalue', 'fujilamdtc', 'fujilamvalue',
+  'aleredtc', 'alerevalue', 'othrs1dtc', 'othrs1value', 'othrs2dtc',
+  'othrs2value',
   
   # HIV
   'hivstt',
@@ -635,7 +656,13 @@ df_bdg_selected <- bdg_raw |>
     oth1 = as.character(oth1),
     oth1stt = as.character(oth1stt),
     oth2 = as.character(oth2),
-    oth2stt = as.character(oth2stt)
+    oth2stt = as.character(oth2stt),
+    hivdtc = as.character(hivdtc),
+    hbsagvalue = as.character(hbsagvalue),
+    hcvvalue = as.character(hcvvalue),
+    vdrlvalue = as.character(vdrlvalue),
+    tphavalue = as.character(tphavalue),
+    nmdarvalue = as.character(nmdarvalue)
   )
 
 # Merge across sites
