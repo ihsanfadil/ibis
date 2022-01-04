@@ -154,7 +154,9 @@ jkt_raw <- df_jkt |>
          cd4dtc = cd4dtc_x,
          artdtc2 = artdtc_y,
          cd4dtc2 = cd4dtc_y,
-         hivdtc2 = hivdtc_y
+         hivdtc2 = hivdtc_y,
+         csfsample1 = csf_sample1,
+         csfsample2 = csf_sample2
          ) |> 
   
   # Add non-existent variables to match the other site
@@ -222,7 +224,18 @@ jkt_raw <- df_jkt |>
          oth15text = rep(NA, nrow(df_jkt)),
          oth15 = rep(NA, nrow(df_jkt)),
          oth15dtc = rep(NA, nrow(df_jkt)),
-         oth15stt = rep(NA, nrow(df_jkt))) |>
+         oth15stt = rep(NA, nrow(df_jkt)),
+         
+         rifprobe_a = rep(NA, nrow(df_jkt)),
+         rifprobe_b = rep(NA, nrow(df_jkt)),
+         rifprobe_c = rep(NA, nrow(df_jkt)),
+         rifprobe_d = rep(NA, nrow(df_jkt)),
+         rifprobe_e = rep(NA, nrow(df_jkt)),
+         ctval_a = rep(NA, nrow(df_jkt)),
+         ctval_b = rep(NA, nrow(df_jkt)),
+         ctval_c = rep(NA, nrow(df_jkt)),
+         ctval_d = rep(NA, nrow(df_jkt)),
+         ctval_e = rep(NA, nrow(df_jkt))) |>
   
   # Make variables uniform across sites
   rename(xray_ores = xrayoth,
@@ -305,7 +318,54 @@ bdg_raw <- df_bdg |>
          fujilamdtc = rep(NA, nrow(df_bdg)),
          fujilamvalue = rep(NA, nrow(df_bdg)),
          aleredtc = rep(NA, nrow(df_bdg)),
-         alerevalue = rep(NA, nrow(df_bdg))) |>
+         alerevalue = rep(NA, nrow(df_bdg)),
+         sequence = rep(NA, nrow(df_bdg)),
+         csfsample1 = csfsample,
+         csfsample2 = rep(NA, nrow(df_bdg)),
+         sampledtc1 = sampledtc,
+         sampledtc2 = rep(NA, nrow(df_bdg)),
+         sampletime1 = sampletime,
+         sampletime2 = rep(NA, nrow(df_bdg)),
+         sptype1 = sptype,
+         sptype2 = rep(NA, nrow(df_bdg)),
+         oppressure1 = oppressure,
+         oppressure2 = rep(NA, nrow(df_bdg)),
+         oppressunm1 = oppressunm,
+         oppressunm2 = rep(NA, nrow(df_bdg)),
+         appearance1 = appearance,
+         appearance2 = rep(NA, nrow(df_bdg)),
+         csf1 = csf,
+         csf2 = rep(NA, nrow(df_bdg)),
+         csfglucose1 = csfglucose,
+         csfglucose2 = rep(NA, nrow(df_bdg)),
+         gramstain1 = gramstain,
+         gramstain2 = rep(NA, nrow(df_bdg)),
+         znsmear1 = znsmear,
+         znsmear2 = rep(NA, nrow(df_bdg)),
+         ininksmear1 = ininksmear,
+         ininksmear2 = rep(NA, nrow(df_bdg)),
+         baccult1 = baccult,
+         baccult2 = rep(NA, nrow(df_bdg)),
+         pathongen1 = pathongen,
+         pathongen2 = rep(NA, nrow(df_bdg)),
+         crypcult1 = crypcult,
+         crypcult2 = rep(NA, nrow(df_bdg)),
+         mycocult1 = mycocult,
+         mycocult2 = rep(NA, nrow(df_bdg)),
+         csfnmdar1 = csfnmdar,
+         csfnmdar2 = rep(NA, nrow(df_bdg)),
+         hivviload1 = hivviload,
+         hivviload2 = rep(NA, nrow(df_bdg)),
+         hivviloadnd1 = hivviloadnd,
+         hivviloadnd2 = rep(NA, nrow(df_bdg)),
+         pcrtb1 = pcrtb,
+         pcrtb2 = rep(NA, nrow(df_bdg)),
+         gene1 = rep(NA, nrow(df_bdg)),
+         gene2 = rep(NA, nrow(df_bdg)),
+         pcrcov21 = rep(NA, nrow(df_bdg)),
+         pcrcov22 = rep(NA, nrow(df_bdg)),
+         cffoth1 = rep(NA, nrow(df_bdg)),
+         cffoth2 = rep(NA, nrow(df_bdg))) |>
   
   # Make variables uniform across sites
   rename(xraynm = xray_res___0,
@@ -472,6 +532,20 @@ vars_of_interest <- c(
   'crag1', 'crag2', 'xpert1', 'xpert2', 'xpertrif1', 'xpertrif2',
   'csfcmv1', 'csfcmv2', 'csfhsv1', 'csfhsv2', 'csfebv1', 'csfebv2', 'csfvzv1',
     'csfvzv2', 'csfvdrl1', 'csfvdrl2', 'csftpha1', 'csftpha2',
+  
+  # CSF findings (extended)
+  # Here, `initial`, `siteid`, `subjid` not considered
+  'sequence', 'csfsample1', 'csfsample2', 'sampledtc1', 'sampledtc2',
+  'sampletime1', 'sampletime2', 'sptype1', 'sptype2', 'oppressure1',
+  'oppressure2', 'oppressunm1', 'oppressunm2', 'appearance1', 'appearance2',
+  'csf1', 'csf2', 'csfglucose1', 'csfglucose2', 'gramstain1', 'gramstain2',
+  'znsmear1', 'znsmear2', 'ininksmear1', 'ininksmear2', 'rifprobe_a',
+  'rifprobe_b', 'rifprobe_c', 'rifprobe_d', 'rifprobe_e', 'ctval_a',
+  'ctval_b', 'ctval_c', 'ctval_d', 'ctval_e', 'baccult1', 'baccult2',
+  'pathongen1', 'pathongen2', 'crypcult1', 'crypcult2', 'mycocult1',
+  'mycocult2', 'csfnmdar1', 'csfnmdar2', 'hivviload1', 'hivviload2',
+  'hivviloadnd1', 'hivviloadnd2', 'pcrtb1', 'pcrtb2', 'gene1', 'gene2',
+  'pcrcov21', 'pcrcov22', 'cffoth1', 'cffoth2',
   
   # Radiologic
   'xraynm', 'xrayinf', 'xraymili', 'xraycav', 'xray_ores',
@@ -681,7 +755,19 @@ df_bdg_selected <- bdg_raw |>
     viloadstt = as.character(viloadstt),
     viloaddtc = as.character(viloaddtc),
     hivmususstt = as.character(hivmususstt),
-    cotripro = as.character(cotripro)
+    cotripro = as.character(cotripro),
+    csfsample1 = as.character(csfsample1),
+    sampletime1 = as.character(sampletime1),
+    sptype1 = as.character(sptype1),
+    appearance1 = as.character(appearance1),
+    gramstain1 = as.character(gramstain1),
+    znsmear1 = as.character(znsmear1),
+    ininksmear1 = as.character(ininksmear1),
+    baccult1 = as.character(baccult1),
+    crypcult1 = as.character(crypcult1),
+    mycocult1 = as.character(mycocult1),
+    csfnmdar1 = as.character(csfnmdar1),
+    pcrtb1 = as.character(pcrtb1)
   )
 
 # Merge across sites
