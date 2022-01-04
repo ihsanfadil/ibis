@@ -151,7 +151,10 @@ jkt_raw <- df_jkt |>
          artspec = artspec_x,
          artdtc = artdtc_x,
          hivdtc = hivdtc_x,
-         cd4dtc = cd4dtc_x
+         cd4dtc = cd4dtc_x,
+         artdtc2 = artdtc_y,
+         cd4dtc2 = cd4dtc_y,
+         hivdtc2 = hivdtc_y
          ) |> 
   
   # Add non-existent variables to match the other site
@@ -455,6 +458,13 @@ vars_of_interest <- c(
   # HIV
   'hivstt',
   
+  # HIV findings (extended)
+  # Here, `initial`, `siteid`, `subjid` not considered
+  'hivmonth', 'hivyear', 'hivunk', 'unkmonth', 'arths', 'artdtc2', 'artyear',
+  'artregimen', 'arteverm', 'artevery', 'artcurspec', 'cd4count', 'cd4stt',
+  'cd4dtc2', 'viloadstt', 'viload', 'viloaddtc', 'hivdtc2', 'hivmusus',
+  'hivmususstt', 'cotripro',
+  
   # CSF
   'whcellc1', 'whcellc2', 'polycellc1', 'polycellc2', 'monocellc1',
     'monocellc2', 'protein1', 'protein2', 'pblglucose1', 'pblglucose2',
@@ -488,6 +498,8 @@ df_jkt_selected <- jkt_raw |>
    fstdosetime = as.character(fstdosetime),
    lumpuncnd = as.character(lumpuncnd),
    clindadtc = as.character(clindadtc),
+   cd4count = as.character(cd4count),
+   viload = as.character(viload),
     
    ## Baseline
    dob = as.character(dob)
@@ -662,7 +674,14 @@ df_bdg_selected <- bdg_raw |>
     hcvvalue = as.character(hcvvalue),
     vdrlvalue = as.character(vdrlvalue),
     tphavalue = as.character(tphavalue),
-    nmdarvalue = as.character(nmdarvalue)
+    nmdarvalue = as.character(nmdarvalue),
+    arths = as.character(arths),
+    cd4stt = as.character(cd4stt),
+    cd4dtc2 = as.character(cd4dtc2),
+    viloadstt = as.character(viloadstt),
+    viloaddtc = as.character(viloaddtc),
+    hivmususstt = as.character(hivmususstt),
+    cotripro = as.character(cotripro)
   )
 
 # Merge across sites
