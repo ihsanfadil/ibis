@@ -156,7 +156,10 @@ jkt_raw <- df_jkt |>
          cd4dtc2 = cd4dtc_y,
          hivdtc2 = hivdtc_y,
          csfsample1 = csf_sample1,
-         csfsample2 = csf_sample2
+         csfsample2 = csf_sample2,
+         other_specify1 = bioth1,
+         other_specify2 = bioth2,
+         other_specify3 = bioth3
          ) |> 
   
   # Add non-existent variables to match the other site
@@ -235,11 +238,21 @@ jkt_raw <- df_jkt |>
          ctval_b = rep(NA, nrow(df_jkt)),
          ctval_c = rep(NA, nrow(df_jkt)),
          ctval_d = rep(NA, nrow(df_jkt)),
-         ctval_e = rep(NA, nrow(df_jkt))) |>
+         ctval_e = rep(NA, nrow(df_jkt)),
+         
+         resmrin0 = rep(NA, nrow(df_jkt)),
+         resmrin1 = rep(NA, nrow(df_jkt)),
+         resmrin2 = rep(NA, nrow(df_jkt)),
+         resmrin3 = rep(NA, nrow(df_jkt)),
+         resmrin4 = rep(NA, nrow(df_jkt)),
+         other1 = rep(NA, nrow(df_jkt)),
+         other2 = rep(NA, nrow(df_jkt)),
+         other3 = rep(NA, nrow(df_jkt)),
+         xraynd = rep(NA, nrow(df_jkt)),
+         xray_ores = rep(NA, nrow(df_jkt))) |> # Different from Excel!
   
   # Make variables uniform across sites
-  rename(xray_ores = xrayoth,
-         monopare = monoparesis,
+  rename(monopare = monoparesis,
          suetiunk = syetiunk,
          xray = xray_x,
          tbdrug = tbdrug_x,
@@ -302,10 +315,6 @@ bdg_raw <- df_bdg |>
          csfvdrl2 = rep(NA, nrow(df_bdg)),
          csftpha1 = csftpha,
          csftpha2 = rep(NA, nrow(df_bdg)),
-         bihernia2 = rep(NA, nrow(df_bdg)),
-         bihernia3 = rep(NA, nrow(df_bdg)),
-         bienceph2 = rep(NA, nrow(df_bdg)),
-         bienceph3 = rep(NA, nrow(df_bdg)),
          lumpdur = rep(NA, nrow(df_bdg)),
          lumpdurhour = rep(NA, nrow(df_bdg)),
          mob = rep(NA, nrow(df_bdg)),
@@ -365,7 +374,12 @@ bdg_raw <- df_bdg |>
          pcrcov21 = rep(NA, nrow(df_bdg)),
          pcrcov22 = rep(NA, nrow(df_bdg)),
          cffoth1 = rep(NA, nrow(df_bdg)),
-         cffoth2 = rep(NA, nrow(df_bdg))) |>
+         cffoth2 = rep(NA, nrow(df_bdg)),
+         mrinm = rep(NA, nrow(df_bdg)),
+         mriabscess = rep(NA, nrow(df_bdg)),
+         mrimyelitis = rep(NA, nrow(df_bdg)),
+         mrispcol = rep(NA, nrow(df_bdg))
+         ) |>
   
   # Make variables uniform across sites
   rename(xraynm = xray_res___0,
@@ -405,7 +419,41 @@ bdg_raw <- df_bdg |>
          suetiauto = suetibac___4,
          sueticryp = suetibac___5,
          suetimtube = suetibac___6,
-         suetiunk = suetibac___7) 
+         suetiunk = suetibac___7,
+         xrayoth = xray_res___4,
+         binormal1 = rest_rad1___0,
+         biinfarct1 = rest_rad1___1,
+         bituber1 = rest_rad1___2,
+         bihydro1 = rest_rad1___4,
+         biabscess1 = rest_rad1___5,
+         bimenin1 = rest_rad1___6, 
+         other1 = rest_rad1___9,
+         other_specify1 = rest_rad1_ot,
+         binormal2 = rest_rad2___0,
+         biinfarct2 = rest_rad2___1,
+         bituber2 = rest_rad2___2,
+         bihernia2 = rest_rad2___3,
+         bihydro2 = rest_rad2___4,
+         biabscess2 = rest_rad2___5,
+         bimenin2 = rest_rad2___6,
+         bienceph2 = rest_rad2___7,
+         other2 = rest_rad2___9,
+         other_specify2 = rest_rad2_ot,
+         binormal3 = rest_rad3___0,
+         biinfarct3 = rest_rad3___1,
+         bituber3 = rest_rad3___2,
+         bihernia3 = rest_rad3___3,
+         bihydro3 = rest_rad3___4,
+         biabscess3 = rest_rad3___5,
+         bimenin3 = rest_rad3___6,
+         bienceph3 = rest_rad3___7,
+         other3 = rest_rad3___9,
+         other_specify3 = rest_rad3_ot,
+         resmrin0 = resmrin___0,
+         resmrin1 = resmrin___1,
+         resmrin2 = resmrin___2,
+         resmrin3 = resmrin___3,
+         resmrin4 = resmrin___4) 
 
 # Merge -------------------------------------------------------------------
 
@@ -551,6 +599,18 @@ vars_of_interest <- c(
   'xraynm', 'xrayinf', 'xraymili', 'xraycav', 'xray_ores',
   'bihernia1','bihernia2','bihernia3', 'bienceph1', 'bienceph2', 'bienceph3',
   
+  # Radiologic findings (extended)
+  # Here, `initial`, `siteid`, `subjid` not considered
+  'xraydtc', 'xraynd', 'xrayoth', 'binb1', 'bitype1', 'bidtc1', 'bind1',
+  'bicontrast1', 'binormal1', 'binormal2', 'binormal3', 'biinfarct1',
+  'biinfarct2', 'biinfarct3', 'bituber1', 'bituber2', 'bituber3', 'bihydro1',
+  'bihydro2', 'bihydro3', 'biabscess1', 'biabscess2', 'biabscess3', 'bimenin1',
+  'bimenin2', 'bimenin3', 'other1', 'other_specify1', 'other_specify2',
+  'other_specify3', 'binb2', 'binb3', 'bitype2', 'bitype3', 'bidtc2', 'bidtc3',
+  'bind2', 'bind3', 'bicontrast2', 'bicontrast3', 'other2', 'other3', 'mridtc',
+  'mrind', 'resmrin0', 'resmrin1', 'resmrin2', 'resmrin3', 'resmrin4', 'mrinm',
+  'mriabscess', 'mrimyelitis', 'mrispcol', 'mrioth',
+  
   # Discharge-Death
   'staydur', 'outcome', 'nonneuspec', 'etiomtuber', 'etmtustt', 'etitoxoenc',
     'etitoxostt', 'eticryp', 'eticrypstt', 'etibac', 'etibacstt', 'etivence',
@@ -574,6 +634,8 @@ df_jkt_selected <- jkt_raw |>
    clindadtc = as.character(clindadtc),
    cd4count = as.character(cd4count),
    viload = as.character(viload),
+   bidtc2 = as.character(bidtc2),
+   bidtc3 = as.character(bidtc3),
     
    ## Baseline
    dob = as.character(dob)
@@ -767,7 +829,19 @@ df_bdg_selected <- bdg_raw |>
     crypcult1 = as.character(crypcult1),
     mycocult1 = as.character(mycocult1),
     csfnmdar1 = as.character(csfnmdar1),
-    pcrtb1 = as.character(pcrtb1)
+    pcrtb1 = as.character(pcrtb1),
+    xrayoth = as.character(xrayoth),
+    binb1 = as.character(binb1),
+    bitype1 = as.character(bitype1),
+    bicontrast1 = as.character(bicontrast1),
+    binb2 = as.character(binb2),
+    binb3 = as.character(binb3),
+    bitype2 = as.character(bitype2),
+    bitype3 = as.character(bitype3),
+    bidtc2 = as.character(bidtc2),
+    bidtc3 = as.character(bidtc3),
+    bicontrast2 = as.character(bicontrast2),
+    bicontrast3 = as.character(bicontrast3)
   )
 
 # Merge across sites
