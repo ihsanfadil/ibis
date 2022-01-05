@@ -159,7 +159,15 @@ jkt_raw <- df_jkt |>
          csfsample2 = csf_sample2,
          other_specify1 = bioth1,
          other_specify2 = bioth2,
-         other_specify3 = bioth3
+         other_specify3 = bioth3,
+         tbmgrade = tbmgrade_x,
+         etioth = etioth_x,
+         
+         eyesc2 = eyesc_y,
+         motoric2 = motoric_y,
+         verbal2 = verbal_y,
+         veruni2 = veruni_y,
+         verunirs2 = verunirs_y
          ) |> 
   
   # Add non-existent variables to match the other site
@@ -270,7 +278,8 @@ jkt_raw <- df_jkt |>
          methyldtc = methyldtc_x,
          methylstt = methylstt_x,
          furosedtc = furosedtc_x,
-         furosestt = furosestt_x)
+         furosestt = furosestt_x,
+         deathdtc = deathdtc_x)
 
 bdg_raw <- df_bdg |>
   
@@ -378,7 +387,10 @@ bdg_raw <- df_bdg |>
          mrinm = rep(NA, nrow(df_bdg)),
          mriabscess = rep(NA, nrow(df_bdg)),
          mrimyelitis = rep(NA, nrow(df_bdg)),
-         mrispcol = rep(NA, nrow(df_bdg))
+         mrispcol = rep(NA, nrow(df_bdg)),
+         etiprctb = rep(NA, nrow(df_bdg)),
+         veruni2 = rep(NA, nrow(df_bdg)),
+         verunirs2 = rep(NA, nrow(df_bdg))
          ) |>
   
   # Make variables uniform across sites
@@ -453,7 +465,13 @@ bdg_raw <- df_bdg |>
          resmrin1 = resmrin___1,
          resmrin2 = resmrin___2,
          resmrin3 = resmrin___3,
-         resmrin4 = resmrin___4) 
+         resmrin4 = resmrin___4,
+         syndmen = syndiag___1,
+         syndenc = syndiag___2,
+         syndba = syndiag___3,
+         syndmye = syndiag___4,
+         syndence = syndiag___5,
+         syndnonneu = syndiag___0) 
 
 # Merge -------------------------------------------------------------------
 
@@ -616,6 +634,15 @@ vars_of_interest <- c(
     'etitoxostt', 'eticryp', 'eticrypstt', 'etibac', 'etibacstt', 'etivence',
     'etivencestt', 'etiothba', 'etiothmuco', 'etiothbm', 'etiothneu',
     'etiohtlym', 'etiohnmdar', 'etioothspec',
+  
+  # Discharge-Death (extended)
+  # Here, `initial`, `siteid`, `subjid` not considered
+  'deathdtc', 'deathneu', 'deathnonneu', 'syndmen', 'syndenc', 'syndba',
+  'syndmye', 'syndence', 'syndnonneu', 'tbmgrade', 'etipara', 'etiafb',
+  'eticult', 'etixpert', 'etiprctb', 'etigstain', 'etigstainpos', 'etibaccult',
+  'eticultpos', 'etivencedef', 'etivencespec', 'etioth', 'eyesc2', 'motoric2',
+  'verbal2', 'veruni2', 'verunirs2', 'gcs2', 'extgocs', 'mrs', 'lupu2nd', 
+  'mri2nd', 'neuproce', 'icu', 'meven', 'drugae', 'artstart',
   
   # Study Completion
   'paticond'
@@ -841,7 +868,22 @@ df_bdg_selected <- bdg_raw |>
     bidtc2 = as.character(bidtc2),
     bidtc3 = as.character(bidtc3),
     bicontrast2 = as.character(bicontrast2),
-    bicontrast3 = as.character(bicontrast3)
+    bicontrast3 = as.character(bicontrast3),
+    tbmgrade = as.character(tbmgrade),
+    etipara = as.character(etipara),
+    etiafb = as.character(etiafb),
+    eticult = as.character(eticult),
+    etixpert = as.character(etixpert),
+    etigstain = as.character(etigstain),
+    etibaccult = as.character(etibaccult),
+    etivencedef = as.character(etivencedef),
+    lupu2nd = as.character(lupu2nd),
+    mri2nd = as.character(mri2nd),
+    neuproce = as.character(neuproce),
+    icu = as.character(icu),
+    meven = as.character(meven),
+    drugae = as.character(drugae),
+    artstart = as.character(artstart)
   )
 
 # Merge across sites
