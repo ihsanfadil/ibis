@@ -183,7 +183,7 @@ jkt_raw <- df_jkt |>
          methylstt2 = methylstt_y,
          furosedtc2 = furosedtc_y,
          furosestt2 = furosestt_y,
-         
+         xray_s = xray_y
          ) |> 
   
   # Add non-existent variables to match the other site
@@ -781,6 +781,11 @@ vars_of_interest <- c(
   'treatoth15', 'treatoth15dtc', 'treatoth15stt', 'treatoth15rs',
     'treatoth15spec',
   
+  # Sample storage (extended)
+  # Here, `initial`, `siteid`, `subjid` not considered
+  'xray_s', 'ctscan', 'bmri', 'smri', 'bserum', 'cserum', 'bplasma', 'dna',
+  'bcsf', 'fucsf', 'urine', 'isolate', 'isospec', 'othspec', 'oth',
+  
   # Study Completion
   'paticond'
 )
@@ -1053,7 +1058,20 @@ df_bdg_selected <- bdg_raw |>
     treatoth1stt = as.character(treatoth1stt),
     treatoth1rs = as.character(treatoth1rs),
     treatoth2stt = as.character(treatoth2stt),
-    treatoth3stt = as.character(treatoth3stt)
+    treatoth3stt = as.character(treatoth3stt),
+    xray_s = as.character(xray_s),
+    ctscan = as.character(ctscan),
+    bmri = as.character(bmri),
+    smri = as.character(smri),
+    bserum = as.character(bserum),
+    cserum = as.character(cserum),
+    bplasma = as.character(bplasma),
+    dna = as.character(dna),
+    bcsf = as.character(bcsf),
+    fucsf = as.character(fucsf),
+    urine = as.character(urine),
+    isolate = as.character(isolate),
+    oth = as.character(oth)
   )
 
 # Merge across sites
