@@ -183,7 +183,24 @@ jkt_raw <- df_jkt |>
          methylstt2 = methylstt_y,
          furosedtc2 = furosedtc_y,
          furosestt2 = furosestt_y,
-         xray_s = xray_y
+         xray_s = xray_y,
+         art_sc = art_y,
+         artspec_sc = artspec_y,
+         neurocase_sc = neurocase,
+         tbmedi_sc = tbmedi,
+         mtuber_sc = mtuber,
+         tbmgrade_sc = tbmgrade_y,
+         pararea_sc = pararea,
+         etiothba_sc = etiothba_y,
+         etiothmuco_sc = etiothmuco_y,
+         etiothbm_sc = etiothbm_y,
+         etiothneu_sc = etiothneu_y,
+         etiothlym_sc = etiothlym_y,
+         etiothnmdar_sc = etiothnmdar_y,
+         etioth_sc = etioth_y,
+         etiothspec_sc = etiothspec_y,
+         deathdtc_sc = deathdtc_y,
+         tbdrug_sc = tbdrug_y
          ) |> 
   
   # Add non-existent variables to match the other site
@@ -345,7 +362,10 @@ jkt_raw <- df_jkt |>
          treatoth15dtc = rep(NA, nrow(df_jkt)),
          treatoth15stt = rep(NA, nrow(df_jkt)),
          treatoth15rs = rep(NA, nrow(df_jkt)),
-         treatoth15spec = rep(NA, nrow(df_jkt))
+         treatoth15spec = rep(NA, nrow(df_jkt)),
+         
+         lvous = rep(NA, nrow(df_jkt)),
+         death_day_sc = rep(NA, nrow(df_jkt))
          ) |> 
   
   # Make variables uniform across sites
@@ -787,7 +807,22 @@ vars_of_interest <- c(
   'bcsf', 'fucsf', 'urine', 'isolate', 'isospec', 'othspec', 'oth',
   
   # Study Completion
-  'paticond'
+  'paticond',
+  
+  # Study completion (extended)
+  # Here, `initial`, `siteid`, `subjid` not considered
+  'fudtc', 'moass', 'rehosp6m', 'rehospdtc', 'rehosprs', 'tbmedi_sc', 'tbspec',
+  'antoxomedi', 'antoxospec', 'ancrypmedi', 'ancrypspec',
+  'art_sc', 'artspec_sc', 'neurocase_sc',
+  'neudiaspec', 'mtuber_sc', 'mtubestt', 'tbmgrade_sc', 'pararea_sc',
+  'afb', 'mtubecult', 'mtubexpert', 'toxo', 'toxostt', 'crypto', 'cryptstt',
+  'bacmen', 'bacmenstt', 'gstain', 'gstainpos', 'gstaincult', 'gstaincultpos',
+  'vencep', 'vencepstt', 'vencepdef', 'vencepspec',
+  'etiothba_sc', 'etiothmuco_sc', 'etiothbm_sc', 'etiothneu_sc',
+  'etiothlym_sc', 'etiothnmdar_sc', 'etioth_sc', 'etiothspec_sc',
+  'lvous', 'outcomesc', 'totalsc', 'egs', 'mrsd',
+  'deathdtc_sc', 'death_day_sc', 'deathplace', 'tbdrug_sc', 'arv', 'deathrs',
+  'deathspec'
 )
 
 # Subset the datasets and coerce into the character type where necessary
@@ -1071,7 +1106,29 @@ df_bdg_selected <- bdg_raw |>
     fucsf = as.character(fucsf),
     urine = as.character(urine),
     isolate = as.character(isolate),
-    oth = as.character(oth)
+    oth = as.character(oth),
+    moass = as.character(moass),
+    rehosp6m = as.character(rehosp6m),
+    ancrypmedi = as.character(ancrypmedi),
+    art_sc = as.character(art_sc),
+    neurocase_sc = as.character(neurocase_sc),
+    mtubestt = as.character(mtubestt),
+    tbmgrade_sc = as.character(tbmgrade_sc),
+    pararea_sc = as.character(pararea_sc),
+    afb = as.character(afb),
+    mtubecult = as.character(mtubecult),
+    mtubexpert = as.character(mtubexpert),
+    toxostt = as.character(toxostt),
+    cryptstt = as.character(cryptstt),
+    bacmenstt = as.character(bacmenstt),
+    gstain = as.character(gstain),
+    gstaincult = as.character(gstaincult),
+    vencepstt = as.character(vencepstt),
+    vencepdef = as.character(vencepdef),
+    deathplace = as.character(deathplace),
+    tbdrug_sc = as.character(tbdrug_sc),
+    arv = as.character(arv),
+    deathrs = as.character(deathrs)
   )
 
 # Merge across sites
@@ -1100,7 +1157,7 @@ dim(ibis_raw)
 glimpse(ibis_raw)
 
 # Save the dataset
-ibis_raw |> write_rds(here('0-data', 'ibis_merged.rds')) # R
+ibis_raw |> write_rds(here('0-data', 'ibis_all-merged.rds')) # R
 
 # Appendix ----------------------------------------------------------------
 
