@@ -3,7 +3,7 @@
 
 # Code author  : Ihsan Fadilah
 # Email        : ifadilah@eocru.org
-# Last updated : Late September 2021
+# Last updated : Early February 2022
 # Project      : Indonesia Brain Infection Study
 
 # This script provides reproducible code for cleaning the data. It does not have
@@ -24,7 +24,7 @@ library(haven)      # Write datasets in SPSS format
 
 # Load --------------------------------------------------------------------
 
-ibis_raw <- here('0-data', 'ibis_merged.rds') |> read_rds()
+ibis_raw <- here('0-data', 'ibis_all-merged.rds') |> read_rds()
 glimpse(ibis_raw) # Take a look at the raw data (after merging)
 
 # Clean -------------------------------------------------------------------
@@ -382,10 +382,85 @@ ibis <- ibis_raw |>
       site == 'Jakarta' & paticond == '3' ~ 'Lost to follow up',
       TRUE ~ NA_character_
       ),
+    iscnsinfec = case_when(
+      iscnsinfec == '1' ~ TRUE,
+      iscnsinfec == '0' ~ FALSE,
+      TRUE ~ NA
+    ),
+    is18 = case_when(
+      is18 == '1' ~ TRUE,
+      is18 == '0' ~ FALSE,
+      TRUE ~ NA
+    ),
+    issigned = case_when(
+      issigned == '1' ~ TRUE,
+      issigned == '0' ~ FALSE,
+      TRUE ~ NA
+    ),
+    admisdtc = ymd(admisdtc),
+    admistime = case_when(
+     site == 'Jakarta' ~ as.character(admistime),
+     site == 'Bandung' ~ str_sub(admistime, start = 12, end = -1),
+     TRUE ~ NA_character_
+    ),
+    admistime = hms(admistime),
+    neuroinfecdtc = ymd(neuroinfecdtc),
+    neuroinfectime = case_when(
+      site == 'Jakarta' ~ as.character(neuroinfectime),
+      site == 'Bandung' ~ str_sub(neuroinfectime, start = 12, end = -1),
+      TRUE ~ NA_character_
+    ),
+    neuroinfectime = hms(neuroinfectime),
+    fstdosend = case_when(
+      site == 'Jakarta' & fstdosend == 'FALSE' ~ 'Done',
+      site == 'Jakarta' & fstdosend == 'TRUE ' ~ 'Not done',
+      site == 'Bandung' & fstdosend == '1' ~ 'Done',
+      site == 'Bandung' & fstdosend == '0' ~ 'Not done',
+      TRUE ~ NA_character_
+    ),
+    fstdosedtc = ymd(fstdosedtc),
+    fstdosetime = case_when(
+      site == 'Jakarta' ~ as.character(fstdosetime),
+      site == 'Bandung' ~ str_sub(fstdosetime, start = 12, end = -1),
+      TRUE ~ NA_character_
+    ),
+    fstdosetime = hms(fstdosetime),
+    lumpuncnd = case_when(
+      site == 'Jakarta' & lumpuncnd == 'FALSE' ~ 'Done',
+      site == 'Jakarta' & lumpuncnd == 'TRUE ' ~ 'Not done',
+      site == 'Bandung' & lumpuncnd == '1' ~ 'Done',
+      site == 'Bandung' & lumpuncnd == '0' ~ 'Not done',
+      TRUE ~ NA_character_
+    ),
+    lumpuncdtc = ymd(lumpuncdtc),
+    lunpunctime = case_when(
+      site == 'Jakarta' ~ as.character(lunpunctime),
+      site == 'Bandung' ~ str_sub(lunpunctime, start = 12, end = -1),
+      TRUE ~ NA_character_
+    ),
+    lunpunctime = hms(lunpunctime),
+    enrolldtc = ymd(enrolldtc),
+    enrolltime = case_when(
+      site == 'Jakarta' ~ as.character(enrolltime),
+      site == 'Bandung' ~ str_sub(enrolltime, start = 12, end = -1),
+      TRUE ~ NA_character_
+    ),
+    enrolltime = hms(enrolltime),
+    isrecrbf = case_when(
+      isrecrbf == '1' ~ TRUE,
+      isrecrbf == '0' ~ FALSE,
+      TRUE ~ NA 
+    )
   ) |>
   
   # Make sure all categories are present despite missingness
   mutate(
+    fstdosend = factor(fstdosend,
+                       levels = c('Done', 'Not done'),
+                       labels = c('Done', 'Not done')),
+    lumpuncnd = factor(lumpuncnd,
+                       levels = c('Done', 'Not done'),
+                       labels = c('Done', 'Not done')),
     sex = factor(sex,
                  levels = c('Female', 'Male'),
                  labels = c('Female', 'Male')),
@@ -595,7 +670,10 @@ var_label(ibis) <- list(
   etiohnmdar = 'NMDAR encephalitis',
   etioothspec = 'Other aetiology',
   paticond = "Patient's condition",
-  comppare = 'Presence of any paresis'
+  comppare = 'Presence of any paresis',
+  
+  initial = "Patient's initial",
+  
 )
 
 # Exclude variables
@@ -605,11 +683,15 @@ ibis <- ibis |>
 # Take a look at the cleaned dataset
 glimpse(ibis)
 
+# Extended variables ------------------------------------------------------
+
+
+
 # Save --------------------------------------------------------------------
 
-ibis |> write_rds(here('0-data', 'ibis_cleaned.rds')) # R
-ibis |> write_sav(here('0-data', 'ibis_cleaned.sav')) # SPSS
-ibis |> write_dta(here('0-data', 'ibis_cleaned.dta')) # Stata
+ibis |> write_rds(here('0-data', 'ibis_all-cleaned.rds')) # R
+ibis |> write_sav(here('0-data', 'ibis_all-cleaned.sav')) # SPSS
+ibis |> write_dta(here('0-data', 'ibis_all-cleaned.dta')) # Stata
 
 # Appendix ----------------------------------------------------------------
 
