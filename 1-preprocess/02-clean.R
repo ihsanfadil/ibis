@@ -450,11 +450,61 @@ ibis <- ibis_raw |>
       isrecrbf == '1' ~ TRUE,
       isrecrbf == '0' ~ FALSE,
       TRUE ~ NA 
-    )
+    ),
+    mob = case_when(
+       site == 'Jakarta' ~ as.numeric(mob),
+       site == 'Bandung' ~ str_sub(dob, start = 6, end = 7) |> as.numeric(),
+       TRUE ~ NA_real_
+    ),
+    yob = case_when(
+      site == 'Jakarta' ~ as.numeric(yob),
+      site == 'Bandung' ~ str_sub(dob, start = 1, end = 4) |> as.numeric(),
+      TRUE ~ NA_real_
+    ),
+    dob = case_when(
+      site == 'Jakarta' ~ as.numeric(dob),
+      site == 'Bandung' ~ str_sub(dob, start = -2, end = -1) |> as.numeric(),
+      TRUE ~ NA_real_
+    ),
+    studypl = case_when(
+       studypl == '1' ~ as.numeric(studypl),
+       studypl == '2' ~ as.numeric(studypl),
+       studypl == '3' ~ as.numeric(studypl),
+       TRUE ~ NA_real_
+    ),
+    refstt = case_when(
+      refstt == '1' ~ as.numeric(refstt),
+      refstt == '2' ~ as.numeric(refstt),
+      refstt == '3' ~ as.numeric(refstt),
+      TRUE ~ NA_real_
+    ),
+    fstsymdtc = ymd(fstsymdtc),
+    fevercomp = if_else(fevercomp == '1', TRUE, FALSE),
+    headcomp = if_else(headcomp == '1', TRUE, FALSE),
+    vomitcomp = if_else(vomitcomp == '1', TRUE, FALSE),
+    alconcomp = if_else(alconcomp == '1', TRUE, FALSE),
+    lethsym = case_when(
+      lethsym == '1' ~ as.numeric(lethsym),
+      lethsym == '0' ~ as.numeric(lethsym),
+      lethsym %in% c('8', '9') ~ 2,
+      TRUE ~ NA_real_
+    ),
+    lethcomp = if_else(lethcomp == '1', TRUE, FALSE),
   ) |>
   
   # Make sure all categories are present despite missingness
   mutate(
+    lethsym = factor(lethsym,
+                     levels = c(0, 1, 2),
+                     labels = c('No', 'Yes', 'Unknown')),
+    refstt = factor(refstt,
+                    levels = c(1, 2, 3),
+                    labels = c('Self-referral',
+                               'Hospital referral',
+                               'Primary health care')),
+    studypl = factor(studypl,
+                     levels = c(1, 2, 3),
+                     labels = c('ER', 'Ward', 'Outpatient')),
     fstdosend = factor(fstdosend,
                        levels = c('Done', 'Not done'),
                        labels = c('Done', 'Not done')),
