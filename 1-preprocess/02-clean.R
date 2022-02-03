@@ -490,10 +490,83 @@ ibis <- ibis_raw |>
       TRUE ~ NA_real_
     ),
     lethcomp = if_else(lethcomp == '1', TRUE, FALSE),
+    lethday = case_when(
+      lethday == 99999 ~ NA_real_,
+      is.numeric(lethday) ~ as.numeric(lethday),
+      TRUE ~ NA_real_
+    ),
+    bechcomp = if_else(bechcomp == '1', TRUE, FALSE),
+    moabsym = case_when(
+      moabsym == '1' ~ as.numeric(moabsym),
+      moabsym == '0' ~ as.numeric(moabsym),
+      moabsym %in% c('8', '9') ~ 2,
+      TRUE ~ NA_real_
+    ),
+    moabcomp = if_else(moabcomp == '1', TRUE, FALSE),
+    moabday = case_when(
+      moabday == 99999 ~ NA_real_,
+      is.numeric(moabday) ~ as.numeric(moabday),
+      TRUE ~ NA_real_
+    ),
+    seabsym = case_when(
+      seabsym == '1' ~ as.numeric(seabsym),
+      seabsym == '0' ~ as.numeric(seabsym),
+      seabsym %in% c('8', '9') ~ 2,
+      TRUE ~ NA_real_
+    ),
+    seabcomp = if_else(seabcomp == '1', TRUE, FALSE),
+    seabday = case_when(
+      seabday == 99999 ~ NA_real_,
+      is.numeric(seabday) ~ as.numeric(seabday),
+      TRUE ~ NA_real_
+    ),
+    cranpsym = case_when(
+      cranpsym == '1' ~ as.numeric(cranpsym),
+      cranpsym == '0' ~ as.numeric(cranpsym),
+      cranpsym %in% c('8', '9') ~ 2,
+      TRUE ~ NA_real_
+    ),
+    cranpcomp = if_else(cranpcomp == '1', TRUE, FALSE),
+    cranpday = case_when(
+      cranpday == 99999 ~ NA_real_,
+      is.numeric(cranpday) ~ as.numeric(cranpday),
+      TRUE ~ NA_real_
+    ),
+    seizucomp = if_else(seizucomp == '1', TRUE, FALSE),
+    seipattern = case_when(
+      site == 'Jakarta' & seipattern == '1' ~ 0,
+      site == 'Jakarta' & seipattern == '2' ~ 1,
+      site == 'Bandung' & seipattern == '0' ~ 0,
+      site == 'Bandung' & seipattern == '1' ~ 1,
+      seipattern %in% c('8', '9') ~ 2,
+    ),
+    seiwitms = if_else(seiwitms == '1', TRUE, FALSE),
+    seizufre = case_when(
+      seizufre == '0' ~ 0,
+      seizufre == '1' ~ 1,
+      seizufre == '2' ~ 2,
+      seizufre %in% c('8', '9') ~ 3,
+      TRUE ~ NA_real_
+    )
   ) |>
   
   # Make sure all categories are present despite missingness
   mutate(
+    seizufre = factor(seizufre,
+                      levels = c(0, 1, 2, 3),
+                      labels = c('No', 'Once', 'Repeated', 'Unknown')),
+    seipattern = factor(seipattern,
+                        levels = c(0, 1, 2),
+                        labels = c('Focal', 'General', 'Unknown')),
+    cranpsym = factor(cranpsym,
+                      levels = c(0, 1, 2),
+                      labels = c('No', 'Yes', 'Unknown')),
+    seabsym = factor(seabsym,
+                     levels = c(0, 1, 2),
+                     labels = c('No', 'Yes', 'Unknown')),
+    moabsym = factor(moabsym,
+                     levels = c(0, 1, 2),
+                     labels = c('No', 'Yes', 'Unknown')),
     lethsym = factor(lethsym,
                      levels = c(0, 1, 2),
                      labels = c('No', 'Yes', 'Unknown')),
