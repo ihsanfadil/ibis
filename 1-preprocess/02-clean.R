@@ -547,11 +547,132 @@ ibis <- ibis_raw |>
       seizufre == '2' ~ 2,
       seizufre %in% c('8', '9') ~ 3,
       TRUE ~ NA_real_
-    )
+    ),
+    othcomp = if_else(othcomp == '1', TRUE, FALSE),
+    othday = case_when(
+      othday == 99999 ~ NA_real_,
+      is.numeric(othday) ~ as.numeric(othday),
+      TRUE ~ NA_real_
+    ),
+    weightlost = case_when(
+      weightlost == '1' ~ as.numeric(weightlost),
+      weightlost == '0' ~ as.numeric(weightlost),
+      weightlost %in% c('8', '9') ~ 2,
+      TRUE ~ NA_real_
+    ),
+    nsweat = case_when(
+      nsweat == '1' ~ as.numeric(nsweat),
+      nsweat == '0' ~ as.numeric(nsweat),
+      nsweat %in% c('8', '9') ~ 2,
+      TRUE ~ NA_real_
+    ),
+    bcg = case_when(
+      bcg == '1' ~ as.numeric(bcg),
+      bcg == '0' ~ as.numeric(bcg),
+      bcg %in% c('8', '9') ~ 2,
+      TRUE ~ NA_real_
+    ),
+    treatedtb = case_when(
+      treatedtb == '1' ~ as.numeric(treatedtb),
+      treatedtb == '0' ~ as.numeric(treatedtb),
+      treatedtb %in% c('8', '9') ~ 2,
+      TRUE ~ NA_real_
+    ),
+    pretb = case_when(
+      pretb == '1' ~ as.numeric(pretb),
+      pretb == '0' ~ as.numeric(pretb),
+      pretb %in% c('8', '9') ~ 2,
+      TRUE ~ NA_real_
+    ),
+    tbrecent = case_when(
+      site == 'Jakarta' & tbrecent == '1' ~ 0,
+      site == 'Jakarta' & tbrecent == '2' ~ 1,
+      site == 'Jakarta' & tbrecent == '3' ~ 2,
+      site == 'Jakarta' & tbrecent == '4' ~ 3,
+      site == 'Bandung' & tbrecent == '0' ~ 0,
+      site == 'Bandung' & tbrecent == '1' ~ 1,
+      site == 'Bandung' & tbrecent == '2' ~ 2,
+      site == 'Bandung' & tbrecent == '3' ~ 3,
+      tbrecent %in% c('8', '9') ~ 4,
+      TRUE ~ NA_real_
+    ),
+    tbsttrec = case_when(
+      site == 'Jakarta' & tbsttrec == '1' ~ 0,
+      site == 'Jakarta' & tbsttrec == '2' ~ 1,
+      site == 'Jakarta' & tbsttrec == '3' ~ 2,
+      site == 'Bandung' & tbsttrec == '0' ~ 0,
+      site == 'Bandung' & tbsttrec == '1' ~ 1,
+      site == 'Bandung' & tbsttrec == '2' ~ 2,
+      TRUE ~ NA_real_
+    ),
+    tbsttpul = if_else(tbsttpul == '1', TRUE, FALSE),
+    tbsttmen = if_else(tbsttmen == '1', TRUE, FALSE),
+    tbsttoth = if_else(tbsttoth == '1', TRUE, FALSE),
+    tblatent = case_when(
+      tblatent == '1' ~ as.numeric(tblatent),
+      tblatent == '0' ~ as.numeric(tblatent),
+      tblatent %in% c('8', '9') ~ 2,
+      TRUE ~ NA_real_
+    ),
+    tbipt = case_when(
+      tbipt == '1' ~ as.numeric(tbipt),
+      tbipt == '0' ~ as.numeric(tbipt),
+      tbipt %in% c('8', '9') ~ 2,
+      TRUE ~ NA_real_
+    ),
+    precns = case_when(
+      precns == '1' ~ as.numeric(precns),
+      precns == '0' ~ as.numeric(precns),
+      precns %in% c('8', '9') ~ 2,
+      TRUE ~ NA_real_
+    ),
   ) |>
   
   # Make sure all categories are present despite missingness
   mutate(
+    cnsfre = factor(cnsfre,
+                    levels = c(1, 2),
+                    labels = c('Once', 'More than once')),
+    precns = factor(precns,
+                    levels = c(0, 1, 2),
+                    labels = c('No', 'Yes', 'Unknown')),
+    tbipt = factor(tbipt,
+                   levels = c(0, 1, 2),
+                   labels = c('No', 'Yes', 'Unknown')),
+    tblatent = factor(tblatent,
+                      levels = c(0, 1, 2),
+                      labels = c('No', 'Yes', 'Unknown')),
+    tbsttrec = factor(tbsttrec,
+                      levels = c(0, 1, 2),
+                      labels = c('Ongoing', 'Completed', 'Interrupted')),
+    tbrecent = factor(tbrecent,
+                      levels = c(0, 1, 2, 3, 4),
+                      labels = c('<1 year',
+                                 '1-3 years',
+                                 '3-10 years',
+                                 '>10 years',
+                                 'Unknown')),
+    tbfre = factor(tbfre,
+                   levels = c(1, 2),
+                   labels = c('Once', 'More than once')),
+    pretb = factor(pretb,
+                   levels = c(0, 1, 2),
+                   labels = c('No', 'Yes', 'Unknown')),
+    timettb = factor(timettb,
+                     levels = c(1, 2),
+                     labels = c('<=1 year', '>1 year')),
+    treatedtb = factor(treatedtb,
+                       levels = c(0, 1, 2),
+                       labels = c('No', 'Yes', 'Unknown')),
+    bcg = factor(bcg,
+                 levels = c(0, 1, 2),
+                 labels = c('No', 'Yes', 'Unknown')),
+    nsweat = factor(nsweat,
+                    levels = c(0, 1, 2),
+                    labels = c('No', 'Yes', 'Unknown')),
+    weightlost = factor(weightlost,
+                        levels = c(0, 1, 2),
+                        labels = c('No', 'Yes', 'Unknown')),
     seizufre = factor(seizufre,
                       levels = c(0, 1, 2, 3),
                       labels = c('No', 'Once', 'Repeated', 'Unknown')),
