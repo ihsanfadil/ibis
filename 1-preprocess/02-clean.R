@@ -772,10 +772,81 @@ ibis <- ibis_raw |>
       gasbleed %in% c('8', '9') ~ 2,
       TRUE ~ NA_real_
     ),
+    inidiamen = if_else(inidiamen == 1, TRUE, FALSE),
+    inidiaence = if_else(inidiaence == 1, TRUE, FALSE),
+    inidiamye = if_else(inidiamye == 1, TRUE, FALSE),
+    inidiabrain = if_else(inidiabrain == 1, TRUE, FALSE),
+    inidiaenc = if_else(inidiaenc == 1, TRUE, FALSE),
+    suetibac = if_else(suetibac == 1, TRUE, FALSE),
+    suetiviral = if_else(suetiviral == 1, TRUE, FALSE),
+    suetitoxo = if_else(suetitoxo == 1, TRUE, FALSE),
+    suetiauto = if_else(suetiauto == 1, TRUE, FALSE),
+    sueticryp = if_else(sueticryp == 1, TRUE, FALSE),
+    suetimtube = if_else(suetimtube == 1, TRUE, FALSE),
+    suetiunk = if_else(suetiunk == 1, TRUE, FALSE),
+    suetiunk = if_else(suetiunk == 1, TRUE, FALSE),
+    cnsinfec = case_when(
+      site == 'Jakarta' & cnsinfec == '1' ~ 0,
+      site == 'Jakarta' & cnsinfec == '2' ~ 1,
+      site == 'Jakarta' & cnsinfec == '3' ~ 2,
+      site == 'Jakarta' & cnsinfec == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(cnsinfec),
+      TRUE ~ NA_real_
+    ),
+    othonset = if_else(othonset == 99999 | is.na(othonset),
+                       NA_real_, as.numeric(othonset)),
+    onsetstt = case_when(
+      site == 'Jakarta' & onsetstt == '1' ~ 0,
+      site == 'Jakarta' & onsetstt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(onsetstt),
+      TRUE ~ NA_real_
+    ),
+    hivresult = case_when(
+      hivresult == '1' ~ as.numeric(hivresult),
+      hivresult == '0' ~ as.numeric(hivresult),
+      hivresult %in% c('2', '9') ~ 2,
+      TRUE ~ NA_real_
+    ),
+    xray = case_when(
+      site == 'Jakarta' & xray == '1' ~ 0,
+      site == 'Jakarta' & xray == '2' ~ 1,
+      site == 'Jakarta' & xray == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(xray),
+      TRUE ~ NA_real_
+    )
   ) |>
   
   # Make sure all categories are present despite missingness
   mutate(
+    xray = factor(xray,
+                  levels = c(0, 1, 2),
+                  labels = c('Normal',
+                             'Compatible with TB',
+                             'Abnormal but not necessarily TB')),
+    extraclues = factor(extraclues,
+                        levels = c(0, 1),
+                        labels = c('No', 'Yes')),
+    hivresult = factor(hivresult,
+                       levels = c(0, 1, 2),
+                       labels = c('Negative', 'Positive', 'Not done')),
+    csfabnor = factor(csfabnor,
+                      levels = c(0, 1, 2),
+                      labels = c('Negative', 'Positive', 'Not done')),
+    onsetstt = factor(onsetstt,
+                      levels = c(0, 1), # Ambiguous 10-day cutoff
+                      labels = c('Acute', 'Subacute')), 
+    cnsinfec = factor(cnsinfec,
+                      levels = c(0, 1, 2, 3),
+                      labels = c('Confirmed', 'Probable',
+                                 'Possible', 'Unlikely')),
+    gradespec = factor(gradespec,
+                       levels = c(1, 2, 3),
+                       labels = c(
+                         'Grade 1: GCS 15, no neurological deficiency',
+                         'Grade 2: GCS 11-14, or CGS 15 + neurological deficit
+                          (new focal neurological signs in this episode)',
+                         'Grade 3: GCS ≤ 10'
+                       )),
     monopare = factor(monopare,
                       levels = c('No', 'Yes', 'Unknown'),
                       labels = c('No', 'Yes', 'Unknown')),
