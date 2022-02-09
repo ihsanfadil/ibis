@@ -942,11 +942,583 @@ ibis <- ibis_raw |>
       site == 'Bandung' ~ as.numeric(flucostt),
       TRUE ~ NA_real_
     ), 
+    ampho = case_when(
+      site == 'Jakarta' & ampho == '1' ~ 0,
+      site == 'Jakarta' & ampho == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(ampho),
+      TRUE ~ NA_real_
+    ),
+    amphodtc = ymd(amphodtc),
+    amphostt = case_when(
+      site == 'Jakarta' & amphostt == '1' ~ 0,
+      site == 'Jakarta' & amphostt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(amphostt),
+      TRUE ~ NA_real_
+    ), 
+    ceftria = case_when(
+      site == 'Jakarta' & ceftria == '1' ~ 0,
+      site == 'Jakarta' & ceftria == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(ceftria),
+      TRUE ~ NA_real_
+    ),
+    ceftriadtc = ymd(ceftriadtc),
+    ceftriastt = case_when(
+      site == 'Jakarta' & ceftriastt == '1' ~ 0,
+      site == 'Jakarta' & ceftriastt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(ceftriastt),
+      TRUE ~ NA_real_
+    ), 
+    merope = case_when(
+      site == 'Jakarta' & merope == '1' ~ 0,
+      site == 'Jakarta' & merope == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(merope),
+      TRUE ~ NA_real_
+    ),
+    meropedtc = ymd(meropedtc),
+    meropestt = case_when(
+      site == 'Jakarta' & meropestt == '1' ~ 0,
+      site == 'Jakarta' & meropestt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(meropestt),
+      TRUE ~ NA_real_
+    ), 
+    acyclo = case_when(
+      site == 'Jakarta' & acyclo == '1' ~ 0,
+      site == 'Jakarta' & acyclo == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(acyclo),
+      TRUE ~ NA_real_
+    ),
+    acyclodtc = ymd(acyclodtc),
+    acyclostt = case_when(
+      site == 'Jakarta' & acyclostt == '1' ~ 0,
+      site == 'Jakarta' & acyclostt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(acyclostt),
+      TRUE ~ NA_real_
+    ), 
+    valgan = case_when(
+      site == 'Jakarta' & valgan == '1' ~ 0,
+      site == 'Jakarta' & valgan == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(valgan),
+      TRUE ~ NA_real_
+    ),
+    valgandtc = ymd(valgandtc),
+    valganstt = case_when(
+      site == 'Jakarta' & valganstt == '1' ~ 0,
+      site == 'Jakarta' & valganstt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(valganstt),
+      TRUE ~ NA_real_
+    ), 
+    dexame = case_when(
+      site == 'Jakarta' & dexame == '1' ~ 0,
+      site == 'Jakarta' & dexame == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(dexame),
+      TRUE ~ NA_real_
+    ),
+    dexamedtc = ymd(dexamedtc),
+    dexamestt = case_when(
+      site == 'Jakarta' & dexamestt == '1' ~ 0,
+      site == 'Jakarta' & dexamestt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(dexamestt),
+      TRUE ~ NA_real_
+    ), 
+    methyl = case_when(
+      site == 'Jakarta' & methyl == '1' ~ 0,
+      site == 'Jakarta' & methyl == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(methyl),
+      TRUE ~ NA_real_
+    ),
+    methyldtc = ymd(methyldtc),
+    methylstt = case_when(
+      site == 'Jakarta' & methylstt == '1' ~ 0,
+      site == 'Jakarta' & methylstt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(methylstt),
+      TRUE ~ NA_real_
+    ), 
+    mannitol = case_when(
+      site == 'Jakarta' & mannitol == '1' ~ 0,
+      site == 'Jakarta' & mannitol == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(mannitol),
+      TRUE ~ NA_real_
+    ),
+    mannitoldtc = ymd(mannitoldtc),
+    mannitolstt = case_when(
+      site == 'Jakarta' & mannitolstt == '1' ~ 0,
+      site == 'Jakarta' & mannitolstt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(mannitolstt),
+      TRUE ~ NA_real_
+    ), 
+    furose = case_when(
+      site == 'Jakarta' & furose == '1' ~ 0,
+      site == 'Jakarta' & furose == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(furose),
+      TRUE ~ NA_real_
+    ),
+    furosedtc = ymd(furosedtc),
+    furosestt = case_when(
+      site == 'Jakarta' & furosestt == '1' ~ 0,
+      site == 'Jakarta' & furosestt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(furosestt),
+      TRUE ~ NA_real_
+    ), 
+    valproic = case_when(
+      site == 'Jakarta' & valproic == '1' ~ 0,
+      site == 'Jakarta' & valproic == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(valproic),
+      TRUE ~ NA_real_
+    ),
+    valproicdtc = ymd(valproicdtc),
+    valproicstt = case_when(
+      site == 'Jakarta' & valproicstt == '1' ~ 0,
+      site == 'Jakarta' & valproicstt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(valproicstt),
+      TRUE ~ NA_real_
+    ), 
+    topira = case_when(
+      site == 'Jakarta' & topira == '1' ~ 0,
+      site == 'Jakarta' & topira == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(topira),
+      TRUE ~ NA_real_
+    ),
+    topiradtc = ymd(topiradtc),
+    topirastt = case_when(
+      site == 'Jakarta' & topirastt == '1' ~ 0,
+      site == 'Jakarta' & topirastt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(topirastt),
+      TRUE ~ NA_real_
+    ), 
+    pheny = case_when(
+      site == 'Jakarta' & pheny == '1' ~ 0,
+      site == 'Jakarta' & pheny == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(pheny),
+      TRUE ~ NA_real_
+    ),
+    phenydtc = ymd(phenydtc),
+    phenystt = case_when(
+      site == 'Jakarta' & phenystt == '1' ~ 0,
+      site == 'Jakarta' & phenystt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(phenystt),
+      TRUE ~ NA_real_
+    ), 
+    levitira = case_when(
+      site == 'Jakarta' & levitira == '1' ~ 0,
+      site == 'Jakarta' & levitira == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(levitira),
+      TRUE ~ NA_real_
+    ),
+    levitiradtc = ymd(levitiradtc),
+    levitirastt = case_when(
+      site == 'Jakarta' & levitirastt == '1' ~ 0,
+      site == 'Jakarta' & levitirastt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(levitirastt),
+      TRUE ~ NA_real_
+    ), 
+    ranppi = case_when(
+      site == 'Jakarta' & ranppi == '1' ~ 0,
+      site == 'Jakarta' & ranppi == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(ranppi),
+      TRUE ~ NA_real_
+    ),
+    ranppidtc = ymd(ranppidtc),
+    ranppistt = case_when(
+      site == 'Jakarta' & ranppistt == '1' ~ 0,
+      site == 'Jakarta' & ranppistt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(ranppistt),
+      TRUE ~ NA_real_
+    ), 
+    art = case_when(
+      site == 'Jakarta' & art == '1' ~ 0,
+      site == 'Jakarta' & art == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(art),
+      TRUE ~ NA_real_
+    ),
+    artdtc = ymd(artdtc),
+    artstt = case_when(
+      site == 'Jakarta' & artstt == '1' ~ 0,
+      site == 'Jakarta' & artstt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(artstt),
+      TRUE ~ NA_real_
+    ), 
+    oth1 = case_when(
+      site == 'Jakarta' & oth1 == '1' ~ 0,
+      site == 'Jakarta' & oth1 == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(oth1),
+      TRUE ~ NA_real_
+    ),
+    oth1dtc = ymd(oth1dtc),
+    oth1stt = case_when(
+      site == 'Jakarta' & oth1stt == '1' ~ 0,
+      site == 'Jakarta' & oth1stt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(oth1stt),
+      TRUE ~ NA_real_
+    ), 
+    oth2 = case_when(
+      site == 'Jakarta' & oth2 == '1' ~ 0,
+      site == 'Jakarta' & oth2 == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(oth2),
+      TRUE ~ NA_real_
+    ),
+    oth2dtc = ymd(oth2dtc),
+    oth2stt = case_when(
+      site == 'Jakarta' & oth2stt == '1' ~ 0,
+      site == 'Jakarta' & oth2stt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(oth2stt),
+      TRUE ~ NA_real_
+    ), 
+    
+    oth3 = case_when(
+      site == 'Jakarta' & oth3 == '1' ~ 0,
+      site == 'Jakarta' & oth3 == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(oth3),
+      TRUE ~ NA_real_
+    ),
+    oth3dtc = ymd(oth3dtc),
+    oth3stt = case_when(
+      site == 'Jakarta' & oth3stt == '1' ~ 0,
+      site == 'Jakarta' & oth3stt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(oth3stt),
+      TRUE ~ NA_real_
+    ), 
+    oth4 = case_when(
+      site == 'Jakarta' & oth4 == '1' ~ 0,
+      site == 'Jakarta' & oth4 == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(oth4),
+      TRUE ~ NA_real_
+    ),
+    oth4dtc = ymd(oth4dtc),
+    oth4stt = case_when(
+      site == 'Jakarta' & oth4stt == '1' ~ 0,
+      site == 'Jakarta' & oth4stt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(oth4stt),
+      TRUE ~ NA_real_
+    ), 
+    oth5 = case_when(
+      site == 'Jakarta' & oth5 == '1' ~ 0,
+      site == 'Jakarta' & oth5 == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(oth5),
+      TRUE ~ NA_real_
+    ),
+    oth5dtc = ymd(oth5dtc),
+    oth5stt = case_when(
+      site == 'Jakarta' & oth5stt == '1' ~ 0,
+      site == 'Jakarta' & oth5stt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(oth5stt),
+      TRUE ~ NA_real_
+    ), 
+    oth6 = case_when(
+      site == 'Jakarta' & oth6 == '1' ~ 0,
+      site == 'Jakarta' & oth6 == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(oth6),
+      TRUE ~ NA_real_
+    ),
+    oth6dtc = ymd(oth6dtc),
+    oth6stt = case_when(
+      site == 'Jakarta' & oth6stt == '1' ~ 0,
+      site == 'Jakarta' & oth6stt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(oth6stt),
+      TRUE ~ NA_real_
+    ),
+    oth7 = case_when(
+      site == 'Jakarta' & oth7 == '1' ~ 0,
+      site == 'Jakarta' & oth7 == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(oth7),
+      TRUE ~ NA_real_
+    ),
+    oth7dtc = ymd(oth7dtc),
+    oth7stt = case_when(
+      site == 'Jakarta' & oth7stt == '1' ~ 0,
+      site == 'Jakarta' & oth7stt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(oth7stt),
+      TRUE ~ NA_real_
+    ),
+    oth8 = case_when(
+      site == 'Jakarta' & oth8 == '1' ~ 0,
+      site == 'Jakarta' & oth8 == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(oth8),
+      TRUE ~ NA_real_
+    ),
+    oth8dtc = ymd(oth8dtc),
+    oth8stt = case_when(
+      site == 'Jakarta' & oth8stt == '1' ~ 0,
+      site == 'Jakarta' & oth8stt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(oth8stt),
+      TRUE ~ NA_real_
+    ),
+    oth9 = case_when(
+      site == 'Jakarta' & oth9 == '1' ~ 0,
+      site == 'Jakarta' & oth9 == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(oth9),
+      TRUE ~ NA_real_
+    ),
+    oth9dtc = ymd(oth9dtc),
+    oth9stt = case_when(
+      site == 'Jakarta' & oth9stt == '1' ~ 0,
+      site == 'Jakarta' & oth9stt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(oth9stt),
+      TRUE ~ NA_real_
+    ),
+    oth10 = case_when(
+      site == 'Jakarta' & oth10 == '1' ~ 0,
+      site == 'Jakarta' & oth10 == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(oth10),
+      TRUE ~ NA_real_
+    ),
+    oth10dtc = ymd(oth10dtc),
+    oth10stt = case_when(
+      site == 'Jakarta' & oth10stt == '1' ~ 0,
+      site == 'Jakarta' & oth10stt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(oth10stt),
+      TRUE ~ NA_real_
+    ),
+    oth11 = case_when(
+      site == 'Jakarta' & oth11 == '1' ~ 0,
+      site == 'Jakarta' & oth11 == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(oth11),
+      TRUE ~ NA_real_
+    ),
+    oth11dtc = ymd(oth11dtc),
+    oth11stt = case_when(
+      site == 'Jakarta' & oth11stt == '1' ~ 0,
+      site == 'Jakarta' & oth11stt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(oth11stt),
+      TRUE ~ NA_real_
+    ),
+    oth12 = case_when(
+      site == 'Jakarta' & oth12 == '1' ~ 0,
+      site == 'Jakarta' & oth12 == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(oth12),
+      TRUE ~ NA_real_
+    ),
+    oth12dtc = ymd(oth12dtc),
+    oth12stt = case_when(
+      site == 'Jakarta' & oth12stt == '1' ~ 0,
+      site == 'Jakarta' & oth12stt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(oth12stt),
+      TRUE ~ NA_real_
+    ),
+    oth13 = case_when(
+      site == 'Jakarta' & oth13 == '1' ~ 0,
+      site == 'Jakarta' & oth13 == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(oth13),
+      TRUE ~ NA_real_
+    ),
+    oth13dtc = ymd(oth13dtc),
+    oth13stt = case_when(
+      site == 'Jakarta' & oth13stt == '1' ~ 0,
+      site == 'Jakarta' & oth13stt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(oth13stt),
+      TRUE ~ NA_real_
+    ),
+    oth14 = case_when(
+      site == 'Jakarta' & oth14 == '1' ~ 0,
+      site == 'Jakarta' & oth14 == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(oth14),
+      TRUE ~ NA_real_
+    ),
+    oth14dtc = ymd(oth14dtc),
+    oth14stt = case_when(
+      site == 'Jakarta' & oth14stt == '1' ~ 0,
+      site == 'Jakarta' & oth14stt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(oth14stt),
+      TRUE ~ NA_real_
+    ),
+    oth15 = case_when(
+      site == 'Jakarta' & oth15 == '1' ~ 0,
+      site == 'Jakarta' & oth15 == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(oth15),
+      TRUE ~ NA_real_
+    ),
+    oth15dtc = ymd(oth15dtc),
+    oth15stt = case_when(
+      site == 'Jakarta' & oth15stt == '1' ~ 0,
+      site == 'Jakarta' & oth15stt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(oth15stt),
+      TRUE ~ NA_real_
+    ),
     
   ) |>
   
   # Make sure all categories are present despite missingness
   mutate(
+    oth15stt = factor(oth15stt,
+                      levels = c(0, 1),
+                      labels = c('Initiated', 'Continued')),
+    oth15 = factor(oth15,
+                   levels = c(0, 1),
+                   labels = c('Started before LP', 'Started after LP')),
+    oth14stt = factor(oth14stt,
+                      levels = c(0, 1),
+                      labels = c('Initiated', 'Continued')),
+    oth14 = factor(oth14,
+                   levels = c(0, 1),
+                   labels = c('Started before LP', 'Started after LP')),
+    oth13stt = factor(oth13stt,
+                      levels = c(0, 1),
+                      labels = c('Initiated', 'Continued')),
+    oth13 = factor(oth13,
+                   levels = c(0, 1),
+                   labels = c('Started before LP', 'Started after LP')),
+    oth12stt = factor(oth12stt,
+                      levels = c(0, 1),
+                      labels = c('Initiated', 'Continued')),
+    oth12 = factor(oth12,
+                   levels = c(0, 1),
+                   labels = c('Started before LP', 'Started after LP')),
+    oth11stt = factor(oth11stt,
+                      levels = c(0, 1),
+                      labels = c('Initiated', 'Continued')),
+    oth11 = factor(oth11,
+                   levels = c(0, 1),
+                   labels = c('Started before LP', 'Started after LP')),
+    oth10stt = factor(oth10stt,
+                      levels = c(0, 1),
+                      labels = c('Initiated', 'Continued')),
+    oth10 = factor(oth10,
+                   levels = c(0, 1),
+                   labels = c('Started before LP', 'Started after LP')),
+    oth9stt = factor(oth9stt,
+                     levels = c(0, 1),
+                     labels = c('Initiated', 'Continued')),
+    oth9 = factor(oth9,
+                  levels = c(0, 1),
+                  labels = c('Started before LP', 'Started after LP')),
+    oth8stt = factor(oth8stt,
+                     levels = c(0, 1),
+                     labels = c('Initiated', 'Continued')),
+    oth8 = factor(oth8,
+                  levels = c(0, 1),
+                  labels = c('Started before LP', 'Started after LP')),
+    oth7stt = factor(oth7stt,
+                     levels = c(0, 1),
+                     labels = c('Initiated', 'Continued')),
+    oth7 = factor(oth7,
+                  levels = c(0, 1),
+                  labels = c('Started before LP', 'Started after LP')),
+    oth6stt = factor(oth6stt,
+                     levels = c(0, 1),
+                     labels = c('Initiated', 'Continued')),
+    oth6 = factor(oth6,
+                  levels = c(0, 1),
+                  labels = c('Started before LP', 'Started after LP')),
+    oth5stt = factor(oth5stt,
+                     levels = c(0, 1),
+                     labels = c('Initiated', 'Continued')),
+    oth5 = factor(oth5,
+                  levels = c(0, 1),
+                  labels = c('Started before LP', 'Started after LP')),
+    oth4stt = factor(oth4stt,
+                     levels = c(0, 1),
+                     labels = c('Initiated', 'Continued')),
+    oth4 = factor(oth4,
+                  levels = c(0, 1),
+                  labels = c('Started before LP', 'Started after LP')),
+    oth3stt = factor(oth3stt,
+                     levels = c(0, 1),
+                     labels = c('Initiated', 'Continued')),
+    oth3 = factor(oth3,
+                  levels = c(0, 1),
+                  labels = c('Started before LP', 'Started after LP')),
+    
+    oth2stt = factor(oth2stt,
+                     levels = c(0, 1),
+                     labels = c('Initiated', 'Continued')),
+    oth2 = factor(oth2,
+                  levels = c(0, 1),
+                  labels = c('Started before LP', 'Started after LP')),
+    oth1stt = factor(oth1stt,
+                     levels = c(0, 1),
+                     labels = c('Initiated', 'Continued')),
+    oth1 = factor(oth1,
+                  levels = c(0, 1),
+                  labels = c('Started before LP', 'Started after LP')),
+    artstt = factor(artstt,
+                    levels = c(0, 1),
+                    labels = c('Initiated', 'Continued')),
+    art = factor(art,
+                 levels = c(0, 1),
+                 labels = c('Started before LP', 'Started after LP')),
+    ranppistt = factor(ranppistt,
+                       levels = c(0, 1),
+                       labels = c('Initiated', 'Continued')),
+    ranppi = factor(ranppi,
+                    levels = c(0, 1),
+                    labels = c('Started before LP', 'Started after LP')),
+    levitirastt = factor(levitirastt,
+                         levels = c(0, 1),
+                         labels = c('Initiated', 'Continued')),
+    levitira = factor(levitira,
+                      levels = c(0, 1),
+                      labels = c('Started before LP', 'Started after LP')),
+    phenystt = factor(phenystt,
+                      levels = c(0, 1),
+                      labels = c('Initiated', 'Continued')),
+    pheny = factor(pheny,
+                   levels = c(0, 1),
+                   labels = c('Started before LP', 'Started after LP')),
+    topirastt = factor(topirastt,
+                       levels = c(0, 1),
+                       labels = c('Initiated', 'Continued')),
+    topira = factor(topira,
+                    levels = c(0, 1),
+                    labels = c('Started before LP', 'Started after LP')),
+    valproicstt = factor(valproicstt,
+                         levels = c(0, 1),
+                         labels = c('Initiated', 'Continued')),
+    valproic = factor(valproic,
+                      levels = c(0, 1),
+                      labels = c('Started before LP', 'Started after LP')),
+    furosestt = factor(furosestt,
+                       levels = c(0, 1),
+                       labels = c('Initiated', 'Continued')),
+    furose = factor(furose,
+                    levels = c(0, 1),
+                    labels = c('Started before LP', 'Started after LP')),
+    mannitolstt = factor(mannitolstt,
+                         levels = c(0, 1),
+                         labels = c('Initiated', 'Continued')),
+    mannitol = factor(mannitol,
+                      levels = c(0, 1),
+                      labels = c('Started before LP', 'Started after LP')),
+    methylstt = factor(methylstt,
+                       levels = c(0, 1),
+                       labels = c('Initiated', 'Continued')),
+    methyl = factor(methyl,
+                    levels = c(0, 1),
+                    labels = c('Started before LP', 'Started after LP')),
+    dexamestt = factor(dexamestt,
+                       levels = c(0, 1),
+                       labels = c('Initiated', 'Continued')),
+    dexame = factor(dexame,
+                    levels = c(0, 1),
+                    labels = c('Started before LP', 'Started after LP')),
+    valganstt = factor(valganstt,
+                       levels = c(0, 1),
+                       labels = c('Initiated', 'Continued')),
+    valgan = factor(valgan,
+                    levels = c(0, 1),
+                    labels = c('Started before LP', 'Started after LP')),
+    acyclostt = factor(acyclostt,
+                       levels = c(0, 1),
+                       labels = c('Initiated', 'Continued')),
+    acyclo = factor(acyclo,
+                    levels = c(0, 1),
+                    labels = c('Started before LP', 'Started after LP')),
+    meropestt = factor(meropestt,
+                       levels = c(0, 1),
+                       labels = c('Initiated', 'Continued')),
+    merope = factor(merope,
+                    levels = c(0, 1),
+                    labels = c('Started before LP', 'Started after LP')),
+    ceftriastt = factor(ceftriastt,
+                        levels = c(0, 1),
+                        labels = c('Initiated', 'Continued')),
+    ceftria = factor(ceftria,
+                     levels = c(0, 1),
+                     labels = c('Started before LP', 'Started after LP')),
+    amphostt = factor(amphostt,
+                      levels = c(0, 1),
+                      labels = c('Initiated', 'Continued')),
+    ampho = factor(ampho,
+                   levels = c(0, 1),
+                   labels = c('Started before LP', 'Started after LP')),
     flucostt = factor(flucostt,
                       levels = c(0, 1),
                       labels = c('Initiated', 'Continued')),
