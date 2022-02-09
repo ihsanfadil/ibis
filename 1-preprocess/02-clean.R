@@ -27,10 +27,34 @@ library(haven)      # Write datasets in SPSS format
 ibis_raw <- here('0-data', 'ibis_all-merged.rds') |> read_rds()
 glimpse(ibis_raw) # Take a look at the raw data (after merging)
 
-# Clean -------------------------------------------------------------------
+# Clean ------------------------------------------------------------------
+
+clindastt_jkt <- ibis_raw |> 
+  filter(site == 'Jakarta') |> 
+  pull(clindastt) |> 
+  factor(levels = c('1', '2'), labels = c('Initiated', 'Continued'))
+
+clindastt_bdg <- ibis_raw |> 
+  filter(site == 'Bandung') |> 
+  pull(clindadtc) |> 
+  factor(levels = c('0', '1'), labels = c('Initiated', 'Continued'))
+
+clindastt0 <- c(clindastt_jkt, clindastt_bdg)
+
+clindadtc_jkt <- ibis_raw |> 
+  filter(site == 'Jakarta') |> 
+  pull(clindadtc) |> 
+  ymd()
+
+clindadtc_bdg <- ibis_raw |> 
+  filter(site == 'Bandung') |> 
+  pull(clindastt) |> 
+  ymd()
+
+clindadtc0 <- c(clindadtc_jkt, clindadtc_bdg)
 
 ibis <- ibis_raw |>
-
+  
   # Redefine categories or values
   mutate(
     sex = case_when(site == 'Jakarta' & sex == 'F' ~ 'Female',
@@ -813,11 +837,164 @@ ibis <- ibis_raw |>
       site == 'Jakarta' & xray == '3' ~ 2,
       site == 'Bandung' ~ as.numeric(xray),
       TRUE ~ NA_real_
-    )
+    ),
+    tbdrug = case_when(
+      site == 'Jakarta' & tbdrug == '1' ~ 0,
+      site == 'Jakarta' & tbdrug == '2' ~ 1,
+      site == 'Bandung'  ~ as.numeric(tbdrug),
+      TRUE ~ NA_real_
+    ),
+    tbdrugdtc = ymd(tbdrugdtc),
+    tbdrugstt = case_when(
+      site == 'Jakarta' & tbdrugstt == '1' ~ 0,
+      site == 'Jakarta' & tbdrugstt == '2' ~ 1,
+      site == 'Bandung'  ~ as.numeric(tbdrugstt),
+      TRUE ~ NA_real_
+    ),
+    levof = case_when(
+      site == 'Jakarta' & levof == '1' ~ 0,
+      site == 'Jakarta' & levof == '2' ~ 1,
+      site == 'Bandung'  ~ as.numeric(levof),
+      TRUE ~ NA_real_
+    ),
+    levofdtc = ymd(levofdtc),
+    levofstt = case_when(
+      site == 'Jakarta' & levofstt == '1' ~ 0,
+      site == 'Jakarta' & levofstt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(levofstt),
+      TRUE ~ NA_real_
+    ),
+    moxif = case_when(
+      site == 'Jakarta' & moxif == '1' ~ 0,
+      site == 'Jakarta' & moxif == '2' ~ 1,
+      site == 'Bandung'  ~ as.numeric(moxif),
+      TRUE ~ NA_real_
+    ),
+    moxifdtc = ymd(moxifdtc),
+    moxifstt = case_when(
+      site == 'Jakarta' & moxifstt == '1' ~ 0,
+      site == 'Jakarta' & moxifstt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(moxifstt),
+      TRUE ~ NA_real_
+    ),
+    cotrimo = case_when(
+      site == 'Jakarta' & cotrimo == '1' ~ 0,
+      site == 'Jakarta' & cotrimo == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(cotrimo),
+      TRUE ~ NA_real_
+    ),
+    cotrimodtc = ymd(cotrimodtc),
+    cotrimostt = case_when(
+      site == 'Jakarta' & cotrimostt == '1' ~ 0,
+      site == 'Jakarta' & cotrimostt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(cotrimostt),
+      TRUE ~ NA_real_
+    ),
+    metroni = case_when(
+      site == 'Jakarta' & metroni == '1' ~ 0,
+      site == 'Jakarta' & metroni == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(metroni),
+      TRUE ~ NA_real_
+    ),
+    metronidtc = ymd(metronidtc),
+    metronistt = case_when(
+      site == 'Jakarta' & metronistt == '1' ~ 0,
+      site == 'Jakarta' & metronistt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(metronistt),
+      TRUE ~ NA_real_
+    ),
+    pyrime = case_when(
+      site == 'Jakarta' & pyrime == '1' ~ 0,
+      site == 'Jakarta' & pyrime == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(pyrime),
+      TRUE ~ NA_real_
+    ),
+    pyrimedtc = ymd(pyrimedtc),
+    pyrimestt = case_when(
+      site == 'Jakarta' & pyrimestt == '1' ~ 0,
+      site == 'Jakarta' & pyrimestt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(pyrimestt),
+      TRUE ~ NA_real_
+    ),
+    
+    clinda = case_when(
+      site == 'Jakarta' & clinda == '1' ~ 0,
+      site == 'Jakarta' & clinda == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(clinda),
+      TRUE ~ NA_real_
+    ),
+    
+    ### This section may not be reproducible in additional dataset, check again!
+    clindadtc = clindadtc0,
+    clindastt0 = clindastt0,
+    ###
+    
+    fluco = case_when(
+      site == 'Jakarta' & fluco == '1' ~ 0,
+      site == 'Jakarta' & fluco == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(fluco),
+      TRUE ~ NA_real_
+    ),
+    flucodtc = ymd(flucodtc),
+    flucostt = case_when(
+      site == 'Jakarta' & flucostt == '1' ~ 0,
+      site == 'Jakarta' & flucostt == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(flucostt),
+      TRUE ~ NA_real_
+    ), 
+    
   ) |>
   
   # Make sure all categories are present despite missingness
   mutate(
+    flucostt = factor(flucostt,
+                      levels = c(0, 1),
+                      labels = c('Initiated', 'Continued')),
+    fluco = factor(fluco,
+                   levels = c(0, 1),
+                   labels = c('Started before LP', 'Started after LP')),
+    clindastt = factor(clindastt,
+                       levels = c(0, 1),
+                       labels = c('Initiated', 'Continued')),
+    clinda = factor(clinda,
+                    levels = c(0, 1),
+                    labels = c('Started before LP', 'Started after LP')),
+    pyrimestt = factor(pyrimestt,
+                       levels = c(0, 1),
+                       labels = c('Initiated', 'Continued')),
+    pyrime = factor(pyrime,
+                    levels = c(0, 1),
+                    labels = c('Started before LP', 'Started after LP')),
+    metronistt = factor(metronistt,
+                        levels = c(0, 1),
+                        labels = c('Initiated', 'Continued')),
+    metroni = factor(metroni,
+                     levels = c(0, 1),
+                     labels = c('Started before LP', 'Started after LP')),
+    cotrimostt = factor(cotrimostt,
+                        levels = c(0, 1),
+                        labels = c('Initiated', 'Continued')),
+    cotrimo = factor(cotrimo,
+                     levels = c(0, 1),
+                     labels = c('Started before LP', 'Started after LP')),
+    moxifstt = factor(moxifstt,
+                      levels = c(0, 1),
+                      labels = c('Initiated', 'Continued')),
+    moxif = factor(moxif,
+                   levels = c(0, 1),
+                   labels = c('Started before LP', 'Started after LP')),
+    levofstt = factor(levofstt,
+                      levels = c(0, 1),
+                      labels = c('Initiated', 'Continued')),
+    levof = factor(levof,
+                   levels = c(0, 1),
+                   labels = c('Started before LP', 'Started after LP')),
+    tbdrugstt = factor(tbdrugstt,
+                       levels = c(0, 1),
+                       labels = c('Initiated', 'Continued')),
+    tbdrug = factor(tbdrug,
+                    levels = c(0, 1),
+                    labels = c('Started before LP', 'Started after LP')),
     xray = factor(xray,
                   levels = c(0, 1, 2),
                   labels = c('Normal',
@@ -1245,21 +1422,16 @@ var_label(ibis) <- list(
   etioothspec = 'Other aetiology',
   paticond = "Patient's condition",
   comppare = 'Presence of any paresis',
-  
-  initial = "Patient's initial",
-  
+  initial = "Patient's initial"
 )
 
 # Exclude variables
 ibis <- ibis |>
-  select(-c(hivvalue))
+  select(-c(hivvalue, clindastt)) |> 
+  rename(clindastt = clindastt0)
 
 # Take a look at the cleaned dataset
 glimpse(ibis)
-
-# Extended variables ------------------------------------------------------
-
-
 
 # Save --------------------------------------------------------------------
 
