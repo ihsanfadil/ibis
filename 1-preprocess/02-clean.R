@@ -1333,11 +1333,143 @@ ibis <- ibis_raw |>
       site == 'Bandung' ~ as.numeric(oth15stt),
       TRUE ~ NA_real_
     ),
-    
+    hemodtc = ymd(hemodtc),
+    hemond = case_when(
+      site == 'Jakarta' & hemond == '0' ~ 0,
+      site == 'Jakarta' & hemond == '1' ~ 1,
+      site == 'Bandung' & hemond == '1' ~ 1,
+      site == 'Bandung' & hemond == '0' ~ 0,
+      TRUE ~ NA_real_
+    ),
+    hemadtc = ymd(hemadtc),
+    hemand = case_when(
+      site == 'Jakarta' & hemand == '0' ~ 0,
+      site == 'Jakarta' & hemand == '1' ~ 1,
+      site == 'Bandung' & hemand == '1' ~ 1,
+      site == 'Bandung' & hemand == '0' ~ 0,
+      TRUE ~ NA_real_
+    ),
+    wcellcdtc = ymd(wcellcdtc),
+    wcellcnd = case_when(
+      site == 'Jakarta' & wcellcnd == '0' ~ 0,
+      site == 'Jakarta' & wcellcnd == '1' ~ 1,
+      site == 'Bandung' & wcellcnd == '1' ~ 1,
+      site == 'Bandung' & wcellcnd == '0' ~ 0,
+      TRUE ~ NA_real_
+    ),
+    neudtc = ymd(neudtc),
+    neund = case_when(
+      site == 'Jakarta' & neund == '0' ~ 0,
+      site == 'Jakarta' & neund == '1' ~ 1,
+      site == 'Bandung' & neund == '1' ~ 1,
+      site == 'Bandung' & neund == '0' ~ 0,
+      TRUE ~ NA_real_
+    ),
+    monodtc = ymd(monodtc),
+    monond = case_when(
+      site == 'Jakarta' & monond == '0' ~ 0,
+      site == 'Jakarta' & monond == '1' ~ 1,
+      site == 'Bandung' & monond == '1' ~ 1,
+      site == 'Bandung' & monond == '0' ~ 0,
+      TRUE ~ NA_real_
+    ),
+    lympdtc = ymd(lympdtc),
+    lympnd = case_when(
+      site == 'Jakarta' & lympnd == '0' ~ 0,
+      site == 'Jakarta' & lympnd == '1' ~ 1,
+      site == 'Bandung' & lympnd == '1' ~ 1,
+      site == 'Bandung' & lympnd == '0' ~ 0,
+      TRUE ~ NA_real_
+    ),
+    eosidtc = ymd(eosidtc),
+    eosind = case_when(
+      site == 'Jakarta' & eosind == '0' ~ 0,
+      site == 'Jakarta' & eosind == '1' ~ 1,
+      site == 'Bandung' & eosind == '1' ~ 1,
+      site == 'Bandung' & eosind == '0' ~ 0,
+      TRUE ~ NA_real_
+    ),
+    platedtc = ymd(platedtc),
+    platend = case_when(
+      site == 'Jakarta' & platend == '0' ~ 0,
+      site == 'Jakarta' & platend == '1' ~ 1,
+      site == 'Bandung' & platend == '1' ~ 1,
+      site == 'Bandung' & platend == '0' ~ 0,
+      TRUE ~ NA_real_
+    ),
+    altdtc = ymd(altdtc),
+    altnd = case_when(
+      site == 'Jakarta' & altnd == '0' ~ 0,
+      site == 'Jakarta' & altnd == '1' ~ 1,
+      site == 'Bandung' & altnd == '1' ~ 1,
+      site == 'Bandung' & altnd == '0' ~ 0,
+      TRUE ~ NA_real_
+    ),
+    creatdtc = ymd(creatdtc),
+    creatnd = case_when(
+      site == 'Jakarta' & creatnd == '0' ~ 0,
+      site == 'Jakarta' & creatnd == '1' ~ 1,
+      site == 'Bandung' & creatnd == '1' ~ 1,
+      site == 'Bandung' & creatnd == '0' ~ 0,
+      TRUE ~ NA_real_
+    ),
+    sodiumdtc = ymd(sodiumdtc),
+    sodiumnd = case_when(
+      site == 'Jakarta' & sodiumnd == '0' ~ 0,
+      site == 'Jakarta' & sodiumnd == '1' ~ 1,
+      site == 'Bandung' & sodiumnd == '1' ~ 1,
+      site == 'Bandung' & sodiumnd == '0' ~ 0,
+      TRUE ~ NA_real_
+    ),
+    hivdtc = ymd(hivdtc),
+    hbadtc = ymd(hbadtc),
+    hband = case_when(
+      site == 'Jakarta' & hband == '0' ~ 0,
+      site == 'Jakarta' & hband == '1' ~ 1,
+      site == 'Bandung' & hband == '1' ~ 1,
+      site == 'Bandung' & hband == '0' ~ 0,
+      TRUE ~ NA_real_
+    ),
   ) |>
   
   # Make sure all categories are present despite missingness
   mutate(
+    hband = factor(hband,
+                   levels = c(0, 1),
+                   labels = c('Done', 'Not done')),
+    sodiumnd = factor(sodiumnd,
+                      levels = c(0, 1),
+                      labels = c('Done', 'Not done')),
+    creatnd = factor(creatnd,
+                     levels = c(0, 1),
+                     labels = c('Done', 'Not done')),
+    altnd = factor(altnd,
+                   levels = c(0, 1),
+                   labels = c('Done', 'Not done')),
+    platend = factor(platend,
+                     levels = c(0, 1),
+                     labels = c('Done', 'Not done')),
+    eosind = factor(eosind,
+                    levels = c(0, 1),
+                    labels = c('Done', 'Not done')),
+    lympnd = factor(lympnd,
+                    levels = c(0, 1),
+                    labels = c('Done', 'Not done')),
+    monond = factor(monond,
+                    levels = c(0, 1),
+                    labels = c('Done', 'Not done')),
+    neund = factor(neund,
+                   levels = c(0, 1),
+                   labels = c('Done', 'Not done')),
+    wcellcnd = factor(wcellcnd,
+                      levels = c(0, 1),
+                      labels = c('Done', 'Not done')),
+    hemand = factor(hemand,
+                    levels = c(0, 1),
+                    labels = c('Done', 'Not done')),
+    hemond = factor(hemond,
+                    levels = c(0, 1),
+                    labels = c('Done', 'Not done')),
     oth15stt = factor(oth15stt,
                       levels = c(0, 1),
                       labels = c('Initiated', 'Continued')),

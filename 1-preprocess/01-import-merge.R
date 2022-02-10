@@ -678,8 +678,8 @@ vars_of_interest <- c(
   
   # Blood findings (extended)
   # Here, `initial`, `siteid`, `subjid` not considered
-  'hemodtc', 'hemadtc', 'hemavalue', 'hemand', 'wcellcdtc', 'wcellcnd',
-  'neudtc', 'neuvalue', 'neund', 'monodtc', 'monovalue', 'monond', 'lympdtc',
+  'hemodtc', 'hemond', 'hemadtc', 'hemavalue', 'hemand', 'wcellcdtc',
+  'wcellcnd', 'neudtc', 'neuvalue', 'neund', 'monodtc', 'monovalue', 'monond', 'lympdtc',
   'lympvalue', 'lympnd', 'eosidtc', 'eosivalue', 'eosind', 'platedtc',
   'platend', 'altdtc', 'altvalue', 'altnd', 'creatdtc', 'creatvalue', 'creatnd',
   'sodiumdtc', 'sodiumvalue', 'sodiumnd', 'hivdtc', 'hbadtc', 'hbavalue',
