@@ -1498,11 +1498,78 @@ ibis <- ibis_raw |>
                          2, as.numeric(alerevalue)),
     othrs1dtc = ymd(othrs1dtc),
     othrs2dtc = ymd(othrs2dtc),
-    
+    hivmonth = if_else(hivmonth == 99999 | is.na(hivmonth),
+                       NA_real_, as.numeric(hivmonth)),
+    # `hivyear` unclear years for Bandung
+    # `hivunk` unclear information on categories
+    arths = case_when(
+      site == 'Jakarta' & arths == '1' ~ 0,
+      site == 'Jakarta' & arths == '2' ~ 1,
+      site == 'Jakarta' & arths == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(arths),
+      arths %in% c('8', '9') ~ 3,
+      TRUE ~ NA_real_
+    ),
+    cd4count = if_else(cd4count == '99999' | is.na(cd4count),
+                       NA_real_, as.numeric(cd4count)),
+    cd4stt = case_when(
+      site == 'Jakarta' & cd4stt == '1' ~ 0,
+      site == 'Bandung' & cd4stt == '0' ~ 0,
+      cd4stt %in% c('8', '9') ~ 1,
+      TRUE ~ NA_real_
+    ),
+    cd4dtc2 = case_when(
+      site == 'Jakarta' & cd4dtc2 == '##/##/####' ~ NA_Date_,
+      site == 'Jakarta' ~ dmy(cd4dtc2),
+      site == 'Bandung' ~ ymd(cd4dtc2),
+      TRUE ~ NA_Date_
+    ),
+    viloadstt = case_when(
+      site == 'Jakarta' & viloadstt == '1' ~ 0,
+      site == 'Bandung' & viloadstt == '0' ~ 0,
+      viloadstt %in% c('8', '9') ~ 1,
+      TRUE ~ NA_real_
+    ),
+    viload = as.numeric(viload),
+    viloaddtc = case_when(
+      site == 'Jakarta' & viloaddtc == '##/##/####' ~ NA_Date_,
+      site == 'Jakarta' ~ dmy(viloaddtc),
+      site == 'Bandung' ~ ymd(viloaddtc),
+      TRUE ~ NA_Date_
+    ),
+    hivmususstt = case_when(
+      site == 'Jakarta' & hivmususstt == '1' ~ 0,
+      site == 'Bandung' & hivmususstt == '0' ~ 0,
+      hivmususstt %in% c('8', '9') ~ 1,
+      TRUE ~ NA_real_
+    ),
+    cotripro = case_when(
+      cotripro %in% c('8', '9') ~ 3,
+      site == 'Jakarta' & cotripro == '3' ~ 0,
+      site == 'Jakarta' & cotripro == '1' ~ 1,
+      site == 'Jakarta' & cotripro == '2' ~ 2,
+      site == 'Bandung' ~ as.numeric(cotripro),
+      TRUE ~ NA_real_
+    )
   ) |>
   
   # Make sure all categories are present despite missingness
   mutate(
+    cd4stt = factor(cd4stt,
+                    levels = c(0, 1),
+                    labels = c('Never done', 'Unknown')),
+    viloadstt = factor(viloadstt,
+                       levels = c(0, 1),
+                       labels = c('Never done', 'Unknown')),
+    hivmususstt = factor(hivmususstt,
+                         levels = c(0, 1),
+                         labels = c('Never done', 'Unknown')),
+    cotripro = factor(cotripro,
+                      levels = c(0, 1, 2, 3),
+                      labels = c('Never', 'Current', 'Previous', 'Unknown')),
+    arths = factor(arths,
+                   levels = c(0, 1, 2, 3),
+                   labels = c('Never', 'Current', 'Ever', 'Unknown')),
     alerevalue = factor(alerevalue,
                         levels = c(0, 1, 2),
                         labels = c('Negative', 'Positive', 'Not done')),
@@ -1870,8 +1937,8 @@ ibis <- ibis_raw |>
                      levels = c('No', 'Yes', 'Unknown'),
                      labels = c('No', 'Yes', 'Unknown')),
     hivvalue = factor(hivvalue,
-                      levels = c('No', 'Yes', 'Unknown'),
-                      labels = c('No', 'Yes', 'Unknown')),
+                      levels = c('Positive', 'Negative', 'Not done'),
+                      labels = c('Positive', 'Negative', 'Not done')),
     gasbleed = factor(gasbleed,
                       levels = c(0, 1, 2),
                       labels = c('No', 'Yes', 'Unknown')),  
