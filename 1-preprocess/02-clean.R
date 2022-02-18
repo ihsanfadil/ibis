@@ -1626,10 +1626,102 @@ ibis <- ibis_raw |>
     pcrtb2 = if_else(pcrtb2 %in% c('2', '9'),
                      2, as.numeric(pcrtb2)),
     # `gene...`, `pcrcov2...` have incomplete information
+    xraydtc = ymd(xraydtc),
+    # `xraynd` incomplete information
+    
+    # `binb1` incomoplete information
+    bitype1 = case_when(
+      site == 'Jakarta' & bitype1 == '1' ~ 0,
+      site == 'Jakarta' & bitype1 == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(bitype1),
+      TRUE ~ NA_real_
+    ),
+    bidtc1 = ymd(bidtc1),
+    # `bind1` incomplete information
+    bicontrast1 = case_when(
+      site == 'Jakarta' & bicontrast1 == '1' ~ 1,
+      site == 'Jakarta' & bicontrast1 == '2' ~ 0,
+      site == 'Bandung' ~ as.numeric(bicontrast1),
+      TRUE ~ NA_real_
+    ),
+    binormal1 = if_else(binormal1 == 1, TRUE, FALSE),
+    binormal2 = if_else(binormal2 == 1, TRUE, FALSE),
+    binormal3 = if_else(binormal3 == 1, TRUE, FALSE),
+    biinfarct1 = if_else(biinfarct1 == 1, TRUE, FALSE),
+    biinfarct2 = if_else(biinfarct2 == 1, TRUE, FALSE),
+    biinfarct3 = if_else(biinfarct3 == 1, TRUE, FALSE),
+    bituber1 = if_else(bituber1 == 1, TRUE, FALSE),
+    bituber2 = if_else(bituber2 == 1, TRUE, FALSE),
+    bituber3 = if_else(bituber3 == 1, TRUE, FALSE),
+    bihydro1 = if_else(bihydro1 == 1, TRUE, FALSE),
+    bihydro2 = if_else(bihydro2 == 1, TRUE, FALSE),
+    bihydro3 = if_else(bihydro3 == 1, TRUE, FALSE),
+    biabscess1 = if_else(biabscess1 == 1, TRUE, FALSE),
+    biabscess2 = if_else(biabscess2 == 1, TRUE, FALSE),
+    biabscess3 = if_else(biabscess3 == 1, TRUE, FALSE),
+    bimenin1 = if_else(bimenin1 == 1, TRUE, FALSE),
+    bimenin2 = if_else(bimenin2 == 1, TRUE, FALSE),
+    bimenin3 = if_else(bimenin3 == 1, TRUE, FALSE),
+    other1 = if_else(other1 == 1, TRUE, FALSE),
+    other2 = if_else(other2 == 1, TRUE, FALSE),
+    other3 = if_else(other3 == 1, TRUE, FALSE),
+    bidtc2 = ymd(bidtc2),
+    bidtc3 = ymd(bidtc3),
+    
+    # `binb2` incomplete information
+    bitype2 = case_when(
+      site == 'Jakarta' & bitype2 == '1' ~ 0,
+      site == 'Jakarta' & bitype2 == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(bitype2),
+      TRUE ~ NA_real_
+    ),
+    bicontrast2 = case_when(
+      site == 'Jakarta' & bicontrast2 == '1' ~ 1,
+      site == 'Jakarta' & bicontrast2 == '2' ~ 0,
+      site == 'Bandung' ~ as.numeric(bicontrast2),
+      TRUE ~ NA_real_
+    ),
+    # `binb3` incomplete information
+    bitype3 = case_when(
+      site == 'Jakarta' & bitype3 == '1' ~ 0,
+      site == 'Jakarta' & bitype3 == '2' ~ 1,
+      site == 'Bandung' ~ as.numeric(bitype3),
+      TRUE ~ NA_real_
+    ),
+    # `bind3` incomplete information
+    bicontrast3 = case_when(
+      site == 'Jakarta' & bicontrast3 == '1' ~ 1,
+      site == 'Jakarta' & bicontrast3 == '2' ~ 0,
+      site == 'Bandung' ~ as.numeric(bicontrast3),
+      TRUE ~ NA_real_
+    ),
+    mridtc = ymd(mridtc),
+    # `resmrin`, `mriabscess`, `mrimyelitis`, `mrispcol` incomplete information
   ) |>
   
   # Make sure all categories are present despite missingness
   mutate(
+    mrind = factor(mrind,
+                   levels = c(0, 1),
+                   labels = c('Done', 'Not done')),
+    bicontrast3 = factor(bicontrast3,
+                         levels = c(0, 1),
+                         labels = c('Without contrast', 'With contrast')),
+    bitype3 = factor(bitype3,
+                     levels = c(0, 1),
+                     labels = c('CT scan', 'MRI')),
+    bicontrast2 = factor(bicontrast2,
+                         levels = c(0, 1),
+                         labels = c('Without contrast', 'With contrast')),
+    bitype2 = factor(bitype2,
+                     levels = c(0, 1),
+                     labels = c('CT scan', 'MRI')),
+    bicontrast1 = factor(bicontrast1,
+                         levels = c(0, 1),
+                         labels = c('Without contrast', 'With contrast')),
+    bitype1 = factor(bitype1,
+                     levels = c(0, 1),
+                     labels = c('CT scan', 'MRI')),
     pcrtb1 = factor(pcrtb1,
                     levels = c(0, 1, 2),
                     labels = c('Negative', 'Positive', 'Not done')),
