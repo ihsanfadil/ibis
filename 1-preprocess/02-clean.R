@@ -1734,10 +1734,869 @@ ibis <- ibis_raw |>
     drugae = as.numeric(drugae),
     artstart = as.numeric(artstart),
     
+    rifamdtc = ymd(rifamdtc),
+    rifamstt = case_when(
+      site == 'Jakarta' & rifamstt == '1' ~ 0, 
+      site == 'Jakarta' & rifamstt == '2' ~ 1,
+      site == 'Jakarta' & rifamstt == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(rifamstt),
+      TRUE ~ NA_real_
+    ),
+    rifamrs = case_when(
+      site == 'Jakarta' & rifamrs == '1' ~ 0,
+      site == 'Jakarta' & rifamrs == '2' ~ 1,
+      site == 'Jakarta' & rifamrs == '3' ~ 2,
+      site == 'Jakarta' & rifamrs == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(rifamrs),
+      TRUE ~ NA_real_
+    ),
+    isonidtc = ymd(isonidtc),
+    isonistt = case_when(
+      site == 'Jakarta' & isonistt == '1' ~ 0, 
+      site == 'Jakarta' & isonistt == '2' ~ 1,
+      site == 'Jakarta' & isonistt == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(isonistt),
+      TRUE ~ NA_real_
+    ),
+    isonirs = case_when(
+      site == 'Jakarta' & isonirs == '1' ~ 0,
+      site == 'Jakarta' & isonirs == '2' ~ 1,
+      site == 'Jakarta' & isonirs == '3' ~ 2,
+      site == 'Jakarta' & isonirs == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(isonirs),
+      TRUE ~ NA_real_
+    ),
+    pyradtc = ymd(pyradtc),
+    pyrastt = case_when(
+      site == 'Jakarta' & pyrastt == '1' ~ 0, 
+      site == 'Jakarta' & pyrastt == '2' ~ 1,
+      site == 'Jakarta' & pyrastt == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(pyrastt),
+      TRUE ~ NA_real_
+    ),
+    pyrars = case_when(
+      site == 'Jakarta' & pyrars == '1' ~ 0,
+      site == 'Jakarta' & pyrars == '2' ~ 1,
+      site == 'Jakarta' & pyrars == '3' ~ 2,
+      site == 'Jakarta' & pyrars == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(pyrars),
+      TRUE ~ NA_real_
+    ),
+    ethamdtc = ymd(ethamdtc),
+    ethamstt = case_when(
+      site == 'Jakarta' & ethamstt == '1' ~ 0, 
+      site == 'Jakarta' & ethamstt == '2' ~ 1,
+      site == 'Jakarta' & ethamstt == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(ethamstt),
+      TRUE ~ NA_real_
+    ),
+    ethamrs = case_when(
+      site == 'Jakarta' & ethamrs == '1' ~ 0,
+      site == 'Jakarta' & ethamrs == '2' ~ 1,
+      site == 'Jakarta' & ethamrs == '3' ~ 2,
+      site == 'Jakarta' & ethamrs == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(ethamrs),
+      TRUE ~ NA_real_
+    ),
+    strepdtc = ymd(strepdtc),
+    strepstt = case_when(
+      site == 'Jakarta' & strepstt == '1' ~ 0, 
+      site == 'Jakarta' & strepstt == '2' ~ 1,
+      site == 'Jakarta' & strepstt == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(strepstt),
+      TRUE ~ NA_real_
+    ),
+    streprs = case_when(
+      site == 'Jakarta' & streprs == '1' ~ 0,
+      site == 'Jakarta' & streprs == '2' ~ 1,
+      site == 'Jakarta' & streprs == '3' ~ 2,
+      site == 'Jakarta' & streprs == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(streprs),
+      TRUE ~ NA_real_
+    ), 
+    tbfdcdtc = ymd(tbfdcdtc),
+    tbfdcstt = case_when(
+      site == 'Jakarta' & tbfdcstt == '1' ~ 0, 
+      site == 'Jakarta' & tbfdcstt == '2' ~ 1,
+      site == 'Jakarta' & tbfdcstt == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(tbfdcstt),
+      TRUE ~ NA_real_
+    ),
+    tbfdcrs = case_when(
+      site == 'Jakarta' & tbfdcrs == '1' ~ 0,
+      site == 'Jakarta' & tbfdcrs == '2' ~ 1,
+      site == 'Jakarta' & tbfdcrs == '3' ~ 2,
+      site == 'Jakarta' & tbfdcrs == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(tbfdcrs),
+      TRUE ~ NA_real_
+    ), 
+    levodtc = ymd(levodtc),
+    levostt = case_when(
+      site == 'Jakarta' & levostt == '1' ~ 0, 
+      site == 'Jakarta' & levostt == '2' ~ 1,
+      site == 'Jakarta' & levostt == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(levostt),
+      TRUE ~ NA_real_
+    ),
+    levors = case_when(
+      site == 'Jakarta' & levors == '1' ~ 0,
+      site == 'Jakarta' & levors == '2' ~ 1,
+      site == 'Jakarta' & levors == '3' ~ 2,
+      site == 'Jakarta' & levors == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(levors),
+      TRUE ~ NA_real_
+    ), 
+    moxidtc = ymd(moxidtc),
+    moxistt = case_when(
+      site == 'Jakarta' & moxistt == '1' ~ 0, 
+      site == 'Jakarta' & moxistt == '2' ~ 1,
+      site == 'Jakarta' & moxistt == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(moxistt),
+      TRUE ~ NA_real_
+    ),
+    moxirs = case_when(
+      site == 'Jakarta' & moxirs == '1' ~ 0,
+      site == 'Jakarta' & moxirs == '2' ~ 1,
+      site == 'Jakarta' & moxirs == '3' ~ 2,
+      site == 'Jakarta' & moxirs == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(moxirs),
+      TRUE ~ NA_real_
+    ), 
+    pyrimedtc2 = ymd(pyrimedtc2),
+    pyrimestt2 = case_when(
+      site == 'Jakarta' & pyrimestt2 == '1' ~ 0, 
+      site == 'Jakarta' & pyrimestt2 == '2' ~ 1,
+      site == 'Jakarta' & pyrimestt2 == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(pyrimestt2),
+      TRUE ~ NA_real_
+    ),
+    pyrimers = case_when(
+      site == 'Jakarta' & pyrimers == '1' ~ 0,
+      site == 'Jakarta' & pyrimers == '2' ~ 1,
+      site == 'Jakarta' & pyrimers == '3' ~ 2,
+      site == 'Jakarta' & pyrimers == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(pyrimers),
+      TRUE ~ NA_real_
+    ), 
+    clinddtc = ymd(clinddtc),
+    clindstt = case_when(
+      site == 'Jakarta' & clindstt == '1' ~ 0, 
+      site == 'Jakarta' & clindstt == '2' ~ 1,
+      site == 'Jakarta' & clindstt == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(clindstt),
+      TRUE ~ NA_real_
+    ),
+    clindrs = case_when(
+      site == 'Jakarta' & clindrs == '1' ~ 0,
+      site == 'Jakarta' & clindrs == '2' ~ 1,
+      site == 'Jakarta' & clindrs == '3' ~ 2,
+      site == 'Jakarta' & clindrs == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(clindrs),
+      TRUE ~ NA_real_
+    ),
+    cotridtc = ymd(cotridtc),
+    cotristt = case_when(
+      site == 'Jakarta' & cotristt == '1' ~ 0, 
+      site == 'Jakarta' & cotristt == '2' ~ 1,
+      site == 'Jakarta' & cotristt == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(cotristt),
+      TRUE ~ NA_real_
+    ),
+    cotrirs = case_when(
+      site == 'Jakarta' & cotrirs == '1' ~ 0,
+      site == 'Jakarta' & cotrirs == '2' ~ 1,
+      site == 'Jakarta' & cotrirs == '3' ~ 2,
+      site == 'Jakarta' & cotrirs == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(cotrirs),
+      TRUE ~ NA_real_
+    ),
+    metrodtc = ymd(metrodtc),
+    metrostt = case_when(
+      site == 'Jakarta' & metrostt == '1' ~ 0, 
+      site == 'Jakarta' & metrostt == '2' ~ 1,
+      site == 'Jakarta' & metrostt == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(metrostt),
+      TRUE ~ NA_real_
+    ),
+    metrors = case_when(
+      site == 'Jakarta' & metrors == '1' ~ 0,
+      site == 'Jakarta' & metrors == '2' ~ 1,
+      site == 'Jakarta' & metrors == '3' ~ 2,
+      site == 'Jakarta' & metrors == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(metrors),
+      TRUE ~ NA_real_
+    ),
+    flucodtc2 = ymd(flucodtc2),
+    flucostt2 = case_when(
+      site == 'Jakarta' & flucostt2 == '1' ~ 0, 
+      site == 'Jakarta' & flucostt2 == '2' ~ 1,
+      site == 'Jakarta' & flucostt2 == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(flucostt2),
+      TRUE ~ NA_real_
+    ),
+    flucors = case_when(
+      site == 'Jakarta' & flucors == '1' ~ 0,
+      site == 'Jakarta' & flucors == '2' ~ 1,
+      site == 'Jakarta' & flucors == '3' ~ 2,
+      site == 'Jakarta' & flucors == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(flucors),
+      TRUE ~ NA_real_
+    ),
+    amphodtc2 = ymd(amphodtc2),
+    amphostt2 = case_when(
+      site == 'Jakarta' & amphostt2 == '1' ~ 0, 
+      site == 'Jakarta' & amphostt2 == '2' ~ 1,
+      site == 'Jakarta' & amphostt2 == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(amphostt2),
+      TRUE ~ NA_real_
+    ),
+    amphors = case_when(
+      site == 'Jakarta' & amphors == '1' ~ 0,
+      site == 'Jakarta' & amphors == '2' ~ 1,
+      site == 'Jakarta' & amphors == '3' ~ 2,
+      site == 'Jakarta' & amphors == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(amphors),
+      TRUE ~ NA_real_
+    ),
+    ceftriadtc2 = ymd(ceftriadtc2),
+    ceftriastt2 = case_when(
+      site == 'Jakarta' & ceftriastt2 == '1' ~ 0, 
+      site == 'Jakarta' & ceftriastt2 == '2' ~ 1,
+      site == 'Jakarta' & ceftriastt2 == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(ceftriastt2),
+      TRUE ~ NA_real_
+    ),
+    ceftriars = case_when(
+      site == 'Jakarta' & ceftriars == '1' ~ 0,
+      site == 'Jakarta' & ceftriars == '2' ~ 1,
+      site == 'Jakarta' & ceftriars == '3' ~ 2,
+      site == 'Jakarta' & ceftriars == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(ceftriars),
+      TRUE ~ NA_real_
+    ),
+    merodtc = ymd(merodtc),
+    merostt = case_when(
+      site == 'Jakarta' & merostt == '1' ~ 0, 
+      site == 'Jakarta' & merostt == '2' ~ 1,
+      site == 'Jakarta' & merostt == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(merostt),
+      TRUE ~ NA_real_
+    ),
+    merors = case_when(
+      site == 'Jakarta' & merors == '1' ~ 0,
+      site == 'Jakarta' & merors == '2' ~ 1,
+      site == 'Jakarta' & merors == '3' ~ 2,
+      site == 'Jakarta' & merors == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(merors),
+      TRUE ~ NA_real_
+    ),
+    acyclodtc2 = ymd(acyclodtc2),
+    acyclostt2 = case_when(
+      site == 'Jakarta' & acyclostt2 == '1' ~ 0, 
+      site == 'Jakarta' & acyclostt2 == '2' ~ 1,
+      site == 'Jakarta' & acyclostt2 == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(acyclostt2),
+      TRUE ~ NA_real_
+    ),
+    acyclors = case_when(
+      site == 'Jakarta' & acyclors == '1' ~ 0,
+      site == 'Jakarta' & acyclors == '2' ~ 1,
+      site == 'Jakarta' & acyclors == '3' ~ 2,
+      site == 'Jakarta' & acyclors == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(acyclors),
+      TRUE ~ NA_real_
+    ),
+    valgandtc2 = ymd(valgandtc2),
+    valganstt2 = case_when(
+      site == 'Jakarta' & valganstt2 == '1' ~ 0, 
+      site == 'Jakarta' & valganstt2 == '2' ~ 1,
+      site == 'Jakarta' & valganstt2 == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(valganstt2),
+      TRUE ~ NA_real_
+    ),
+    valganrs = case_when(
+      site == 'Jakarta' & valganrs == '1' ~ 0,
+      site == 'Jakarta' & valganrs == '2' ~ 1,
+      site == 'Jakarta' & valganrs == '3' ~ 2,
+      site == 'Jakarta' & valganrs == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(valganrs),
+      TRUE ~ NA_real_
+    ),
+    methyldtc2 = ymd(methyldtc2),
+    methylstt2 = case_when(
+      site == 'Jakarta' & methylstt2 == '1' ~ 0, 
+      site == 'Jakarta' & methylstt2 == '2' ~ 1,
+      site == 'Jakarta' & methylstt2 == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(methylstt2),
+      TRUE ~ NA_real_
+    ),
+    methylrs = case_when(
+      site == 'Jakarta' & methylrs == '1' ~ 0,
+      site == 'Jakarta' & methylrs == '2' ~ 1,
+      site == 'Jakarta' & methylrs == '3' ~ 2,
+      site == 'Jakarta' & methylrs == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(methylrs),
+      TRUE ~ NA_real_
+    ),
+    mannidtc = ymd(mannidtc),
+    mannistt = case_when(
+      site == 'Jakarta' & mannistt == '1' ~ 0, 
+      site == 'Jakarta' & mannistt == '2' ~ 1,
+      site == 'Jakarta' & mannistt == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(mannistt),
+      TRUE ~ NA_real_
+    ),
+    mannirs = case_when(
+      site == 'Jakarta' & mannirs == '1' ~ 0,
+      site == 'Jakarta' & mannirs == '2' ~ 1,
+      site == 'Jakarta' & mannirs == '3' ~ 2,
+      site == 'Jakarta' & mannirs == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(mannirs),
+      TRUE ~ NA_real_
+    ),
+    furosedtc2 = ymd(furosedtc2),
+    furosestt2 = case_when(
+      site == 'Jakarta' & furosestt2 == '1' ~ 0, 
+      site == 'Jakarta' & furosestt2 == '2' ~ 1,
+      site == 'Jakarta' & furosestt2 == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(furosestt2),
+      TRUE ~ NA_real_
+    ),
+    furosers = case_when(
+      site == 'Jakarta' & furosers == '1' ~ 0,
+      site == 'Jakarta' & furosers == '2' ~ 1,
+      site == 'Jakarta' & furosers == '3' ~ 2,
+      site == 'Jakarta' & furosers == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(furosers),
+      TRUE ~ NA_real_
+    ),
+    rantididtc = ymd(rantididtc),
+    ranitidistt = case_when(
+      site == 'Jakarta' & ranitidistt == '1' ~ 0, 
+      site == 'Jakarta' & ranitidistt == '2' ~ 1,
+      site == 'Jakarta' & ranitidistt == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(ranitidistt),
+      TRUE ~ NA_real_
+    ),
+    ranitidirs = case_when(
+      site == 'Jakarta' & ranitidirs == '1' ~ 0,
+      site == 'Jakarta' & ranitidirs == '2' ~ 1,
+      site == 'Jakarta' & ranitidirs == '3' ~ 2,
+      site == 'Jakarta' & ranitidirs == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(ranitidirs),
+      TRUE ~ NA_real_
+    ),
+    arvdtc = ymd(arvdtc),
+    arvstt = case_when(
+      site == 'Jakarta' & arvstt == '1' ~ 0, 
+      site == 'Jakarta' & arvstt == '2' ~ 1,
+      site == 'Jakarta' & arvstt == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(arvstt),
+      TRUE ~ NA_real_
+    ),
+    arvrs = case_when(
+      site == 'Jakarta' & arvrs == '1' ~ 0,
+      site == 'Jakarta' & arvrs == '2' ~ 1,
+      site == 'Jakarta' & arvrs == '3' ~ 2,
+      site == 'Jakarta' & arvrs == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(arvrs),
+      TRUE ~ NA_real_
+    ),
+    
+    treatoth1dtc = ymd(treatoth1dtc),
+    treatoth1stt = case_when(
+      site == 'Jakarta' & treatoth1stt == '1' ~ 0, 
+      site == 'Jakarta' & treatoth1stt == '2' ~ 1,
+      site == 'Jakarta' & treatoth1stt == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(treatoth1stt),
+      TRUE ~ NA_real_
+    ),
+    treatoth1rs = case_when(
+      site == 'Jakarta' & treatoth1rs == '1' ~ 0,
+      site == 'Jakarta' & treatoth1rs == '2' ~ 1,
+      site == 'Jakarta' & treatoth1rs == '3' ~ 2,
+      site == 'Jakarta' & treatoth1rs == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(treatoth1rs),
+      TRUE ~ NA_real_
+    ),
+    
+    treatoth2dtc = ymd(treatoth2dtc),
+    treatoth2stt = case_when(
+      site == 'Jakarta' & treatoth2stt == '1' ~ 0, 
+      site == 'Jakarta' & treatoth2stt == '2' ~ 1,
+      site == 'Jakarta' & treatoth2stt == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(treatoth2stt),
+      TRUE ~ NA_real_
+    ),
+    treatoth2rs = case_when(
+      site == 'Jakarta' & treatoth2rs == '1' ~ 0,
+      site == 'Jakarta' & treatoth2rs == '2' ~ 1,
+      site == 'Jakarta' & treatoth2rs == '3' ~ 2,
+      site == 'Jakarta' & treatoth2rs == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(treatoth2rs),
+      TRUE ~ NA_real_
+    ),
+    
+    treatoth3dtc = ymd(treatoth3dtc),
+    treatoth3stt = case_when(
+      site == 'Jakarta' & treatoth3stt == '1' ~ 0, 
+      site == 'Jakarta' & treatoth3stt == '2' ~ 1,
+      site == 'Jakarta' & treatoth3stt == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(treatoth3stt),
+      TRUE ~ NA_real_
+    ),
+    treatoth3rs = case_when(
+      site == 'Jakarta' & treatoth3rs == '1' ~ 0,
+      site == 'Jakarta' & treatoth3rs == '2' ~ 1,
+      site == 'Jakarta' & treatoth3rs == '3' ~ 2,
+      site == 'Jakarta' & treatoth3rs == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(treatoth3rs),
+      TRUE ~ NA_real_
+    ),
+    
+    treatoth4dtc = ymd(treatoth4dtc),
+    treatoth4stt = case_when(
+      site == 'Jakarta' & treatoth4stt == '1' ~ 0, 
+      site == 'Jakarta' & treatoth4stt == '2' ~ 1,
+      site == 'Jakarta' & treatoth4stt == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(treatoth4stt),
+      TRUE ~ NA_real_
+    ),
+    treatoth4rs = case_when(
+      site == 'Jakarta' & treatoth4rs == '1' ~ 0,
+      site == 'Jakarta' & treatoth4rs == '2' ~ 1,
+      site == 'Jakarta' & treatoth4rs == '3' ~ 2,
+      site == 'Jakarta' & treatoth4rs == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(treatoth4rs),
+      TRUE ~ NA_real_
+    ),
+    
+    treatoth5dtc = ymd(treatoth5dtc),
+    treatoth5stt = case_when(
+      site == 'Jakarta' & treatoth5stt == '1' ~ 0, 
+      site == 'Jakarta' & treatoth5stt == '2' ~ 1,
+      site == 'Jakarta' & treatoth5stt == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(treatoth5stt),
+      TRUE ~ NA_real_
+    ),
+    treatoth5rs = case_when(
+      site == 'Jakarta' & treatoth5rs == '1' ~ 0,
+      site == 'Jakarta' & treatoth5rs == '2' ~ 1,
+      site == 'Jakarta' & treatoth5rs == '3' ~ 2,
+      site == 'Jakarta' & treatoth5rs == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(treatoth5rs),
+      TRUE ~ NA_real_
+    ),
+    
+    treatoth6dtc = ymd(treatoth6dtc),
+    treatoth6stt = case_when(
+      site == 'Jakarta' & treatoth6stt == '1' ~ 0, 
+      site == 'Jakarta' & treatoth6stt == '2' ~ 1,
+      site == 'Jakarta' & treatoth6stt == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(treatoth6stt),
+      TRUE ~ NA_real_
+    ),
+    treatoth6rs = case_when(
+      site == 'Jakarta' & treatoth6rs == '1' ~ 0,
+      site == 'Jakarta' & treatoth6rs == '2' ~ 1,
+      site == 'Jakarta' & treatoth6rs == '3' ~ 2,
+      site == 'Jakarta' & treatoth6rs == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(treatoth6rs),
+      TRUE ~ NA_real_
+    ),
+    
+    treatoth7dtc = ymd(treatoth7dtc),
+    treatoth7stt = case_when(
+      site == 'Jakarta' & treatoth7stt == '1' ~ 0, 
+      site == 'Jakarta' & treatoth7stt == '2' ~ 1,
+      site == 'Jakarta' & treatoth7stt == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(treatoth7stt),
+      TRUE ~ NA_real_
+    ),
+    treatoth7rs = case_when(
+      site == 'Jakarta' & treatoth7rs == '1' ~ 0,
+      site == 'Jakarta' & treatoth7rs == '2' ~ 1,
+      site == 'Jakarta' & treatoth7rs == '3' ~ 2,
+      site == 'Jakarta' & treatoth7rs == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(treatoth7rs),
+      TRUE ~ NA_real_
+    ),
+    
+    treatoth8dtc = ymd(treatoth8dtc),
+    treatoth8stt = case_when(
+      site == 'Jakarta' & treatoth8stt == '1' ~ 0, 
+      site == 'Jakarta' & treatoth8stt == '2' ~ 1,
+      site == 'Jakarta' & treatoth8stt == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(treatoth8stt),
+      TRUE ~ NA_real_
+    ),
+    treatoth8rs = case_when(
+      site == 'Jakarta' & treatoth8rs == '1' ~ 0,
+      site == 'Jakarta' & treatoth8rs == '2' ~ 1,
+      site == 'Jakarta' & treatoth8rs == '3' ~ 2,
+      site == 'Jakarta' & treatoth8rs == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(treatoth8rs),
+      TRUE ~ NA_real_
+    ),
+    
+    treatoth9dtc = ymd(treatoth9dtc),
+    treatoth9stt = case_when(
+      site == 'Jakarta' & treatoth9stt == '1' ~ 0, 
+      site == 'Jakarta' & treatoth9stt == '2' ~ 1,
+      site == 'Jakarta' & treatoth9stt == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(treatoth9stt),
+      TRUE ~ NA_real_
+    ),
+    treatoth9rs = case_when(
+      site == 'Jakarta' & treatoth9rs == '1' ~ 0,
+      site == 'Jakarta' & treatoth9rs == '2' ~ 1,
+      site == 'Jakarta' & treatoth9rs == '3' ~ 2,
+      site == 'Jakarta' & treatoth9rs == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(treatoth9rs),
+      TRUE ~ NA_real_
+    ),
+    
+    treatoth10dtc = ymd(treatoth10dtc),
+    treatoth10stt = case_when(
+      site == 'Jakarta' & treatoth10stt == '1' ~ 0, 
+      site == 'Jakarta' & treatoth10stt == '2' ~ 1,
+      site == 'Jakarta' & treatoth10stt == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(treatoth10stt),
+      TRUE ~ NA_real_
+    ),
+    treatoth10rs = case_when(
+      site == 'Jakarta' & treatoth10rs == '1' ~ 0,
+      site == 'Jakarta' & treatoth10rs == '2' ~ 1,
+      site == 'Jakarta' & treatoth10rs == '3' ~ 2,
+      site == 'Jakarta' & treatoth10rs == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(treatoth10rs),
+      TRUE ~ NA_real_
+    ),
+    
+    treatoth11dtc = ymd(treatoth11dtc),
+    treatoth11stt = case_when(
+      site == 'Jakarta' & treatoth11stt == '1' ~ 0, 
+      site == 'Jakarta' & treatoth11stt == '2' ~ 1,
+      site == 'Jakarta' & treatoth11stt == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(treatoth11stt),
+      TRUE ~ NA_real_
+    ),
+    treatoth11rs = case_when(
+      site == 'Jakarta' & treatoth11rs == '1' ~ 0,
+      site == 'Jakarta' & treatoth11rs == '2' ~ 1,
+      site == 'Jakarta' & treatoth11rs == '3' ~ 2,
+      site == 'Jakarta' & treatoth11rs == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(treatoth11rs),
+      TRUE ~ NA_real_
+    ),
+    
+    treatoth12dtc = ymd(treatoth12dtc),
+    treatoth12stt = case_when(
+      site == 'Jakarta' & treatoth12stt == '1' ~ 0, 
+      site == 'Jakarta' & treatoth12stt == '2' ~ 1,
+      site == 'Jakarta' & treatoth12stt == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(treatoth12stt),
+      TRUE ~ NA_real_
+    ),
+    treatoth12rs = case_when(
+      site == 'Jakarta' & treatoth12rs == '1' ~ 0,
+      site == 'Jakarta' & treatoth12rs == '2' ~ 1,
+      site == 'Jakarta' & treatoth12rs == '3' ~ 2,
+      site == 'Jakarta' & treatoth12rs == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(treatoth12rs),
+      TRUE ~ NA_real_
+    ),
+    
+    treatoth13dtc = ymd(treatoth13dtc),
+    treatoth13stt = case_when(
+      site == 'Jakarta' & treatoth13stt == '1' ~ 0, 
+      site == 'Jakarta' & treatoth13stt == '2' ~ 1,
+      site == 'Jakarta' & treatoth13stt == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(treatoth13stt),
+      TRUE ~ NA_real_
+    ),
+    treatoth13rs = case_when(
+      site == 'Jakarta' & treatoth13rs == '1' ~ 0,
+      site == 'Jakarta' & treatoth13rs == '2' ~ 1,
+      site == 'Jakarta' & treatoth13rs == '3' ~ 2,
+      site == 'Jakarta' & treatoth13rs == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(treatoth13rs),
+      TRUE ~ NA_real_
+    ),
+    
+    treatoth14dtc = ymd(treatoth14dtc),
+    treatoth14stt = case_when(
+      site == 'Jakarta' & treatoth14stt == '1' ~ 0, 
+      site == 'Jakarta' & treatoth14stt == '2' ~ 1,
+      site == 'Jakarta' & treatoth14stt == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(treatoth14stt),
+      TRUE ~ NA_real_
+    ),
+    treatoth14rs = case_when(
+      site == 'Jakarta' & treatoth14rs == '1' ~ 0,
+      site == 'Jakarta' & treatoth14rs == '2' ~ 1,
+      site == 'Jakarta' & treatoth14rs == '3' ~ 2,
+      site == 'Jakarta' & treatoth14rs == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(treatoth14rs),
+      TRUE ~ NA_real_
+    ),
+    
+    treatoth15dtc = ymd(treatoth15dtc),
+    treatoth15stt = case_when(
+      site == 'Jakarta' & treatoth15stt == '1' ~ 0, 
+      site == 'Jakarta' & treatoth15stt == '2' ~ 1,
+      site == 'Jakarta' & treatoth15stt == '3' ~ 2,
+      site == 'Bandung' ~ as.numeric(treatoth15stt),
+      TRUE ~ NA_real_
+    ),
+    treatoth15rs = case_when(
+      site == 'Jakarta' & treatoth15rs == '1' ~ 0,
+      site == 'Jakarta' & treatoth15rs == '2' ~ 1,
+      site == 'Jakarta' & treatoth15rs == '3' ~ 2,
+      site == 'Jakarta' & treatoth15rs == '4' ~ 3,
+      site == 'Bandung' ~ as.numeric(treatoth15rs),
+      TRUE ~ NA_real_
+    ),
   ) |>
   
   # Make sure all categories are present despite missingness
   mutate(
+    treatoth15stt = factor(treatoth15stt,
+                           levels = c(0, 1, 2),
+                           labels = c('Ongoing', 'Completed', 'Interrupted')),
+    treatoth15rs = factor(treatoth15rs,
+                          levels = c(0, 1, 2, 3),
+                          labels = c('Unavailable', 'DILI',
+                                     'Allergy', 'Other')),
+    treatoth14stt = factor(treatoth14stt,
+                           levels = c(0, 1, 2),
+                           labels = c('Ongoing', 'Completed', 'Interrupted')),
+    treatoth14rs = factor(treatoth14rs,
+                          levels = c(0, 1, 2, 3),
+                          labels = c('Unavailable', 'DILI',
+                                     'Allergy', 'Other')),
+    treatoth13stt = factor(treatoth13stt,
+                           levels = c(0, 1, 2),
+                           labels = c('Ongoing', 'Completed', 'Interrupted')),
+    treatoth13rs = factor(treatoth13rs,
+                          levels = c(0, 1, 2, 3),
+                          labels = c('Unavailable', 'DILI',
+                                     'Allergy', 'Other')),
+    treatoth12stt = factor(treatoth12stt,
+                           levels = c(0, 1, 2),
+                           labels = c('Ongoing', 'Completed', 'Interrupted')),
+    treatoth12rs = factor(treatoth12rs,
+                          levels = c(0, 1, 2, 3),
+                          labels = c('Unavailable', 'DILI',
+                                     'Allergy', 'Other')),
+    treatoth11stt = factor(treatoth10stt,
+                           levels = c(0, 1, 2),
+                           labels = c('Ongoing', 'Completed', 'Interrupted')),
+    treatoth11rs = factor(treatoth10rs,
+                          levels = c(0, 1, 2, 3),
+                          labels = c('Unavailable', 'DILI',
+                                     'Allergy', 'Other')),
+    treatoth10stt = factor(treatoth10stt,
+                           levels = c(0, 1, 2),
+                           labels = c('Ongoing', 'Completed', 'Interrupted')),
+    treatoth10rs = factor(treatoth10rs,
+                          levels = c(0, 1, 2, 3),
+                          labels = c('Unavailable', 'DILI',
+                                     'Allergy', 'Other')),
+    treatoth9stt = factor(treatoth9stt,
+                          levels = c(0, 1, 2),
+                          labels = c('Ongoing', 'Completed', 'Interrupted')),
+    treatoth9rs = factor(treatoth9rs,
+                         levels = c(0, 1, 2, 3),
+                         labels = c('Unavailable', 'DILI', 'Allergy', 'Other')),
+    treatoth8stt = factor(treatoth8stt,
+                          levels = c(0, 1, 2),
+                          labels = c('Ongoing', 'Completed', 'Interrupted')),
+    treatoth8rs = factor(treatoth8rs,
+                         levels = c(0, 1, 2, 3),
+                         labels = c('Unavailable', 'DILI', 'Allergy', 'Other')),
+    treatoth7stt = factor(treatoth7stt,
+                          levels = c(0, 1, 2),
+                          labels = c('Ongoing', 'Completed', 'Interrupted')),
+    treatoth7rs = factor(treatoth7rs,
+                         levels = c(0, 1, 2, 3),
+                         labels = c('Unavailable', 'DILI', 'Allergy', 'Other')),
+    treatoth6stt = factor(treatoth6stt,
+                          levels = c(0, 1, 2),
+                          labels = c('Ongoing', 'Completed', 'Interrupted')),
+    treatoth6rs = factor(treatoth6rs,
+                         levels = c(0, 1, 2, 3),
+                         labels = c('Unavailable', 'DILI', 'Allergy', 'Other')),
+    treatoth5stt = factor(treatoth5stt,
+                          levels = c(0, 1, 2),
+                          labels = c('Ongoing', 'Completed', 'Interrupted')),
+    treatoth5rs = factor(treatoth5rs,
+                         levels = c(0, 1, 2, 3),
+                         labels = c('Unavailable', 'DILI', 'Allergy', 'Other')),
+    treatoth4stt = factor(treatoth4stt,
+                          levels = c(0, 1, 2),
+                          labels = c('Ongoing', 'Completed', 'Interrupted')),
+    treatoth4rs = factor(treatoth4rs,
+                         levels = c(0, 1, 2, 3),
+                         labels = c('Unavailable', 'DILI', 'Allergy', 'Other')),
+    treatoth3stt = factor(treatoth3stt,
+                          levels = c(0, 1, 2),
+                          labels = c('Ongoing', 'Completed', 'Interrupted')),
+    treatoth3rs = factor(treatoth3rs,
+                         levels = c(0, 1, 2, 3),
+                         labels = c('Unavailable', 'DILI', 'Allergy', 'Other')),
+    treatoth2stt = factor(treatoth2stt,
+                          levels = c(0, 1, 2),
+                          labels = c('Ongoing', 'Completed', 'Interrupted')),
+    treatoth2rs = factor(treatoth2rs,
+                         levels = c(0, 1, 2, 3),
+                         labels = c('Unavailable', 'DILI', 'Allergy', 'Other')),
+    treatoth1stt = factor(treatoth1stt,
+                          levels = c(0, 1, 2),
+                          labels = c('Ongoing', 'Completed', 'Interrupted')),
+    treatoth1rs = factor(treatoth1rs,
+                         levels = c(0, 1, 2, 3),
+                         labels = c('Unavailable', 'DILI', 'Allergy', 'Other')),
+    
+    arvstt = factor(arvstt,
+                    levels = c(0, 1, 2),
+                    labels = c('Ongoing', 'Completed', 'Interrupted')),
+    arvrs = factor(arvrs,
+                   levels = c(0, 1, 2, 3),
+                   labels = c('Unavailable', 'DILI', 'Allergy', 'Other')),
+    ranitidistt = factor(ranitidistt,
+                         levels = c(0, 1, 2),
+                         labels = c('Ongoing', 'Completed', 'Interrupted')),
+    ranitidirs = factor(ranitidirs,
+                        levels = c(0, 1, 2, 3),
+                        labels = c('Unavailable', 'DILI', 'Allergy', 'Other')),
+    furosestt2 = factor(furosestt2,
+                        levels = c(0, 1, 2),
+                        labels = c('Ongoing', 'Completed', 'Interrupted')),
+    furosers = factor(furosers,
+                      levels = c(0, 1, 2, 3),
+                      labels = c('Unavailable', 'DILI', 'Allergy', 'Other')),
+    mannistt = factor(mannistt,
+                      levels = c(0, 1, 2),
+                      labels = c('Ongoing', 'Completed', 'Interrupted')),
+    mannirs = factor(mannirs,
+                     levels = c(0, 1, 2, 3),
+                     labels = c('Unavailable', 'DILI', 'Allergy', 'Other')),
+    methylstt2 = factor(methylstt2,
+                        levels = c(0, 1, 2),
+                        labels = c('Ongoing', 'Completed', 'Interrupted')),
+    methylrs = factor(methylrs,
+                      levels = c(0, 1, 2, 3),
+                      labels = c('Unavailable', 'DILI', 'Allergy', 'Other')),
+    valganstt2 = factor(valganstt2,
+                        levels = c(0, 1, 2),
+                        labels = c('Ongoing', 'Completed', 'Interrupted')),
+    valganrs = factor(valganrs,
+                      levels = c(0, 1, 2, 3),
+                      labels = c('Unavailable', 'DILI', 'Allergy', 'Other')),
+    acyclostt2 = factor(acyclostt2,
+                        levels = c(0, 1, 2),
+                        labels = c('Ongoing', 'Completed', 'Interrupted')),
+    acyclors = factor(acyclors,
+                      levels = c(0, 1, 2, 3),
+                      labels = c('Unavailable', 'DILI', 'Allergy', 'Other')),
+    merostt = factor(merostt,
+                     levels = c(0, 1, 2),
+                     labels = c('Ongoing', 'Completed', 'Interrupted')),
+    merors = factor(merors,
+                    levels = c(0, 1, 2, 3),
+                    labels = c('Unavailable', 'DILI', 'Allergy', 'Other')),
+    ceftriastt2 = factor(ceftriastt2,
+                         levels = c(0, 1, 2),
+                         labels = c('Ongoing', 'Completed', 'Interrupted')),
+    ceftriars = factor(ceftriars,
+                       levels = c(0, 1, 2, 3),
+                       labels = c('Unavailable', 'DILI', 'Allergy', 'Other')),
+    amphostt2 = factor(amphostt2,
+                       levels = c(0, 1, 2),
+                       labels = c('Ongoing', 'Completed', 'Interrupted')),
+    amphors = factor(amphors,
+                     levels = c(0, 1, 2, 3),
+                     labels = c('Unavailable', 'DILI', 'Allergy', 'Other')),
+    flucostt2 = factor(flucostt2,
+                       levels = c(0, 1, 2),
+                       labels = c('Ongoing', 'Completed', 'Interrupted')),
+    flucors = factor(flucors,
+                     levels = c(0, 1, 2, 3),
+                     labels = c('Unavailable', 'DILI', 'Allergy', 'Other')),
+    metrostt = factor(metrostt,
+                      levels = c(0, 1, 2),
+                      labels = c('Ongoing', 'Completed', 'Interrupted')),
+    metrors = factor(metrors,
+                     levels = c(0, 1, 2, 3),
+                     labels = c('Unavailable', 'DILI', 'Allergy', 'Other')),
+    cotristt = factor(cotristt,
+                      levels = c(0, 1, 2),
+                      labels = c('Ongoing', 'Completed', 'Interrupted')),
+    cotrirs = factor(cotrirs,
+                     levels = c(0, 1, 2, 3),
+                     labels = c('Unavailable', 'DILI', 'Allergy', 'Other')),
+    clindstt = factor(clindstt,
+                      levels = c(0, 1, 2),
+                      labels = c('Ongoing', 'Completed', 'Interrupted')),
+    clindrs = factor(clindrs,
+                     levels = c(0, 1, 2, 3),
+                     labels = c('Unavailable', 'DILI', 'Allergy', 'Other')),
+    pyrimestt2 = factor(pyrimestt2,
+                        levels = c(0, 1, 2),
+                        labels = c('Ongoing', 'Completed', 'Interrupted')),
+    pyrimers = factor(pyrimers,
+                      levels = c(0, 1, 2, 3),
+                      labels = c('Unavailable', 'DILI', 'Allergy', 'Other')),
+    moxistt = factor(moxistt,
+                     levels = c(0, 1, 2),
+                     labels = c('Ongoing', 'Completed', 'Interrupted')),
+    moxirs = factor(moxirs,
+                    levels = c(0, 1, 2, 3),
+                    labels = c('Unavailable', 'DILI', 'Allergy', 'Other')),
+    levostt = factor(levostt,
+                     levels = c(0, 1, 2),
+                     labels = c('Ongoing', 'Completed', 'Interrupted')),
+    levors = factor(levors,
+                    levels = c(0, 1, 2, 3),
+                    labels = c('Unavailable', 'DILI', 'Allergy', 'Other')),
+    tbfdcstt = factor(tbfdcstt,
+                      levels = c(0, 1, 2),
+                      labels = c('Ongoing', 'Completed', 'Interrupted')),
+    tbfdcrs = factor(tbfdcrs,
+                     levels = c(0, 1, 2, 3),
+                     labels = c('Unavailable', 'DILI', 'Allergy', 'Other')),
+    strepstt = factor(strepstt,
+                      levels = c(0, 1, 2),
+                      labels = c('Ongoing', 'Completed', 'Interrupted')),
+    streprs = factor(streprs,
+                     levels = c(0, 1, 2, 3),
+                     labels = c('Unavailable', 'DILI', 'Allergy', 'Other')),
+    ethamstt = factor(ethamstt,
+                      levels = c(0, 1, 2),
+                      labels = c('Ongoing', 'Completed', 'Interrupted')),
+    ethamrs = factor(ethamrs,
+                     levels = c(0, 1, 2, 3),
+                     labels = c('Unavailable', 'DILI', 'Allergy', 'Other')),
+    pyrastt = factor(pyrastt,
+                     levels = c(0, 1, 2),
+                     labels = c('Ongoing', 'Completed', 'Interrupted')),
+    pyrars = factor(pyrars,
+                    levels = c(0, 1, 2, 3),
+                    labels = c('Unavailable', 'DILI', 'Allergy', 'Other')),
+    isonistt = factor(isonistt,
+                      levels = c(0, 1, 2),
+                      labels = c('Ongoing', 'Completed', 'Interrupted')),
+    isonirs = factor(isonirs,
+                     levels = c(0, 1, 2, 3),
+                     labels = c('Unavailable', 'DILI', 'Allergy', 'Other')),
+    rifamstt = factor(rifamstt,
+                      levels = c(0, 1, 2),
+                      labels = c('Ongoing', 'Completed', 'Interrupted')),
+    rifamrs = factor(rifamrs,
+                     levels = c(0, 1, 2, 3),
+                     labels = c('Unavailable', 'DILI', 'Allergy', 'Other')),
+    
     artstart = factor(artstart,
                       levels = c(0, 1),
                       labels = c('No', 'Yes')),

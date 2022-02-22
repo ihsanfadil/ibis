@@ -780,7 +780,7 @@ vars_of_interest <- c(
   'furosedtc2', 'furosestt2', 'furosers', 'furosespec', 
   'rantididtc', 'ranitidistt', 'ranitidirs', 'ranitidispec',
   'arvdtc', 'arvstt', 'arvrs', 'arvrsspec',
-  'arvspec1', 'arvspec2', 'arvspec3',
+  'arvspec1', 'arvspec2', 'arvspec3', 'treatoth1',
   'treatoth1dtc', 'treatoth1stt', 'treatoth1rs', 'treatoth1spec',
   'treatoth2', 'treatoth2dtc', 'treatoth2stt', 'treatoth2rs', 'treatoth2spec',
   'treatoth3', 'treatoth3dtc', 'treatoth3stt', 'treatoth3rs', 'treatoth3spec',
