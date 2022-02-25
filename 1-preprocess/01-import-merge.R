@@ -813,7 +813,8 @@ vars_of_interest <- c(
   
   # Study completion (extended)
   # Here, `initial`, `siteid`, `subjid` not considered
-  'fudtc', 'moass', 'rehosp6m', 'rehospdtc', 'rehosprs', 'tbmedi_sc', 'tbspec',
+  'fudtc', 'moass', 'rehosp6m', 'rehospdtc', 'rehosprs', 'pacontdtc',
+  'tbmedi_sc', 'tbspec',
   'antoxomedi', 'antoxospec', 'ancrypmedi', 'ancrypspec',
   'art_sc', 'artspec_sc', 'neurocase_sc',
   'neudiaspec', 'mtuber_sc', 'mtubestt', 'tbmgrade_sc', 'pararea_sc',
