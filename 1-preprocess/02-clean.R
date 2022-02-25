@@ -3,7 +3,7 @@
 
 # Code author  : Ihsan Fadilah
 # Email        : ifadilah@eocru.org
-# Last updated : Early February 2022
+# Last updated : Late February 2022
 # Project      : Indonesia Brain Infection Study
 
 # This script provides reproducible code for cleaning the data. It does not have
